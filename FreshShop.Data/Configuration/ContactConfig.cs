@@ -21,7 +21,9 @@ namespace FreshShop.Data.Configuration
 
             builder.Property(x => x.Message).IsRequired();
 
-            builder.Property(x => x.CreatedDate).IsRequired();         
+            builder.Property(x => x.CreatedDate).IsRequired();
+
+            builder.HasOne(x => x.AppUser).WithMany(x => x.Contacts).HasForeignKey(x => x.UserId);
 
         }
     }

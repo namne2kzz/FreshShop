@@ -25,6 +25,8 @@ namespace FreshShop.Data.Configuration
 
             builder.HasOne(x => x.Customer).WithMany(x => x.Addresses).HasForeignKey(x => x.CustomerID);
 
+            builder.HasOne(x => x.AppUser).WithMany(x => x.Addresses).HasForeignKey(x => x.UserId);
+
         }
 
        

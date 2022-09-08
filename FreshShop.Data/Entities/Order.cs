@@ -19,6 +19,8 @@ namespace FreshShop.Data.Entities
 
         public int CustomerID { get; set; }
 
+        public Guid UserId { get; set; }
+
         [Required]
         [StringLength(255)]
         public string ShipName { get; set; }
@@ -47,6 +49,8 @@ namespace FreshShop.Data.Entities
         public virtual Coupon Coupon { get; set; }
 
         public virtual Customer Customer { get; set; }
+
+        public virtual AppUser AppUser { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }

@@ -11,7 +11,9 @@ namespace FreshShop.Data.Entities
     {
         public int ID { get; set; }
 
-        public int CustomerID { get; set; }       
+        public int CustomerID { get; set; }  
+        
+        public Guid UserId { get; set; }
 
         [Column(TypeName = "text")]
         [Required]
@@ -21,5 +23,7 @@ namespace FreshShop.Data.Entities
         public DateTime CreatedDate { get; set; }
 
         public virtual Customer Customer { get; set; }
+
+        public virtual AppUser AppUser { get; set; }
     }
 }

@@ -18,6 +18,7 @@ namespace FreshShop.Data.Entities
             Orders = new HashSet<Order>();
             Reviews = new HashSet<Review>();
             Wishlists = new HashSet<Wishlist>();
+            Transactions = new HashSet<Transaction>();
         }
 
         public int ID { get; set; }
@@ -71,5 +72,7 @@ namespace FreshShop.Data.Entities
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Wishlist> Wishlists { get; set; }
+
+        public virtual ICollection<Transaction> Transactions { get; set; }
     }
 }

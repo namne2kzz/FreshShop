@@ -31,5 +31,13 @@ namespace FreshShop.Data.Entities
         public string Provider { get; set; }
 
         public bool Status { get; set; }
+
+        public Guid UserId { get; set; }
+
+        public int CustomerID { get; set; }
+
+        public virtual AppUser AppUser { get; set; }
+
+        public virtual Customer Customer { get; set; }
     }
 }
