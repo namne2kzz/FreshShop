@@ -4,4 +4,8 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\FreshShop.Data\FreshShop.Data.csproj" />
+  </ItemGroup>
+
 </Project>

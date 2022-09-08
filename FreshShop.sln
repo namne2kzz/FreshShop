@@ -10,6 +10,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FreshShop.Data", "FreshShop.Data\FreshShop.Data.csproj", "{074FB630-956F-468A-840C-86E72B6432AE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FreshShop.Business", "FreshShop.Business\FreshShop.Business.csproj", "{B42C6F9A-21D2-4F7E-80FC-8E641272B0AD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,6 +24,14 @@ Global
 		{3719389D-D86F-4F9B-AE5C-DA35438AE75C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3719389D-D86F-4F9B-AE5C-DA35438AE75C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3719389D-D86F-4F9B-AE5C-DA35438AE75C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{074FB630-956F-468A-840C-86E72B6432AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{074FB630-956F-468A-840C-86E72B6432AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{074FB630-956F-468A-840C-86E72B6432AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{074FB630-956F-468A-840C-86E72B6432AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B42C6F9A-21D2-4F7E-80FC-8E641272B0AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B42C6F9A-21D2-4F7E-80FC-8E641272B0AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B42C6F9A-21D2-4F7E-80FC-8E641272B0AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B42C6F9A-21D2-4F7E-80FC-8E641272B0AD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

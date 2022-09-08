@@ -20,6 +20,9 @@ namespace FreshShop.Controllers
 
         public IActionResult Index()
         {
+          
+            
+
             return View();
         }
 
