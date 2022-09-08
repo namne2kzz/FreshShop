@@ -18,6 +18,7 @@ namespace FreshShop.Data.Entities
             Promotions = new HashSet<Promotion>();
             Reviews = new HashSet<Review>();
             Wishlists = new HashSet<Wishlist>();
+            ProductTranslations = new HashSet<ProductTranslation>();
         }
 
         public int ID { get; set; }
@@ -28,9 +29,7 @@ namespace FreshShop.Data.Entities
         [StringLength(255)]
         public string Name { get; set; }
 
-        [Column(TypeName = "text")]
-        [Required]
-        public string Description { get; set; }
+       
 
         public int Stock { get; set; }
 
@@ -68,6 +67,8 @@ namespace FreshShop.Data.Entities
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Wishlist> Wishlists { get; set; }
+
+        public virtual ICollection<ProductTranslation> ProductTranslations { get; set; }
 
     }
 }
