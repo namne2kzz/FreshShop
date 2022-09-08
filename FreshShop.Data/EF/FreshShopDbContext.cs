@@ -32,6 +32,9 @@ namespace FreshShop.Data.EF
         public virtual DbSet<Review> Reviews { get; set; }      
         public virtual DbSet<Transaction> Transactions { get; set; }
         public virtual DbSet<Wishlist> Wishlists { get; set; }
+        public virtual DbSet<Language> Languages { get; set; }
+        public virtual DbSet<CategoryTranslation> CategoryTranslations { get; set; }
+        public virtual DbSet<ProductTranslation> ProductTranslations { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -52,6 +55,9 @@ namespace FreshShop.Data.EF
             modelBuilder.ApplyConfiguration(new ReviewConfig());
             modelBuilder.ApplyConfiguration(new TransactionConfig());
             modelBuilder.ApplyConfiguration(new WishlistConfig());
+            modelBuilder.ApplyConfiguration(new LanguageConfig());
+            modelBuilder.ApplyConfiguration(new CategoryTranslationConfig());
+            modelBuilder.ApplyConfiguration(new ProductTranslationConfig());
 
             modelBuilder.ApplyConfiguration(new AppUserConfig());
             modelBuilder.ApplyConfiguration(new AppRoleConfig());

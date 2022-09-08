@@ -19,9 +19,7 @@ namespace FreshShop.Data.Configuration
 
             builder.HasOne(x => x.Category).WithMany(x => x.Products).HasForeignKey(x => x.CategoryID);           
 
-            builder.Property(x => x.Name).IsRequired().HasMaxLength(255);
-
-            builder.Property(x => x.Description).IsRequired();
+            builder.Property(x => x.Name).IsRequired().HasMaxLength(255);         
 
             builder.Property(x => x.Stock).IsRequired();
 

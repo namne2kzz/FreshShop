@@ -13,6 +13,8 @@ namespace FreshShop.Data.Entities
         public Category()
         {
             Products = new HashSet<Product>();
+            CategoryTranslations = new HashSet<CategoryTranslation>();
+
         }
 
         public int ID { get; set; }
@@ -31,5 +33,7 @@ namespace FreshShop.Data.Entities
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Product> Products { get; set; }
+
+        public virtual ICollection<CategoryTranslation> CategoryTranslations { get; set; }
     }
 }
