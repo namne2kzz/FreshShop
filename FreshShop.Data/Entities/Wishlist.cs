@@ -12,6 +12,8 @@ namespace FreshShop.Data.Entities
 
         public int CustomerID { get; set; }
 
+        public Guid UserId { get; set; }
+
         public int ProductID { get; set; }
 
         [Column(TypeName = "date")]
@@ -20,5 +22,7 @@ namespace FreshShop.Data.Entities
         public virtual Customer Customer { get; set; }
 
         public virtual Product Product { get; set; }
+
+        public virtual AppUser AppUser { get; set; }
     }
 }

@@ -35,6 +35,8 @@ namespace FreshShop.Data.Configuration
 
             builder.Property(x => x.Status).IsRequired();
 
+            builder.HasOne(x => x.AppUser).WithMany(x => x.Orders).HasForeignKey(x => x.UserId);
+
         }
     }
 }

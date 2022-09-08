@@ -13,6 +13,8 @@ namespace FreshShop.Data.Entities
 
         public int CustomerID { get; set; }
 
+        public Guid UserId { get; set; }
+
         [Required]
         [StringLength(255)]
         public string Province { get; set; }
@@ -28,6 +30,8 @@ namespace FreshShop.Data.Entities
         public bool IsDefault { get; set; }
 
         public virtual Customer Customer { get; set; }
+
+        public virtual AppUser AppUser { get; set; }
     }
 }
 

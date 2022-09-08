@@ -1,5 +1,7 @@
 ﻿using FreshShop.Data.Configuration;
 using FreshShop.Data.Entities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -7,7 +9,7 @@ using System.Text;
 
 namespace FreshShop.Data.EF
 {
-    public partial class FreshShopDbContext : DbContext
+    public class FreshShopDbContext : IdentityDbContext<AppUser,AppRole,Guid>
     {
         public FreshShopDbContext(DbContextOptions options)
             : base(options)
@@ -50,6 +52,19 @@ namespace FreshShop.Data.EF
             modelBuilder.ApplyConfiguration(new ReviewConfig());
             modelBuilder.ApplyConfiguration(new TransactionConfig());
             modelBuilder.ApplyConfiguration(new WishlistConfig());
+
+            modelBuilder.ApplyConfiguration(new AppUserConfig());
+            modelBuilder.ApplyConfiguration(new AppRoleConfig());
+
+            modelBuilder.Entity<IdentityUserClaim<Guid>>().ToTable("AppUserClaims");
+            modelBuilder.Entity<IdentityUserRole<Guid>>().ToTable("AppUserRoles").HasKey(x=>new {x.UserId,x.RoleId });
+            modelBuilder.Entity<IdentityUserLogin<Guid>>().ToTable("AppUserLogins").HasKey(x=>x.UserId);
+
+            modelBuilder.Entity<IdentityRoleClaim<Guid>>().ToTable("AppRoleClaims"); 
+            modelBuilder.Entity<IdentityUserToken<Guid>>().ToTable("AppUserTokens").HasKey(x=>x.UserId);
+
+            //data seeding
+
 
             //base.OnModelCreating(modelBuilder);
         }
