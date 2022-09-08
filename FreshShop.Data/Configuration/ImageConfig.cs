@@ -19,7 +19,7 @@ namespace FreshShop.Data.Configuration
 
             builder.HasOne(x => x.Product).WithMany(x => x.Images).HasForeignKey(x => x.ProductID);
 
-            builder.Property(x => x.ImagePath).IsRequired().HasMaxLength(255);
+            builder.Property(x => x.ImagePath).IsRequired().HasMaxLength(255).IsUnicode(false);
 
             builder.Property(x => x.CreatedDate).IsRequired();
 

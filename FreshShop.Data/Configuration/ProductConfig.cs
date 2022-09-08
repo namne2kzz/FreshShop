@@ -27,6 +27,8 @@ namespace FreshShop.Data.Configuration
 
             builder.Property(x => x.Unit).IsRequired().HasMaxLength(255);
 
+            builder.Property(x => x.OriginalPrice).IsRequired();
+
             builder.Property(x => x.Price).IsRequired();
 
             builder.Property(x => x.ViewCount).IsRequired();

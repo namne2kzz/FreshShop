@@ -25,7 +25,7 @@ namespace FreshShop.Data.Entities
 
         [Required]
         [StringLength(255)]
-        public string Image { get; set; }
+        public string ImagePath { get; set; }
 
         public int? ParentID { get; set; }
 

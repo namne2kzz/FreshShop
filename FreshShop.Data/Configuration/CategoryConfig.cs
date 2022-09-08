@@ -19,7 +19,7 @@ namespace FreshShop.Data.Configuration
            
             builder.Property(x => x.Name).IsRequired().HasMaxLength(255);
 
-            builder.Property(x => x.Image).IsRequired().HasMaxLength(255);
+            builder.Property(x => x.ImagePath).IsRequired().HasMaxLength(255).IsUnicode(false);
 
             builder.Property(x => x.ParentID).IsRequired(false);
 

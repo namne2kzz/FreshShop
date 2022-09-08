@@ -1,5 +1,6 @@
 ﻿using FreshShop.Data.Configuration;
 using FreshShop.Data.Entities;
+using FreshShop.Data.Seedings;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -70,7 +71,7 @@ namespace FreshShop.Data.EF
             modelBuilder.Entity<IdentityUserToken<Guid>>().ToTable("AppUserTokens").HasKey(x=>x.UserId);
 
             //data seeding
-
+            modelBuilder.Seed();
 
             //base.OnModelCreating(modelBuilder);
         }
