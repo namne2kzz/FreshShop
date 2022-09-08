@@ -39,6 +39,8 @@ namespace FreshShop.Data.Entities
         [StringLength(255)]
         public string Unit { get; set; }
 
+        public decimal OriginalPrice { get; set; }
+
         public decimal Price { get; set; }
 
         public int ViewCount { get; set; }

@@ -11,10 +11,7 @@ namespace FreshShop.Data.Entities
 
         public int CategoryId { set; get; }
 
-        public string Name { set; get; }
-
-        [Column(TypeName = "text")]
-        public string SeoDescription { set; get; }
+        public string Name { set; get; }     
 
         public string SeoTitle { set; get; }
 

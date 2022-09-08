@@ -17,14 +17,11 @@ namespace FreshShop.Data.Configuration
 
             builder.Property(x => x.Id).UseIdentityColumn();
 
-
             builder.Property(x => x.Name).IsRequired().HasMaxLength(255);
 
-            builder.Property(x => x.SeoAlias).IsRequired().HasMaxLength(255);
+            builder.Property(x => x.SeoAlias).IsRequired().HasMaxLength(255).IsUnicode(false);          
 
-            builder.Property(x => x.SeoDescription);
-
-            builder.Property(x => x.SeoTitle).HasMaxLength(255);
+            builder.Property(x => x.SeoTitle).HasMaxLength(255).IsUnicode(false);
 
             builder.Property(x => x.LanguageId).IsUnicode(false).IsRequired().HasMaxLength(5);
 
