@@ -3,16 +3,22 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.32126.315
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FreshShop", "FreshShop\FreshShop.csproj", "{3719389D-D86F-4F9B-AE5C-DA35438AE75C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FreshShop", "FreshShop\FreshShop.csproj", "{3719389D-D86F-4F9B-AE5C-DA35438AE75C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C5436AB4-0FEC-4B81-98E6-7A10AAB401F2}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FreshShop.Data", "FreshShop.Data\FreshShop.Data.csproj", "{074FB630-956F-468A-840C-86E72B6432AE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FreshShop.Data", "FreshShop.Data\FreshShop.Data.csproj", "{074FB630-956F-468A-840C-86E72B6432AE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FreshShop.Business", "FreshShop.Business\FreshShop.Business.csproj", "{B42C6F9A-21D2-4F7E-80FC-8E641272B0AD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FreshShop.Business", "FreshShop.Business\FreshShop.Business.csproj", "{B42C6F9A-21D2-4F7E-80FC-8E641272B0AD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FreshShop.Utilities", "FreshShop.Utilities\FreshShop.Utilities.csproj", "{3F175A11-E400-4EBA-88CF-187A697A80AF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FreshShop.ViewModels", "FreshShop.ViewModel\FreshShop.ViewModels.csproj", "{B28F87DD-E7AA-4D5F-BD83-724F44D5E5A5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FreshShop.BackendApi", "FreshShop.BackendApi\FreshShop.BackendApi.csproj", "{0FE28730-BC1D-4EB0-89BB-8CED9A6A4563}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,6 +38,18 @@ Global
 		{B42C6F9A-21D2-4F7E-80FC-8E641272B0AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B42C6F9A-21D2-4F7E-80FC-8E641272B0AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B42C6F9A-21D2-4F7E-80FC-8E641272B0AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F175A11-E400-4EBA-88CF-187A697A80AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F175A11-E400-4EBA-88CF-187A697A80AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F175A11-E400-4EBA-88CF-187A697A80AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F175A11-E400-4EBA-88CF-187A697A80AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B28F87DD-E7AA-4D5F-BD83-724F44D5E5A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B28F87DD-E7AA-4D5F-BD83-724F44D5E5A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B28F87DD-E7AA-4D5F-BD83-724F44D5E5A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B28F87DD-E7AA-4D5F-BD83-724F44D5E5A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0FE28730-BC1D-4EB0-89BB-8CED9A6A4563}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FE28730-BC1D-4EB0-89BB-8CED9A6A4563}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0FE28730-BC1D-4EB0-89BB-8CED9A6A4563}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0FE28730-BC1D-4EB0-89BB-8CED9A6A4563}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

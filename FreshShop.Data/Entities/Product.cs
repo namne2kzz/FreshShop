@@ -23,13 +23,7 @@ namespace FreshShop.Data.Entities
 
         public int ID { get; set; }
 
-        public int CategoryID { get; set; }
-
-        [Required]
-        [StringLength(255)]
-        public string Name { get; set; }
-
-       
+        public int CategoryID { get; set; }           
 
         public int Stock { get; set; }
 
