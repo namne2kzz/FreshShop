@@ -24,7 +24,7 @@ namespace FreshShop.Data.Configuration
 
             builder.Property(x => x.Content).IsRequired();
 
-            builder.Property(x => x.CreatedDate).IsRequired().HasDefaultValue(DateTime.Now);
+            builder.Property(x => x.CreatedDate).IsRequired();
 
             builder.Property(x => x.Status).IsRequired();           
 

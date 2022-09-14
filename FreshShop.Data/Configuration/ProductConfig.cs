@@ -17,9 +17,7 @@ namespace FreshShop.Data.Configuration
 
             builder.Property(x => x.ID).UseIdentityColumn();
 
-            builder.HasOne(x => x.Category).WithMany(x => x.Products).HasForeignKey(x => x.CategoryID);           
-
-            builder.Property(x => x.Name).IsRequired().HasMaxLength(255);         
+            builder.HasOne(x => x.Category).WithMany(x => x.Products).HasForeignKey(x => x.CategoryID);                          
 
             builder.Property(x => x.Stock).IsRequired();
 

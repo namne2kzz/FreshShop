@@ -4,14 +4,16 @@ using FreshShop.Data.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FreshShop.Data.Migrations
 {
     [DbContext(typeof(FreshShopDbContext))]
-    partial class FreshShopDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220914071355_modifies")]
+    partial class modifies
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -45,8 +45,7 @@ namespace FreshShop.Data.Seedings
            new Product()
            {
                ID = 1,
-               CategoryID=1,
-               Name="San pham 1",
+               CategoryID=1,              
                Stock=10,
                Sold=0,
                Unit="kg",
