@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace FreshShop.ViewModels.System
+namespace FreshShop.ViewModels.System.Users
 {
     public class LoginRequest
     {

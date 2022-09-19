@@ -1,5 +1,5 @@
 ﻿using FreshShop.Business.System.Users;
-using FreshShop.ViewModels.System;
+using FreshShop.ViewModels.System.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

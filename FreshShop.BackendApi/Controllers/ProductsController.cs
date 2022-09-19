@@ -192,5 +192,8 @@ namespace FreshShop.BackendApi.Controllers
             var images = await _manageProductService.GetListImage(productId);
             return Ok(images);
         }
+
+       
+
     }
 }
