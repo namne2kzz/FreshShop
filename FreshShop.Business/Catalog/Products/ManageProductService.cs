@@ -13,10 +13,11 @@ using Microsoft.AspNetCore.Http;
 using System.Net.Http.Headers;
 using System.IO;
 using FreshShop.Business.Common;
+using FreshShop.ViewModels.Catalog.ProductImage;
 
 namespace FreshShop.Business.Catalog.Products
 {
-    class ManageProductService : IManageProductService
+    public class ManageProductService : IManageProductService
     {
         private readonly FreshShopDbContext _context;
         private readonly IStorageService _storageService;
@@ -70,30 +71,41 @@ namespace FreshShop.Business.Catalog.Products
             return pageResult;
         }
 
-        public async Task<List<Image>> GetListImage(int productId)
+        public async Task<List<ProductImageViewModel>> GetListImage(int productId)
         {
-            var imageList = _context.Images.Where(x => x.ProductID == productId).ToListAsync();
+            var imageList = _context.Images.Where(x => x.ProductID == productId).Select(x => new ProductImageViewModel()
+            {
+                ProductId=x.ProductID,
+                ProductImageId=x.ID,
+                IsDefault=x.IsDefault,
+                CreatedDate=x.CreatedDate,
+                ImagePath=x.ImagePath,
+            }).ToListAsync();
             return await imageList;
+            
         }
 
-        public async Task<int> AddImage(int productId, List<IFormFile> file)
+        public async Task<int> AddImage(int productId, ProductImageCreateRequest request)
         {
-            foreach(var item in file)
+
+            var img = new Image();
+            img.ProductID = productId;
+            img.IsDefault = false;
+            img.CreatedDate = DateTime.Now;
+            if (request.ThumbnailImage != null)
             {
-                Image img = new Image();
-                img.ProductID = productId;
-                img.ImagePath = await this.SaveFile(item);
-                img.IsDefault = false;
-                img.CreatedDate = DateTime.Now;
-                _context.Images.Add(img);
+                img.ImagePath = await this.SaveFile(request.ThumbnailImage);
             }
-            return await _context.SaveChangesAsync();
+            _context.Images.Add(img);
+
+            await _context.SaveChangesAsync();
+            return img.ID;
         }
 
         public async Task<int> Create(ProductCreateRequest request)
         {
             var product = new Product()
-            {              
+            {
                 Price = request.Price,
                 OriginalPrice = request.OriginalPrice,
                 Unit = request.Unit,
@@ -102,9 +114,9 @@ namespace FreshShop.Business.Catalog.Products
                 ViewCount = 0,
                 CategoryID = request.CategoryId,
                 CreatedDate = DateTime.Now,
-                Status=true,
-                ProductTranslations=new List<ProductTranslation>() 
-                { 
+                Status = true,
+                ProductTranslations = new List<ProductTranslation>()
+                {
                     new ProductTranslation()
                     {
                         Name=request.Name,
@@ -115,7 +127,7 @@ namespace FreshShop.Business.Catalog.Products
                     }
                 }
             };
-            if(request.ThumbnailImage != null)
+            if (request.ThumbnailImage != null)
             {
                 product.Images = new List<Image>()
                 {
@@ -129,8 +141,9 @@ namespace FreshShop.Business.Catalog.Products
             }
 
             _context.Products.Add(product);
-            return await _context.SaveChangesAsync();
-           
+            await _context.SaveChangesAsync();
+            return product.ID;
+
         }
 
         public async Task<int> Delete(int productId)
@@ -139,22 +152,22 @@ namespace FreshShop.Business.Catalog.Products
             if (product == null) throw new FreshShopException("Cannot find product");
 
             var thumnailImage = _context.Images.Where(x => x.ProductID == productId);
-           foreach(var item in thumnailImage)
+            foreach (var item in thumnailImage)
             {
                 await _storageService.DeleteFileAsync(item.ImagePath);
             }
 
             _context.Products.Remove(product);
-                                
+
             return await _context.SaveChangesAsync();
         }
-            
+
         public async Task<int> Update(ProductUpdateRequest request)
         {
             var product = await _context.Products.FindAsync(request.Id);
             var productTranslation = await _context.ProductTranslations.FirstOrDefaultAsync(x => x.ProductId == request.Id && x.LanguageId == request.LanguageId);
             if (product == null) throw new FreshShopException("Cannot find produt...");
-           
+
             productTranslation.Name = request.Name;
             productTranslation.Description = request.Description;
             productTranslation.SeoAlias = request.SeoAlias;
@@ -162,13 +175,13 @@ namespace FreshShop.Business.Catalog.Products
 
             if (request.ThumbnailImage != null)
             {
-                var thumnailImage =await _context.Images.FirstOrDefaultAsync(x => x.IsDefault == true && x.ProductID == request.Id);
-                if(thumnailImage != null)
+                var thumnailImage = await _context.Images.FirstOrDefaultAsync(x => x.IsDefault == true && x.ProductID == request.Id);
+                if (thumnailImage != null)
                 {
                     thumnailImage.ImagePath = await this.SaveFile(request.ThumbnailImage);
-                    _context.Images.Update(thumnailImage);                
+                    _context.Images.Update(thumnailImage);
                 }
-               
+
             }
 
             return await _context.SaveChangesAsync();
@@ -176,7 +189,7 @@ namespace FreshShop.Business.Catalog.Products
 
         public async Task<int> ChangeImageStatus(int imageId)
         {
-            var imageDefault =await  _context.Images.FirstOrDefaultAsync(x => x.IsDefault == true);
+            var imageDefault = await _context.Images.FirstOrDefaultAsync(x => x.IsDefault == true);
             imageDefault.IsDefault = !imageDefault.IsDefault;
 
             var image = await _context.Images.FindAsync(imageId);
@@ -188,7 +201,10 @@ namespace FreshShop.Business.Catalog.Products
         public async Task<int> DeleteImage(int imageId)
         {
             var image = await _context.Images.FindAsync(imageId);
-           _context.Images.Remove(image);
+            if (image == null) throw new FreshShopException("Cannot find image");
+
+            _context.Images.Remove(image);
+            await _storageService.DeleteFileAsync(image.ImagePath);
             return await _context.SaveChangesAsync();
         }
 
@@ -197,7 +213,7 @@ namespace FreshShop.Business.Catalog.Products
             var product = await _context.Products.FindAsync(productId);
             if (product == null) throw new FreshShopException("Cannot find produt...");
             product.Price = newPrice;
-            return await _context.SaveChangesAsync() >0;
+            return await _context.SaveChangesAsync() > 0;
         }
 
         public async Task<bool> UpdateSold(int productId, int quantity)
@@ -220,7 +236,7 @@ namespace FreshShop.Business.Catalog.Products
         {
             var product = await _context.Products.FindAsync(productId);
             product.ViewCount += 1;
-            return await _context.SaveChangesAsync() >0;
+            return await _context.SaveChangesAsync() > 0;
         }
 
         private async Task<string> SaveFile(IFormFile file)
@@ -231,6 +247,49 @@ namespace FreshShop.Business.Catalog.Products
             return fileName;
         }
 
+        public async Task<ProductViewModel> GetById(int productId, string languageId)
+        {
+            var product = await _context.Products.FindAsync(productId);
+            var productTranslation = await _context.ProductTranslations.FirstOrDefaultAsync(x => x.LanguageId == languageId && x.ProductId == productId);
+            var category = await _context.Categories.FindAsync(product.CategoryID);
+
+            var productViewModel = new ProductViewModel()
+            {
+                ID = product.ID,
+                CategoryID = category.ID,
+                CategoryName = category.Name,
+                Name = productTranslation != null ? productTranslation.Name : null,
+                Description = productTranslation != null ? productTranslation.Description : null,
+                SeoAlias = productTranslation != null ? productTranslation.SeoAlias : null,
+                SeoTitle = productTranslation != null ? productTranslation.SeoTitle : null,
+                OriginalPrice = product.OriginalPrice,
+                Price = product.Price,
+                Unit = product.Unit,
+                Stock = product.Stock,
+                Sold = product.Sold,
+                ViewCount = product.ViewCount,
+                CreatedDate = product.CreatedDate,
+                LanguageId = productTranslation.LanguageId,
+            };
+            return productViewModel;
+        }
+    
+        public async Task<ProductImageViewModel> GetImageById(int imageId)
+        {
+            var image = await _context.Images.FindAsync(imageId);
+
+            if (image == null) throw new FreshShopException("Cannot find image");
+
+            var productImageViewModel = new ProductImageViewModel()
+            {
+                ProductId=image.ProductID,
+                ProductImageId=image.ID,
+                IsDefault=image.IsDefault,
+                CreatedDate=image.CreatedDate,
+                ImagePath=image.ImagePath,
+            };
+            return productImageViewModel;
+        }
        
     }
 }
