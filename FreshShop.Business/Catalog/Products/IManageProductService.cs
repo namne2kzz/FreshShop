@@ -1,5 +1,6 @@
 ﻿using FreshShop.Data.Entities;
 using FreshShop.ViewModels.Catalog.Product;
+using FreshShop.ViewModels.Catalog.ProductImage;
 using FreshShop.ViewModels.Common;
 using Microsoft.AspNetCore.Http;
 using System;
@@ -25,14 +26,18 @@ namespace FreshShop.Business.Catalog.Products
 
         Task<bool> UpdateStock(int productId, int quantity);
 
+        Task<ProductViewModel> GetById(int productId, string languageId);
+
         Task<PagedResult<ProductViewModel>> GetAllPaging(GetManageProductPagingRequest request);
 
-        Task<int> AddImage(int productId, List<IFormFile> file);
+        Task<int> AddImage(int productId, ProductImageCreateRequest request);
 
         Task<int> ChangeImageStatus(int imageId);
 
         Task<int> DeleteImage(int imageId);
 
-        Task<List<Image>> GetListImage(int productId);
+        Task<List<ProductImageViewModel>> GetListImage(int productId);
+
+        Task<ProductImageViewModel> GetImageById(int imageId);
     }
 }
