@@ -1,4 +1,4 @@
-﻿using FreshShop.ViewModels.System;
+﻿using FreshShop.ViewModels.System.Users;
 using System;
 using System.Collections.Generic;
 using System.Text;

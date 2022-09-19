@@ -1,7 +1,7 @@
 ﻿using FreshShop.Business.Common;
 using FreshShop.Data.Entities;
 using FreshShop.Utilities.Exceptions;
-using FreshShop.ViewModels.System;
+using FreshShop.ViewModels.System.Users;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
