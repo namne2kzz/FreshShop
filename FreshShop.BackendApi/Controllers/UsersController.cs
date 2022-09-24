@@ -22,7 +22,7 @@ namespace FreshShop.BackendApi.Controllers
 
         [HttpPost("authenticate")]
         [AllowAnonymous]
-        public async Task<IActionResult> Authenticate([FromForm]LoginRequest request)
+        public async Task<IActionResult> Authenticate([FromBody]LoginRequest request)
         {
             if (!ModelState.IsValid)
             {
@@ -33,7 +33,7 @@ namespace FreshShop.BackendApi.Controllers
             {
                 return BadRequest("Username or Password is incorrect...");
             }
-            return Ok(new { token = resultToken });
+            return Ok(resultToken);
         }
 
         [HttpPost("register")]

@@ -18,7 +18,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FreshShop.Utilities", "Fres
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FreshShop.ViewModels", "FreshShop.ViewModel\FreshShop.ViewModels.csproj", "{B28F87DD-E7AA-4D5F-BD83-724F44D5E5A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FreshShop.BackendApi", "FreshShop.BackendApi\FreshShop.BackendApi.csproj", "{0FE28730-BC1D-4EB0-89BB-8CED9A6A4563}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FreshShop.BackendApi", "FreshShop.BackendApi\FreshShop.BackendApi.csproj", "{0FE28730-BC1D-4EB0-89BB-8CED9A6A4563}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FreshShop.AdminApp", "FreshShop.AdminApp\FreshShop.AdminApp.csproj", "{14934F2A-C87F-4C59-A2F4-728B4A6DAA4C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,6 +52,10 @@ Global
 		{0FE28730-BC1D-4EB0-89BB-8CED9A6A4563}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0FE28730-BC1D-4EB0-89BB-8CED9A6A4563}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0FE28730-BC1D-4EB0-89BB-8CED9A6A4563}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14934F2A-C87F-4C59-A2F4-728B4A6DAA4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14934F2A-C87F-4C59-A2F4-728B4A6DAA4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14934F2A-C87F-4C59-A2F4-728B4A6DAA4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14934F2A-C87F-4C59-A2F4-728B4A6DAA4C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
