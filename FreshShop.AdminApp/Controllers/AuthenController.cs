@@ -2,6 +2,7 @@
 using FreshShop.ViewModels.System.Users;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Logging;
@@ -44,16 +45,24 @@ namespace FreshShop.AdminApp.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(ModelState);
+                return View();
             }
             var token = await _userApiClient.Authenticate(request);
 
-            var userPrincipal = this.ValidateToken(token);
+            if (!token.IsSuccessed)
+            {
+                ModelState.AddModelError("", token.Message);
+                return View();
+            }
+
+            var userPrincipal = this.ValidateToken(token.ResultObj);
             var authProperties = new AuthenticationProperties
             {
                 ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(10),
                 IsPersistent = true
             };
+
+            HttpContext.Session.SetString("Token", token.ResultObj);
 
             await HttpContext.SignInAsync(
                 CookieAuthenticationDefaults.AuthenticationScheme,
@@ -69,6 +78,7 @@ namespace FreshShop.AdminApp.Controllers
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            HttpContext.Session.Remove("Token");
             return Redirect("Login");
         }
 

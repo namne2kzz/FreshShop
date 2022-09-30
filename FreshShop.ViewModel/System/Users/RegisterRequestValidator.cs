@@ -21,7 +21,7 @@ namespace FreshShop.ViewModels.System.Users
                 .Matches(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,})+)$").WithMessage("Email is incorrect format");
 
             RuleFor(x => x.PhoneNumber).NotEmpty().WithMessage("PhoneNumber is required")
-                .MaximumLength(12).WithMessage("PhoneNumber cannot over 12 charactors").Matches(@"^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$").WithMessage("Email is incorrect format");
+                .MaximumLength(12).WithMessage("PhoneNumber cannot over 12 charactors").Matches(@"^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$").WithMessage("Phone Number is incorrect format");
 
             RuleFor(x => x.UserName).NotEmpty().WithMessage("UserName is required")
                 .MinimumLength(6).WithMessage("UserName is at least 6 charactors");
@@ -37,7 +37,7 @@ namespace FreshShop.ViewModels.System.Users
                 }
             });
 
-            RuleFor(x => x.ThumbnailImage).NotEmpty().WithMessage("Select one image");
+          
         }
     }
 }

@@ -105,6 +105,7 @@
                     <!-- Authentication card start -->
 
                     <form asp-action="Login" asp-controller="Authen" method="post" class="md-float-material form-material">
+                       
                         <div class="text-center">
                             <img src="/images/logo.png" alt="logo.png">
                         </div>
@@ -115,15 +116,16 @@
                                         <h3 class="text-center">Đăng nhập</h3>
                                     </div>
                                 </div>
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 <div class="form-group form-primary">
-                                    <input type="text" asp-for="UserName" name="username" class="form-control" required="">
-                                    <span class="form-bar"></span>
-                                    <label class="float-label">Tài khoản</label>
+                                    <input type="text" asp-for="UserName" name="username" class="form-control" placeholder="Tên đăng nhập...">
+                                    <span asp-validation-for="UserName" class="text-danger"></span>
+                                 
                                 </div>
                                 <div class="form-group form-primary">
-                                    <input type="password" asp-for="Password" name="password" class="form-control" required="">
-                                    <span class="form-bar"></span>
-                                    <label class="float-label">Mật khẩu</label>
+                                    <input type="password" asp-for="Password" name="password" class="form-control" placeholder="Mật khẩu...">
+                                    <span asp-validation-for="Password" class="text-danger"></span>
+                                  
                                 </div>
                                 <div class="row m-t-25 text-left">
                                     <div class="col-12">

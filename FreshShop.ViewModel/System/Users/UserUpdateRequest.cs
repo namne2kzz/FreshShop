@@ -1,17 +1,18 @@
-﻿using Microsoft.AspNetCore.Http;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace FreshShop.ViewModels.System.Users
 {
-    public class RegisterRequest
+    public class UserUpdateRequest
     {
-        [Display(Name="Tên")]
+        public Guid Id { get; set; }
+
+        [Display(Name = "Tên")]
         public string FirstName { get; set; }
 
-        [Display(Name ="Họ")]
+        [Display(Name = "Họ")]
         public string LastName { get; set; }
 
         //[Display(Name = "Hình ảnh")]
@@ -27,15 +28,6 @@ namespace FreshShop.ViewModels.System.Users
         [Display(Name = "Số điện thoại")]
         public string PhoneNumber { get; set; }
 
-        [Display(Name = "Tên đăng nhập")]
-        public string UserName { get; set; }
 
-        [Display(Name = "Mật khẩu")]
-        [DataType(DataType.Password)]
-        public string Password { get; set; }
-
-        [Display(Name = "Nhập lại mật khẩu")]
-        [DataType(DataType.Password)]
-        public string ConfirmPassword { get; set; }
     }
 }

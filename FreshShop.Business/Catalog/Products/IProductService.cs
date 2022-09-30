@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace FreshShop.Business.Catalog.Products
 {
-    public interface IManageProductService
+    public interface IProductService
     {
         Task<int> Create(ProductCreateRequest request);
 
@@ -39,5 +39,7 @@ namespace FreshShop.Business.Catalog.Products
         Task<List<ProductImageViewModel>> GetListImage(int productId);
 
         Task<ProductImageViewModel> GetImageById(int imageId);
+
+        public Task<PagedResult<ProductViewModel>> GetAllByCategoryId(GetPublicProductPagingRequest request, string languageId);
     }
 }

@@ -1,0 +1,130 @@
+﻿
+@using FreshShop.ViewModels.Common
+@using FreshShop.ViewModels.System.Users 
+@model PagedResult<UserViewModel>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section script{ 
+    <script src="~/jsControllers/userController.js"></script>
+}
+
+<!-- Page-header start -->
+<div class="page-header">
+    <div class="page-block">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <div class="page-header-title">
+                    <h5 class="m-b-10">Danh sách người dùng</h5>
+                    <p class="m-b-0">Lorem Ipsum is simply dummy text of the printing</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <ul class="breadcrumb-title">
+                    <li class="breadcrumb-item">
+                        <a href="/Home/Index"> <i class="fa fa-home"></i> </a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="/User/Index">User</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="/User/Index">Index</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Page-header end -->
+<div class="pcoded-inner-content">
+    <!-- Main-body start -->
+    <div class="main-body">
+        <div class="page-wrapper">
+            <!-- Page-body start -->
+            <div class="page-body">                            
+                <!-- Hover table card start -->
+                <div class="card">
+                    @if (TempData["AlertMessage"] != null)
+                    {
+                        <div id="AlertBox" class="alert @TempData["AlertType"] hide" role="alert">
+                            @TempData["AlertMessage"]
+                        </div>
+
+                    }
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <a class="btn btn-primary" href="/User/Create">Thêm mới</a>
+                            </div>
+                            <div class="col-md-6">
+                                <form class="form-group" asp-action="Index" asp-controller="User" method="get">
+                                    <div class="row">
+                                        <div class="col-md-9">
+                                            <input class="form-control" name="keyword" value="@ViewBag.Keyword" placeholder="Tìm kiếm..." />
+                                        </div>
+                                        <div style="display:inline-block">
+                                            <button type="submit" class="btn-sm btn-primary">Tìm kiếm</button>
+                                            <button type="button" class="btn-sm btn-primary" onclick="window.location.href='/User/Index'">Đặt lại</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="card-block table-border-style">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>UserName</th>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>Email</th>
+                                        <th>Phone Number</th>
+                                        <th>Image Path</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        foreach (var item in Model.Items)
+                                        {
+                                            <tr>
+                                                <th>@item.UserName</th>
+                                                <td>@item.FirstName</td>
+                                                <td>@item.LastName</td>
+                                                <td>@item.Email</td>
+                                                <td>@item.PhoneNumber</td>
+                                                <td>@item.ImagePath</td>
+                                                <td>
+                                                    @Html.ActionLink("Cập nhật", "Update", "User", new { id = item.Id }) |
+                                                    @Html.ActionLink("Chi tiết", "Detail", "User", new { id = item.Id }) |
+                                                    <a href="#" class="user-link-delete" data-id="@item.Id">Xóa</a> |
+                                                    @Html.ActionLink("Gán quyền", "RoleAssign", "User", new { id = item.Id }) 
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <!--Pagination-->
+                        @await Component.InvokeAsync("Pager", Model)
+                    </div>
+                </div>
+                <!-- Hover table card end -->             
+            </div>
+            <!-- Page-body end -->
+        </div>
+    </div>
+    <!-- Main-body end -->
+  
+</div>
+

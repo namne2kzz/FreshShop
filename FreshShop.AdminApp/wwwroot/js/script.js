@@ -1,5 +1,10 @@
 "use strict";
-$(document).ready(function() {
+$(document).ready(function () {
+    //Alert TempData
+    $('#AlertBox').removeClass('hide');
+
+    $('#AlertBox').delay(2000).slideUp(1000);
+
     // card js start
     $(".card-header-right .close-card").on('click', function() {
         var $this = $(this);
