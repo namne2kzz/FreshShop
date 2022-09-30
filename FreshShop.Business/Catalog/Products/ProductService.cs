@@ -17,12 +17,12 @@ using FreshShop.ViewModels.Catalog.ProductImage;
 
 namespace FreshShop.Business.Catalog.Products
 {
-    public class ManageProductService : IManageProductService
+    public class ProductService : IProductService
     {
         private readonly FreshShopDbContext _context;
         private readonly IStorageService _storageService;
 
-        public ManageProductService(FreshShopDbContext context, IStorageService storageService)
+        public ProductService(FreshShopDbContext context, IStorageService storageService)
         {
             _context = context;
             _storageService = storageService;
@@ -65,6 +65,8 @@ namespace FreshShop.Business.Catalog.Products
             var pageResult = new PagedResult<ProductViewModel>()
             {
                 TotalRecord = totalRow,
+                PageIndex=request.PageIndex,
+                PageSize=request.PageSize,
                 Items = data,
             };
 
@@ -290,6 +292,49 @@ namespace FreshShop.Business.Catalog.Products
             };
             return productImageViewModel;
         }
-       
+
+        public async Task<PagedResult<ProductViewModel>> GetAllByCategoryId(GetPublicProductPagingRequest request, string languageId)
+        {
+            var query = from a in _context.Products
+                        join b in _context.ProductTranslations on a.ID equals b.ProductId
+                        join c in _context.Categories on a.CategoryID equals c.ID
+                        where b.LanguageId == languageId
+                        select new { a, b };
+
+            if (request.CategoryId.HasValue && request.CategoryId.Value > 0)
+            {
+                query = query.Where(x => x.a.CategoryID == request.CategoryId);
+            }
+
+            int totalRow = await query.CountAsync();
+
+            var data = await query.Skip((request.PageIndex - 1) * request.PageSize).Take(request.PageSize)
+                .Select(x => new ProductViewModel()
+                {
+
+                    ID = x.a.ID,
+                    CategoryID = x.a.CategoryID,
+                    LanguageId = x.b.LanguageId,
+                    Name = x.b.Name,
+                    Unit = x.a.Unit,
+                    Price = x.a.Price,
+                    ViewCount = x.a.ViewCount,
+                    Description = x.b.Description,
+                    SeoAlias = x.b.SeoAlias,
+                    SeoTitle = x.b.SeoTitle,
+
+                }).ToListAsync();
+
+            var pageResult = new PagedResult<ProductViewModel>()
+            {
+                TotalRecord = totalRow,
+                PageIndex=request.PageIndex,
+                PageSize=request.PageSize,
+                Items = data,
+            };
+
+            return pageResult;
+        }
+
     }
 }

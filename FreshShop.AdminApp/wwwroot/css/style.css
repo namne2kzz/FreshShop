@@ -26,6 +26,15 @@ File: style.css
 /**  =====================
       Custom css start
 ==========================  **/
+
+/*----------------------------*\
+	Custom SweetAlert
+\*----------------------------*/
+/*.swal-wide {
+    font-size: 1.6rem !important;
+}*/
+
+
 body {
   background-color: #f3f3f3;
   font-size: 0.875em;
