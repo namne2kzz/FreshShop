@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace FreshShop.BackendApi.Controllers
 {
-
+    
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
@@ -175,8 +175,8 @@ namespace FreshShop.BackendApi.Controllers
 
             if (result.IsSuccessed) return Ok(result);
             return BadRequest(result);
-           
-          
+
+
         }
 
         [HttpPatch("{productId}/images/{imageId}")]
@@ -191,7 +191,7 @@ namespace FreshShop.BackendApi.Controllers
         }
 
         [HttpGet("{productId}/images")]
-        public async Task<IActionResult> GetListImage([FromQuery]int productId)
+        public async Task<IActionResult> GetListImage([FromQuery] int productId)
         {
             var images = await _productService.GetListImage(productId);
             if (images.Count > 0) return Ok(images);
@@ -202,3 +202,4 @@ namespace FreshShop.BackendApi.Controllers
 
     }
 }
+

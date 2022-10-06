@@ -35,16 +35,16 @@ namespace FreshShop.Business.Catalog.Products
                         join c in _context.Categories on a.CategoryID equals c.ID
                         join d in _context.CategoryTranslations on a.CategoryID equals d.CategoryId
                         join e in _context.Images on a.ID equals e.ProductID
-                        where e.IsDefault==true
-                        where b.LanguageId==request.LanguageId && d.LanguageId==request.LanguageId
+                        where e.IsDefault == true
+                        where b.LanguageId == request.LanguageId && d.LanguageId == request.LanguageId
                         select new { a, b, c, d, e };
             if (!string.IsNullOrEmpty(request.Keyword))
             {
                 query = query.Where(x => x.b.Name.Contains(request.Keyword));
             }
-            if (request.CategoryId !=null && request.CategoryId !=0)
+            if (request.CategoryId != null && request.CategoryId != 0)
             {
-                query = query.Where(x=>x.d.CategoryId==request.CategoryId);
+                query = query.Where(x => x.d.CategoryId == request.CategoryId);
             }
 
             int totalRow = await query.CountAsync();
@@ -55,7 +55,7 @@ namespace FreshShop.Business.Catalog.Products
 
                     ID = x.a.ID,
                     CategoryID = x.a.CategoryID,
-                    CategoryName=x.d.Name,
+                    CategoryName = x.d.Name,
                     LanguageId = x.b.LanguageId,
                     Name = x.b.Name,
                     Unit = x.a.Unit,
@@ -64,15 +64,15 @@ namespace FreshShop.Business.Catalog.Products
                     Description = x.b.Description,
                     SeoAlias = x.b.SeoAlias,
                     SeoTitle = x.b.SeoTitle,
-                    ImagePath=x.e.ImagePath
+                    ImagePath = x.e.ImagePath
 
                 }).ToListAsync();
 
             var pageResult = new PagedResult<ProductViewModel>()
             {
                 TotalRecord = totalRow,
-                PageIndex=request.PageIndex,
-                PageSize=request.PageSize,
+                PageIndex = request.PageIndex,
+                PageSize = request.PageSize,
                 Items = data,
             };
 
@@ -83,14 +83,14 @@ namespace FreshShop.Business.Catalog.Products
         {
             var imageList = _context.Images.Where(x => x.ProductID == productId).Select(x => new ProductImageViewModel()
             {
-                ProductId=x.ProductID,
-                ProductImageId=x.ID,
-                IsDefault=x.IsDefault,
-                CreatedDate=x.CreatedDate,
-                ImagePath=x.ImagePath,
+                ProductId = x.ProductID,
+                ProductImageId = x.ID,
+                IsDefault = x.IsDefault,
+                CreatedDate = x.CreatedDate,
+                ImagePath = x.ImagePath,
             }).ToListAsync();
             return await imageList;
-            
+
         }
 
         public async Task<int> AddImage(ProductImageCreateRequest request)
@@ -151,7 +151,7 @@ namespace FreshShop.Business.Catalog.Products
             _context.Products.Add(product);
             await _context.SaveChangesAsync();
             return product.ID;
-          
+
 
         }
 
@@ -168,7 +168,7 @@ namespace FreshShop.Business.Catalog.Products
 
             _context.Products.Remove(product);
 
-            var result=  await _context.SaveChangesAsync();
+            var result = await _context.SaveChangesAsync();
             if (result > 0) return new ApiSuccessResult<bool>();
             return new ApiErrorResult<bool>("Xóa sản phẩm không thành công");
         }
@@ -195,8 +195,8 @@ namespace FreshShop.Business.Catalog.Products
 
             //}
 
-            var result= await _context.SaveChangesAsync();
-            if(result>0) return new ApiSuccessResult<bool>();
+            var result = await _context.SaveChangesAsync();
+            if (result > 0) return new ApiSuccessResult<bool>();
             return new ApiErrorResult<bool>("Cập nhật không thành công");
         }
 
@@ -231,7 +231,7 @@ namespace FreshShop.Business.Catalog.Products
             if (product == null) throw new FreshShopException("Cannot find produt...");
             product.Price = newPrice;
             var result = await _context.SaveChangesAsync();
-            if(result>0) return new ApiSuccessResult<bool>();
+            if (result > 0) return new ApiSuccessResult<bool>();
             return new ApiErrorResult<bool>("Cập nhật không thành công");
 
         }
@@ -293,10 +293,10 @@ namespace FreshShop.Business.Catalog.Products
                 LanguageId = productTranslation.LanguageId,
             };
             return new ApiSuccessResult<ProductViewModel>(productViewModel);
-           
+
 
         }
-    
+
         public async Task<ProductImageViewModel> GetImageById(int imageId)
         {
             var image = await _context.Images.FindAsync(imageId);
@@ -305,11 +305,11 @@ namespace FreshShop.Business.Catalog.Products
 
             var productImageViewModel = new ProductImageViewModel()
             {
-                ProductId=image.ProductID,
-                ProductImageId=image.ID,
-                IsDefault=image.IsDefault,
-                CreatedDate=image.CreatedDate,
-                ImagePath=image.ImagePath,
+                ProductId = image.ProductID,
+                ProductImageId = image.ID,
+                IsDefault = image.IsDefault,
+                CreatedDate = image.CreatedDate,
+                ImagePath = image.ImagePath,
             };
             return productImageViewModel;
         }
@@ -349,8 +349,8 @@ namespace FreshShop.Business.Catalog.Products
             var pageResult = new PagedResult<ProductViewModel>()
             {
                 TotalRecord = totalRow,
-                PageIndex=request.PageIndex,
-                PageSize=request.PageSize,
+                PageIndex = request.PageIndex,
+                PageSize = request.PageSize,
                 Items = data,
             };
 
