@@ -19,8 +19,7 @@ namespace FreshShop.Data.Seedings
             modelBuilder.Entity<Category>().HasData(
                 new Category()
                 {
-                    ID = 1,
-                    Name="Loai 1",
+                    ID = 1,                   
                     IsShowOnHome = true,
                     ParentID = null,  
                     ImagePath="cate1.jpg"
@@ -29,8 +28,7 @@ namespace FreshShop.Data.Seedings
                  {
                      ID = 2,
                      IsShowOnHome = true,
-                     ParentID = null,                    
-                    Name="Loai 2",
+                     ParentID = null,                                       
                     ImagePath="cate2.jpg"
                  });
 

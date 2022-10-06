@@ -17,10 +17,7 @@ namespace FreshShop.ViewModels.Catalog.Product
 
         public string SeoAlias { get; set; }
 
-        public string LanguageId { set; get; }
-
-        public IFormFile ThumbnailImage { get; set; }
-
+        public string LanguageId { set; get; }      
 
     }
 }

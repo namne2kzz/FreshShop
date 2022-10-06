@@ -1,12 +1,10 @@
-﻿var user = {
+﻿const user = {
     init: function () {
         user.registerEvents();
         user.deleteUser();
     },
     registerEvents: function () {
-       
-       
-       
+                    
     },
     deleteUser: function () {
 
@@ -26,26 +24,26 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         $.ajax({
-                            url: 'localhost:5002/User/Delete',
+                            url: 'http://localhost:5002/User/Delete',
                             data: { id: $(this).data('id') },
                             type: 'POST',
                             dataType: 'json',
                             success: function (res) {
-                                if (res.status == true) {
+                                if (res.status == true) {                                   
+                                    window.location.href = "/User/Index";
                                     Swal.fire(
                                         'Thành công',
                                         'Xóa tài khoản thành công!',
                                         'success'
                                     );
-                                    window.location.href = "/User/Index"
                                 }
-                                else {
+                                else {                                 
+                                    window.location.href = "/User/Index";
                                     Swal.fire(
                                         'Thất bại',
                                         "Xóa tài khoản thất bại",
                                         'error'
                                     );
-                                    window.location.href = "/User/Index"
                                 }
 
                             }

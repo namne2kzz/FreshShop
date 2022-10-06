@@ -1,4 +1,5 @@
 ﻿using FreshShop.AdminApp.Models;
+using FreshShop.Utilities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -25,6 +26,13 @@ namespace FreshShop.AdminApp.Controllers
         {
             var session = HttpContext.Session.GetString("Token");
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult Language(NavigationViewModel navigationViewModel)
+        {
+            HttpContext.Session.SetString(SystemConstants.DefaultLanguageId, navigationViewModel.CurrentLanguageId);
+            return RedirectToAction("Index");
         }
 
         public IActionResult Privacy()

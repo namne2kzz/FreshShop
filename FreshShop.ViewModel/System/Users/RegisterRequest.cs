@@ -14,9 +14,9 @@ namespace FreshShop.ViewModels.System.Users
         [Display(Name ="Họ")]
         public string LastName { get; set; }
 
-        //[Display(Name = "Hình ảnh")]
-        //[DataType(DataType.Upload)]
-        //public IFormFile ThumbnailImage { get; set; }
+        [Display(Name = "Hình ảnh")]
+        [DataType(DataType.Upload)]
+        public IFormFile ThumbnailImage { get; set; }
 
         [Display(Name = "Ngày sinh")]
         [DataType(DataType.Date)]

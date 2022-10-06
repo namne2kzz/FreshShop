@@ -28,19 +28,23 @@ namespace FreshShop.Business.Catalog.Products
             _storageService = storageService;
         }
 
-        public async Task<PagedResult<ProductViewModel>> GetAllPaging(GetManageProductPagingRequest request)
+        public async Task<ApiResult<PagedResult<ProductViewModel>>> GetAllByLanguageId(GetManageProductPagingRequest request)
         {
             var query = from a in _context.Products
                         join b in _context.ProductTranslations on a.ID equals b.ProductId
                         join c in _context.Categories on a.CategoryID equals c.ID
-                        select new { a, b };
+                        join d in _context.CategoryTranslations on a.CategoryID equals d.CategoryId
+                        join e in _context.Images on a.ID equals e.ProductID
+                        where e.IsDefault==true
+                        where b.LanguageId==request.LanguageId && d.LanguageId==request.LanguageId
+                        select new { a, b, c, d, e };
             if (!string.IsNullOrEmpty(request.Keyword))
             {
                 query = query.Where(x => x.b.Name.Contains(request.Keyword));
             }
-            if (request.CategoryId.Count > 0)
+            if (request.CategoryId !=null && request.CategoryId !=0)
             {
-                query = query.Where(x => request.CategoryId.Contains(x.a.CategoryID));
+                query = query.Where(x=>x.d.CategoryId==request.CategoryId);
             }
 
             int totalRow = await query.CountAsync();
@@ -51,6 +55,7 @@ namespace FreshShop.Business.Catalog.Products
 
                     ID = x.a.ID,
                     CategoryID = x.a.CategoryID,
+                    CategoryName=x.d.Name,
                     LanguageId = x.b.LanguageId,
                     Name = x.b.Name,
                     Unit = x.a.Unit,
@@ -59,6 +64,7 @@ namespace FreshShop.Business.Catalog.Products
                     Description = x.b.Description,
                     SeoAlias = x.b.SeoAlias,
                     SeoTitle = x.b.SeoTitle,
+                    ImagePath=x.e.ImagePath
 
                 }).ToListAsync();
 
@@ -70,7 +76,7 @@ namespace FreshShop.Business.Catalog.Products
                 Items = data,
             };
 
-            return pageResult;
+            return new ApiSuccessResult<PagedResult<ProductViewModel>>(pageResult);
         }
 
         public async Task<List<ProductImageViewModel>> GetListImage(int productId)
@@ -87,11 +93,11 @@ namespace FreshShop.Business.Catalog.Products
             
         }
 
-        public async Task<int> AddImage(int productId, ProductImageCreateRequest request)
+        public async Task<int> AddImage(ProductImageCreateRequest request)
         {
 
             var img = new Image();
-            img.ProductID = productId;
+            img.ProductID = request.ProductId;
             img.IsDefault = false;
             img.CreatedDate = DateTime.Now;
             if (request.ThumbnailImage != null)
@@ -145,10 +151,11 @@ namespace FreshShop.Business.Catalog.Products
             _context.Products.Add(product);
             await _context.SaveChangesAsync();
             return product.ID;
+          
 
         }
 
-        public async Task<int> Delete(int productId)
+        public async Task<ApiResult<bool>> Delete(int productId)
         {
             var product = await _context.Products.FindAsync(productId);
             if (product == null) throw new FreshShopException("Cannot find product");
@@ -161,10 +168,12 @@ namespace FreshShop.Business.Catalog.Products
 
             _context.Products.Remove(product);
 
-            return await _context.SaveChangesAsync();
+            var result=  await _context.SaveChangesAsync();
+            if (result > 0) return new ApiSuccessResult<bool>();
+            return new ApiErrorResult<bool>("Xóa sản phẩm không thành công");
         }
 
-        public async Task<int> Update(ProductUpdateRequest request)
+        public async Task<ApiResult<bool>> Update(ProductUpdateRequest request)
         {
             var product = await _context.Products.FindAsync(request.Id);
             var productTranslation = await _context.ProductTranslations.FirstOrDefaultAsync(x => x.ProductId == request.Id && x.LanguageId == request.LanguageId);
@@ -175,18 +184,20 @@ namespace FreshShop.Business.Catalog.Products
             productTranslation.SeoAlias = request.SeoAlias;
             productTranslation.SeoTitle = request.SeoTitle;
 
-            if (request.ThumbnailImage != null)
-            {
-                var thumnailImage = await _context.Images.FirstOrDefaultAsync(x => x.IsDefault == true && x.ProductID == request.Id);
-                if (thumnailImage != null)
-                {
-                    thumnailImage.ImagePath = await this.SaveFile(request.ThumbnailImage);
-                    _context.Images.Update(thumnailImage);
-                }
+            //if (request.ThumbnailImage != null)
+            //{
+            //    var thumnailImage = await _context.Images.FirstOrDefaultAsync(x => x.IsDefault == true && x.ProductID == request.Id);
+            //    if (thumnailImage != null)
+            //    {
+            //        thumnailImage.ImagePath = await this.SaveFile(request.ThumbnailImage);
+            //        _context.Images.Update(thumnailImage);
+            //    }
 
-            }
+            //}
 
-            return await _context.SaveChangesAsync();
+            var result= await _context.SaveChangesAsync();
+            if(result>0) return new ApiSuccessResult<bool>();
+            return new ApiErrorResult<bool>("Cập nhật không thành công");
         }
 
         public async Task<int> ChangeImageStatus(int imageId)
@@ -200,22 +211,29 @@ namespace FreshShop.Business.Catalog.Products
             return await _context.SaveChangesAsync();
         }
 
-        public async Task<int> DeleteImage(int imageId)
+        public async Task<ApiResult<bool>> DeleteImage(int imageId)
         {
             var image = await _context.Images.FindAsync(imageId);
             if (image == null) throw new FreshShopException("Cannot find image");
+            if (image.IsDefault) return new ApiErrorResult<bool>("Xóa thất bại");
 
             _context.Images.Remove(image);
             await _storageService.DeleteFileAsync(image.ImagePath);
-            return await _context.SaveChangesAsync();
+            var result = await _context.SaveChangesAsync();
+            if (result > 0) return new ApiSuccessResult<bool>();
+            return new ApiErrorResult<bool>("Xóa thất bại");
+
         }
 
-        public async Task<bool> UpdatePrice(int productId, decimal newPrice)
+        public async Task<ApiResult<bool>> UpdatePrice(int productId, decimal newPrice)
         {
             var product = await _context.Products.FindAsync(productId);
             if (product == null) throw new FreshShopException("Cannot find produt...");
             product.Price = newPrice;
-            return await _context.SaveChangesAsync() > 0;
+            var result = await _context.SaveChangesAsync();
+            if(result>0) return new ApiSuccessResult<bool>();
+            return new ApiErrorResult<bool>("Cập nhật không thành công");
+
         }
 
         public async Task<bool> UpdateSold(int productId, int quantity)
@@ -249,9 +267,10 @@ namespace FreshShop.Business.Catalog.Products
             return fileName;
         }
 
-        public async Task<ProductViewModel> GetById(int productId, string languageId)
+        public async Task<ApiResult<ProductViewModel>> GetById(int productId, string languageId)
         {
             var product = await _context.Products.FindAsync(productId);
+            var categoryTranslation = await _context.CategoryTranslations.FirstOrDefaultAsync(x => x.LanguageId == languageId && x.CategoryId == product.CategoryID);
             var productTranslation = await _context.ProductTranslations.FirstOrDefaultAsync(x => x.LanguageId == languageId && x.ProductId == productId);
             var category = await _context.Categories.FindAsync(product.CategoryID);
 
@@ -259,7 +278,7 @@ namespace FreshShop.Business.Catalog.Products
             {
                 ID = product.ID,
                 CategoryID = category.ID,
-                CategoryName = category.Name,
+                CategoryName = categoryTranslation.Name,
                 Name = productTranslation != null ? productTranslation.Name : null,
                 Description = productTranslation != null ? productTranslation.Description : null,
                 SeoAlias = productTranslation != null ? productTranslation.SeoAlias : null,
@@ -273,7 +292,9 @@ namespace FreshShop.Business.Catalog.Products
                 CreatedDate = product.CreatedDate,
                 LanguageId = productTranslation.LanguageId,
             };
-            return productViewModel;
+            return new ApiSuccessResult<ProductViewModel>(productViewModel);
+           
+
         }
     
         public async Task<ProductImageViewModel> GetImageById(int imageId)

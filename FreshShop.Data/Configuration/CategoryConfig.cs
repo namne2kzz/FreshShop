@@ -15,9 +15,7 @@ namespace FreshShop.Data.Configuration
 
             builder.HasKey(x => x.ID);
 
-            builder.Property(x => x.ID).UseIdentityColumn();
-           
-            builder.Property(x => x.Name).IsRequired().HasMaxLength(255);
+            builder.Property(x => x.ID).UseIdentityColumn();                     
 
             builder.Property(x => x.ImagePath).IsRequired().HasMaxLength(255).IsUnicode(false);
 

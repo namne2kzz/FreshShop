@@ -36,21 +36,7 @@ namespace FreshShop.BackendApi.Controllers
             return Ok(resultToken);
         }
 
-        [HttpPost("register")]
-        [AllowAnonymous]
-        public async Task<IActionResult> Register([FromBody] RegisterRequest request)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            var result = await _userService.Register(request);
-            if (!result.IsSuccessed)
-            {
-                return BadRequest(result.Message);
-            }
-            return Ok();
-        }
+       
 
 
     }

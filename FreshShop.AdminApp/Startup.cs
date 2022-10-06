@@ -41,14 +41,7 @@ namespace FreshShop.AdminApp
             services.AddSession(options =>
             {
                 options.IdleTimeout = TimeSpan.FromMinutes(30);
-            });
-
-            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
-            {
-                builder.WithOrigins("http://localhost:5002")
-                       .AllowAnyMethod()
-                       .AllowAnyHeader();
-            }));
+            });         
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
@@ -56,6 +49,9 @@ namespace FreshShop.AdminApp
             //Declear DI
             services.AddTransient<IUserApiClient, UserApiClient>();
             services.AddTransient<IRoleApiClient, RoleApiClient>();
+            services.AddTransient<ILanguageApiClient, LanguageApiClient>();
+            services.AddTransient<IProductApiClient, ProductApiClient>();
+            services.AddTransient<ICategoryApiClient, CategoryApiClient>();
 
             IMvcBuilder builder = services.AddRazorPages();
             
@@ -65,7 +61,8 @@ namespace FreshShop.AdminApp
             if (environment == Environments.Development)
             {
                 builder.AddRazorRuntimeCompilation();
-            }
+               
+            }          
 #endif
         }
 
@@ -74,7 +71,7 @@ namespace FreshShop.AdminApp
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                app.UseDeveloperExceptionPage();              
             }
             else
             {
@@ -87,9 +84,7 @@ namespace FreshShop.AdminApp
 
             app.UseAuthentication();
 
-            app.UseRouting();
-
-            app.UseCors("MyPolicy");
+            app.UseRouting();          
 
             app.UseAuthorization();
 

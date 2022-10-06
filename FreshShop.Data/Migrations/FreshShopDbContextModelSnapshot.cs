@@ -88,7 +88,7 @@ namespace FreshShop.Data.Migrations
                         new
                         {
                             Id = new Guid("8d04dce2-969a-435d-bba4-df3f325983dc"),
-                            ConcurrencyStamp = "9b880e57-2f62-42da-80fa-94d545e2eb0c",
+                            ConcurrencyStamp = "83c583f9-c8ff-46da-817d-af0b6b82f2df",
                             Description = "Administrator role",
                             Name = "admin",
                             NormalizedName = "admin"
@@ -171,7 +171,7 @@ namespace FreshShop.Data.Migrations
                         {
                             Id = new Guid("69bd714f-9576-45ba-b5b7-f00649be00de"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "68964811-fffa-45ce-ba99-eeacc0f690a6",
+                            ConcurrencyStamp = "9bfe85ae-20ae-4617-bca2-70dda434b4d8",
                             Dob = new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "tedu.international@gmail.com",
                             EmailConfirmed = true,
@@ -181,7 +181,7 @@ namespace FreshShop.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "tedu.international@gmail.com",
                             NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAEAACcQAAAAEL7t9ZZD8iWheT0Gy46vVVGrclGX3FKyAi6p2Zl6qNr9XTRq5oK7dAL78216dmFZ7g==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEA1rMNIRJjZxXITj4WU0a9ESzlCLy5ETMx16vlTpnPlcro5mh86EAs9Eh3awj8h8zA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -276,11 +276,6 @@ namespace FreshShop.Data.Migrations
                     b.Property<bool>("IsShowOnHome")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(255)")
-                        .HasMaxLength(255);
-
                     b.Property<int?>("ParentID")
                         .HasColumnType("int");
 
@@ -293,15 +288,13 @@ namespace FreshShop.Data.Migrations
                         {
                             ID = 1,
                             ImagePath = "cate1.jpg",
-                            IsShowOnHome = true,
-                            Name = "Loai 1"
+                            IsShowOnHome = true
                         },
                         new
                         {
                             ID = 2,
                             ImagePath = "cate2.jpg",
-                            IsShowOnHome = true,
-                            Name = "Loai 2"
+                            IsShowOnHome = true
                         });
                 });
 
@@ -775,7 +768,7 @@ namespace FreshShop.Data.Migrations
                         {
                             ID = 1,
                             CategoryID = 1,
-                            CreatedDate = new DateTime(2022, 9, 14, 14, 13, 54, 251, DateTimeKind.Local).AddTicks(1173),
+                            CreatedDate = new DateTime(2022, 10, 6, 14, 52, 34, 801, DateTimeKind.Local).AddTicks(6581),
                             OriginalPrice = 8000m,
                             Price = 10000m,
                             Sold = 0,
