@@ -14,11 +14,11 @@ namespace FreshShop.Business.Catalog.Products
     {
         Task<int> Create(ProductCreateRequest request);
 
-        Task<int> Update(ProductUpdateRequest request);
+        Task<ApiResult<bool>> Update(ProductUpdateRequest request);
 
-        Task<int> Delete(int productId);
+        Task<ApiResult<bool>> Delete(int productId);
 
-        Task<bool> UpdatePrice(int productId, decimal newPrice);
+        Task<ApiResult<bool>> UpdatePrice(int productId, decimal newPrice);
 
         Task<bool> UpdateViewCount(int productId);
 
@@ -26,15 +26,15 @@ namespace FreshShop.Business.Catalog.Products
 
         Task<bool> UpdateStock(int productId, int quantity);
 
-        Task<ProductViewModel> GetById(int productId, string languageId);
+        Task<ApiResult<ProductViewModel>> GetById(int productId, string languageId);
 
-        Task<PagedResult<ProductViewModel>> GetAllPaging(GetManageProductPagingRequest request);
+        Task<ApiResult<PagedResult<ProductViewModel>>> GetAllByLanguageId(GetManageProductPagingRequest request);
 
-        Task<int> AddImage(int productId, ProductImageCreateRequest request);
+        Task<int> AddImage(ProductImageCreateRequest request);
 
         Task<int> ChangeImageStatus(int imageId);
 
-        Task<int> DeleteImage(int imageId);
+        Task<ApiResult<bool>> DeleteImage(int imageId);
 
         Task<List<ProductImageViewModel>> GetListImage(int productId);
 

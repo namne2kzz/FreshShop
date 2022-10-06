@@ -12,41 +12,50 @@ using System.Threading.Tasks;
 
 namespace FreshShop.BackendApi.Controllers
 {
-    
+
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
     public class ProductsController : ControllerBase
     {
         private readonly IProductService _productService;
-       
+
 
         public ProductsController(IProductService productService)
         {
             _productService = productService;
-           
-        }     
+
+        }
 
         [HttpGet("{languageId}")]
-        public async Task<IActionResult> GetAllPaging([FromQuery] GetPublicProductPagingRequest request, string languageId)
+        public async Task<IActionResult> GetAllByLanguage([FromQuery] GetManageProductPagingRequest request)
+        {
+            var products = await _productService.GetAllByLanguageId(request);
+            return Ok(products);
+        }
+
+
+        [HttpGet("{languageId}/{categoryId}")]
+        public async Task<IActionResult> GetAllByCategory([FromQuery] GetPublicProductPagingRequest request, string languageId)
         {
             var products = await _productService.GetAllByCategoryId(request, languageId);
             return Ok(products);
         }
 
-        [HttpGet("{productId}/{languageId})")]
-        public async Task<IActionResult> GetById(int productId, string languageId)
+        [HttpGet("detail")]
+        public async Task<IActionResult> GetById([FromQuery] int productId, string languageId)
         {
             var product = await _productService.GetById(productId, languageId);
             if (product == null)
             {
-                return BadRequest("Cannot fid product");
+                return BadRequest("Cannot find product");
             }
             return Ok(product);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromForm]ProductCreateRequest request)
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> Create([FromForm] ProductCreateRequest request)
         {
             if (!ModelState.IsValid)
             {
@@ -59,45 +68,39 @@ namespace FreshShop.BackendApi.Controllers
             }
             var product = await _productService.GetById(productId, request.LanguageId);
 
-            return CreatedAtAction(nameof(GetById),new { id=productId }, product);
+            return CreatedAtAction(nameof(GetById), new { id = productId }, product.ResultObj);
         }
 
-        [HttpPut]
-        public async Task<IActionResult> Update([FromForm] ProductUpdateRequest request)
+        [HttpPut("{productId}")]
+        public async Task<IActionResult> Update(int productId, [FromBody] ProductUpdateRequest request)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
-            var affectedRow = await _productService.Update(request);
-            if (affectedRow == 0)
-            {
-                return BadRequest();
-            }
-            return Ok();
+            var result = await _productService.Update(request);
+            if (result.IsSuccessed) return Ok(result);
+            return BadRequest(result);
         }
 
         [HttpDelete("{productId}")]
         public async Task<IActionResult> Delete(int productId)
         {
-            var affectedRow = await _productService.Delete(productId);
-            if (affectedRow == 0)
-            {
-                return BadRequest();
-            }
-            return Ok();
+            var result = await _productService.Delete(productId);
+            if (result.IsSuccessed) return Ok(result);
+            return BadRequest(result);
         }
 
         [HttpPatch("{productId}/{newPrice}")]
         public async Task<IActionResult> UpdatePrice(int productId, decimal newPrice)
         {
-            
-            var affectedRow = await _productService.UpdatePrice(productId,newPrice);
-            if (!affectedRow)
+
+            var result = await _productService.UpdatePrice(productId, newPrice);
+            if (result.IsSuccessed)
             {
-                return BadRequest();
+                return Ok(result);
             }
-            return Ok();
+            return BadRequest(result);
         }
 
         [HttpPatch("stock/{productId}/{quantity}")]
@@ -148,13 +151,14 @@ namespace FreshShop.BackendApi.Controllers
         }
 
         [HttpPost("{productId}/images")]
-        public async Task<IActionResult> AddImage([FromForm]ProductImageCreateRequest request, int productId)
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> AddImage([FromForm] ProductImageCreateRequest request)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
-            var imageId = await _productService.AddImage(productId, request);
+            var imageId = await _productService.AddImage(request);
             if (imageId == 0)
             {
                 return BadRequest();
@@ -167,12 +171,12 @@ namespace FreshShop.BackendApi.Controllers
         [HttpDelete("{productId}/images/{imageId}")]
         public async Task<IActionResult> DeleteImage(int imageId)
         {
-            var affectedRow = await _productService.DeleteImage(imageId);
-            if (affectedRow == 0)
-            {
-                return BadRequest();
-            }
-            return Ok();
+            var result = await _productService.DeleteImage(imageId);
+
+            if (result.IsSuccessed) return Ok(result);
+            return BadRequest(result);
+           
+          
         }
 
         [HttpPatch("{productId}/images/{imageId}")]
@@ -187,13 +191,14 @@ namespace FreshShop.BackendApi.Controllers
         }
 
         [HttpGet("{productId}/images")]
-        public async Task<IActionResult> GetListImage(int productId)
+        public async Task<IActionResult> GetListImage([FromQuery]int productId)
         {
             var images = await _productService.GetListImage(productId);
-            return Ok(images);
+            if (images.Count > 0) return Ok(images);
+            return BadRequest(images);
         }
 
-       
+
 
     }
 }

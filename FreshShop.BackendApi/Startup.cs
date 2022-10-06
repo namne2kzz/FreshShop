@@ -1,7 +1,9 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using FreshShop.Business.Catalog.Categories;
 using FreshShop.Business.Catalog.Products;
 using FreshShop.Business.Common;
+using FreshShop.Business.System.Languages;
 using FreshShop.Business.System.Roles;
 using FreshShop.Business.System.Users;
 using FreshShop.Data.EF;
@@ -45,21 +47,21 @@ namespace FreshShop.BackendApi
                 .AddEntityFrameworkStores<FreshShopDbContext>()
                 .AddDefaultTokenProviders();
 
-            //Declear DI
-            services.AddTransient<IStorageService, FileStorageService>();
-          
-            services.AddTransient<IProductService, ProductService>();
-
+            //Declear DI                   
             services.AddTransient<UserManager<AppUser>, UserManager<AppUser>>();
             services.AddTransient<SignInManager<AppUser>, SignInManager<AppUser>>();
             services.AddTransient<RoleManager<AppRole>, RoleManager<AppRole>>();
+            
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IRoleService, RoleService>();
+            services.AddTransient<IStorageService, FileStorageService>();
+            services.AddTransient<IProductService, ProductService>();           
+            services.AddTransient<ILanguageService, LanguageService>();
+            services.AddTransient<ICategoryService, CategoryService>();
 
             services.AddTransient<IValidator<LoginRequest>, LoginRequestValidator>();
             services.AddTransient<IValidator<RegisterRequest>, RegisterRequestValidator>();
 
-            
 
             services.AddControllers()
                 .AddFluentValidation(fv=>fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>());

@@ -36,5 +36,7 @@ namespace FreshShop.ViewModels.Catalog.Product
 
         public string LanguageId { set; get; }
 
+        public string ImagePath { get; set; }
+
     }
 }

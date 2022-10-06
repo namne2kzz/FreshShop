@@ -1,4 +1,5 @@
 ﻿using FreshShop.AdminApp.Services;
+using FreshShop.Utilities;
 using FreshShop.ViewModels.System.Users;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -62,7 +63,8 @@ namespace FreshShop.AdminApp.Controllers
                 IsPersistent = true
             };
 
-            HttpContext.Session.SetString("Token", token.ResultObj);
+            HttpContext.Session.SetString(SystemConstants.DefaultLanguageId, _configuration["DefaultLanguageId"]);
+            HttpContext.Session.SetString(SystemConstants.Token, token.ResultObj);
 
             await HttpContext.SignInAsync(
                 CookieAuthenticationDefaults.AuthenticationScheme,

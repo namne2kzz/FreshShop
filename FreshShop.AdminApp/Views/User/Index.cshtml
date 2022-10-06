@@ -86,7 +86,7 @@
                                         <th>Last Name</th>
                                         <th>Email</th>
                                         <th>Phone Number</th>
-                                        <th>Image Path</th>
+                                        <th>Image</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -100,7 +100,9 @@
                                                 <td>@item.LastName</td>
                                                 <td>@item.Email</td>
                                                 <td>@item.PhoneNumber</td>
-                                                <td>@item.ImagePath</td>
+                                                <td>
+                                                    <img class="img-radius img-40 align-top m-r-15" src="http://localhost:5001/user-content/@item.ImagePath"/>
+                                                </td>
                                                 <td>
                                                     @Html.ActionLink("Cập nhật", "Update", "User", new { id = item.Id }) |
                                                     @Html.ActionLink("Chi tiết", "Detail", "User", new { id = item.Id }) |

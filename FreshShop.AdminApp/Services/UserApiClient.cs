@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers; 
@@ -55,7 +56,7 @@ namespace FreshShop.AdminApp.Services
             {
                 return JsonConvert.DeserializeObject<ApiSuccessResult<bool>>(body);
             }
-            return JsonConvert.DeserializeObject<ApiErrorResult<bool>>(body);
+            return JsonConvert.DeserializeObject<ApiErrorResult<bool>>("Thao tác thất bại");
 
         }
 
@@ -72,7 +73,7 @@ namespace FreshShop.AdminApp.Services
             {
                 return JsonConvert.DeserializeObject<ApiSuccessResult<UserViewModel>>(body);
             }
-                return JsonConvert.DeserializeObject<ApiErrorResult<UserViewModel>>(body);
+                return JsonConvert.DeserializeObject<ApiErrorResult<UserViewModel>>("Không tìm thấy tài khoản");
 
         }
 
@@ -85,27 +86,47 @@ namespace FreshShop.AdminApp.Services
             var response = await client.GetAsync($"/api/users/paging?pageIndex=" +
                 $"{request.PageIndex}&pageSize={request.PageSize}&keyword={request.Keyword}");
             var body = await response.Content.ReadAsStringAsync();
-            var users = JsonConvert.DeserializeObject<ApiSuccessResult<PagedResult<UserViewModel>>>(body);
-            return users;
+            if(response.IsSuccessStatusCode) return JsonConvert.DeserializeObject<ApiSuccessResult<PagedResult<UserViewModel>>>(body);
+            return JsonConvert.DeserializeObject<ApiErrorResult<PagedResult<UserViewModel>>>("Thao tác thất bại");
         }
 
         public async Task<ApiResult<bool>> Register(RegisterRequest request)
         {
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);         
+          
+            var requestContent = new MultipartFormDataContent();
 
-            var json = JsonConvert.SerializeObject(request);
-            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+            if (request.ThumbnailImage != null)
+            {
+                byte[] data;
+                using (var br = new BinaryReader(request.ThumbnailImage.OpenReadStream()))
+                {
+                    data = br.ReadBytes((int)request.ThumbnailImage.OpenReadStream().Length);
+                }
+                ByteArrayContent bytes = new ByteArrayContent(data);
+                requestContent.Add(bytes, "thumbnailImage", request.ThumbnailImage.FileName);
+            }
 
-            var response = await client.PostAsync("/api/authens/register", httpContent);
+            requestContent.Add(new StringContent(request.FirstName.ToString()), "firstName");
+            requestContent.Add(new StringContent(request.LastName.ToString()), "lastName");
+            requestContent.Add(new StringContent(request.Dob.ToString()), "dob");
+            requestContent.Add(new StringContent(request.Email.ToString()), "email");
+            requestContent.Add(new StringContent(request.PhoneNumber.ToString()), "phoneNumber");
+            requestContent.Add(new StringContent(request.UserName.ToString()), "userName");
+            requestContent.Add(new StringContent(request.Password.ToString()), "password");
+            requestContent.Add(new StringContent(request.ConfirmPassword.ToString()), "confirmPassowrd");          
+
+            var response = await client.PostAsync("/api/users/register", requestContent);
             var result = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode)
             {
                 return JsonConvert.DeserializeObject<ApiSuccessResult<bool>>(result);
             }
-            return JsonConvert.DeserializeObject<ApiErrorResult<bool>>(result);
-
+            return JsonConvert.DeserializeObject<ApiErrorResult<bool>>("Thêm tài khoản thất bại");
         }
+
+    
 
         public async Task<ApiResult<bool>> RoleAssign(Guid id, RoleAssignRequest request)
         {
@@ -122,7 +143,7 @@ namespace FreshShop.AdminApp.Services
             {
                 return JsonConvert.DeserializeObject<ApiSuccessResult<bool>>(result);
             }
-            return JsonConvert.DeserializeObject<ApiErrorResult<bool>>(result);
+            return JsonConvert.DeserializeObject<ApiErrorResult<bool>>("Gán quyền thất bại");
         }
 
         public async Task<ApiResult<bool>> Update(Guid id, UserUpdateRequest request)
@@ -140,7 +161,7 @@ namespace FreshShop.AdminApp.Services
             {
                 return JsonConvert.DeserializeObject<ApiSuccessResult<bool>>(result);
             }
-            return JsonConvert.DeserializeObject<ApiErrorResult<bool>>(result);
+            return JsonConvert.DeserializeObject<ApiErrorResult<bool>>("Cập nhật thất bại");
         }
     }
 }

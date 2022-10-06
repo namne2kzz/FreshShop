@@ -54,7 +54,9 @@ namespace FreshShop.Business.System.Users
                 new Claim(ClaimTypes.Email,user.Email),
                 new Claim(ClaimTypes.GivenName,user.Firstname),
                 new Claim(ClaimTypes.Role,string.Join(";",roles)),
-                new Claim(ClaimTypes.Name,request.UserName)
+                new Claim(ClaimTypes.Name,request.UserName),
+                new Claim(ClaimTypes.Uri,user.ImagePath)
+                
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]));
@@ -158,11 +160,13 @@ namespace FreshShop.Business.System.Users
                 PhoneNumber = request.PhoneNumber,
                 Lastname = request.LastName,
                 Firstname = request.FirstName,
-                UserName=request.UserName,  
-                ImagePath="null.jpg"
-                                                    
+                UserName=request.UserName,                                                                              
 
         };
+            if(request.ThumbnailImage != null)
+            {
+                user.ImagePath = await this.SaveFile(request.ThumbnailImage);
+            }
             var result = await _userManager.CreateAsync(user, request.Password);
             if (!result.Succeeded) return new ApiSuccessResult<bool>();
 
