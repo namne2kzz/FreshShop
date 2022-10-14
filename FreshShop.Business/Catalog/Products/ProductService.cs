@@ -40,7 +40,7 @@ namespace FreshShop.Business.Catalog.Products
                         select new { a, b, c, d, e };
             if (!string.IsNullOrEmpty(request.Keyword))
             {
-                query = query.Where(x => x.b.Name.Contains(request.Keyword));
+                query = query.Where(x => x.b.Name.Contains(request.Keyword) || x.b.Description.Contains(request.Keyword) || x.d.Name.Contains(request.Keyword));
             }
             if (request.CategoryId != null && request.CategoryId != 0)
             {
@@ -60,6 +60,9 @@ namespace FreshShop.Business.Catalog.Products
                     Name = x.b.Name,
                     Unit = x.a.Unit,
                     Price = x.a.Price,
+                    OriginalPrice=x.a.OriginalPrice,
+                    Stock=x.a.Stock,
+                    Sold=x.a.Sold,
                     ViewCount = x.a.ViewCount,
                     Description = x.b.Description,
                     SeoAlias = x.b.SeoAlias,
@@ -158,7 +161,13 @@ namespace FreshShop.Business.Catalog.Products
         public async Task<ApiResult<bool>> Delete(int productId)
         {
             var product = await _context.Products.FindAsync(productId);
-            if (product == null) throw new FreshShopException("Cannot find product");
+            if (product == null) return new ApiErrorResult<bool>("Không tìm thấy sản phẩm");
+
+            var productTranslation = await _context.ProductTranslations.Where(x => x.ProductId == productId).ToListAsync();
+            foreach(var item in productTranslation)
+            {
+                _context.ProductTranslations.Remove(item);
+            }
 
             var thumnailImage = _context.Images.Where(x => x.ProductID == productId);
             foreach (var item in thumnailImage)
@@ -179,10 +188,12 @@ namespace FreshShop.Business.Catalog.Products
             var productTranslation = await _context.ProductTranslations.FirstOrDefaultAsync(x => x.ProductId == request.Id && x.LanguageId == request.LanguageId);
             if (product == null) throw new FreshShopException("Cannot find produt...");
 
+            product.CategoryID = request.CategoryId;
             productTranslation.Name = request.Name;
             productTranslation.Description = request.Description;
             productTranslation.SeoAlias = request.SeoAlias;
             productTranslation.SeoTitle = request.SeoTitle;
+
 
             //if (request.ThumbnailImage != null)
             //{

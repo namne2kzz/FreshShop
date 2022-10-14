@@ -9,27 +9,17 @@ namespace FreshShop.Data.Entities
   
     public partial class Address
     {
-        public int ID { get; set; }
-
-        public int CustomerID { get; set; }
+        public int ID { get; set; }      
 
         public Guid UserId { get; set; }
-
-        [Required]
-        [StringLength(255)]
-        public string Province { get; set; }
-
-        [Required]
-        [StringLength(255)]
-        public string District { get; set; }
-
-        [Column(TypeName = "text")]
-        [Required]
+             
+        public int ProvinceId { get; set; }
+               
+        public int DistrictId { get; set; }
+       
         public string AddressDetail { get; set; }
 
-        public bool IsDefault { get; set; }
-
-        public virtual Customer Customer { get; set; }
+        public bool IsDefault { get; set; }      
 
         public virtual AppUser AppUser { get; set; }
     }

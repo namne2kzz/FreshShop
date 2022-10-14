@@ -15,9 +15,7 @@ namespace FreshShop.Data.Entities
             OrderDetails = new HashSet<OrderDetail>();
         }
 
-        public int ID { get; set; }
-
-        public int CustomerID { get; set; }
+        public int ID { get; set; }        
 
         public Guid UserId { get; set; }
 
@@ -46,9 +44,7 @@ namespace FreshShop.Data.Entities
 
         public int Status { get; set; }
 
-        public virtual Coupon Coupon { get; set; }
-
-        public virtual Customer Customer { get; set; }
+        public virtual Coupon Coupon { get; set; }      
 
         public virtual AppUser AppUser { get; set; }
 

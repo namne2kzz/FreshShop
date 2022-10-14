@@ -55,8 +55,8 @@ namespace FreshShop.Business.System.Users
                 new Claim(ClaimTypes.GivenName,user.Firstname),
                 new Claim(ClaimTypes.Role,string.Join(";",roles)),
                 new Claim(ClaimTypes.Name,request.UserName),
-                new Claim(ClaimTypes.Uri,user.ImagePath)
-                
+                new Claim(ClaimTypes.Uri,user.ImagePath),
+                new Claim(ClaimTypes.NameIdentifier,user.Id.ToString())
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]));

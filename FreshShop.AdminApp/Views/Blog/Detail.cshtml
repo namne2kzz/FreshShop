@@ -1,0 +1,164 @@
+﻿@model FreshShop.ViewModels.Catalog.Blog.BlogViewModel
+@{
+    ViewData["Title"] = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Page-header start -->
+<div class="page-header">
+    <div class="page-block">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <div class="page-header-title">
+                    <h5 class="m-b-10">Chi tiết thông tin bài viết</h5>
+                    <p class="m-b-0">Lorem Ipsum is simply dummy text of the printing</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <ul class="breadcrumb-title">
+                    <li class="breadcrumb-item">
+                        <a href="/"> <i class="fa fa-home"></i> </a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="/Blog/Index">Bài viết</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        @Html.ActionLink("Chi tiết", "Detail", "Blog", new { id = Model.Id })
+
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Page-header end -->
+<div class="pcoded-inner-content">
+    <div class="main-body">
+        <div class="page-wrapper">
+            <!-- Page body start -->
+            <div class="page-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <!-- Material tab card start -->
+                        <div class="card">
+
+                            <div class="card-block">
+                                <!-- Row start -->
+                                <div class="row m-b-30">
+                                    <div class="col-lg-12 col-xl-12">
+
+                                        <!-- Nav tabs -->
+                                        <ul class="nav nav-tabs md-tabs" role="tablist">
+
+                                            <li class="nav-item">
+                                                <a class="nav-link active" data-toggle="tab" href="#profile3" role="tab">Thông tin chi tiêt</a>
+                                                <div class="slide"></div>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" data-toggle="tab" href="#image3" role="tab">Danh sách bình luận</a>
+                                                <div class="slide"></div>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" data-toggle="tab" href="#settings3" role="tab">Gán trạng thái</a>
+                                                <div class="slide"></div>
+                                            </li>
+                                        </ul>
+                                        <!-- Tab panes -->
+                                        <div class="tab-content card-block">
+                                            <div class="tab-pane active" id="profile3" role="tabpanel">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <table style="width:100%" class="table table-hover table-responsive">
+
+                                                            <tbody>
+                                                                <tr>
+                                                                    <th width="20%">
+                                                                        @Html.DisplayNameFor(model => model.Id)
+                                                                    </th>
+                                                                    <td width="30%">
+                                                                        @Html.DisplayFor(model => model.Id)
+                                                                    </td>
+
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>
+                                                                        @Html.DisplayNameFor(model => model.Title)
+                                                                    </th>
+                                                                    <td>
+                                                                        @Html.DisplayFor(model => model.Title)
+                                                                    </td>
+
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>
+                                                                        @Html.DisplayNameFor(model => model.Content)
+                                                                    </th>
+                                                                    <td>
+                                                                        @Html.DisplayFor(model => model.Content)
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>
+                                                                        @Html.DisplayNameFor(model => model.CreatedDate)
+                                                                    </th>
+                                                                    <td>
+                                                                        @Html.DisplayFor(model => model.CreatedDate)
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>
+                                                                        @Html.DisplayNameFor(model => model.Status)
+                                                                    </th>
+                                                                    <td>
+                                                                        @Html.DisplayFor(model => model.Status)
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <img style="height:80%;width:80%" src="http://localhost:5001/user-content/@Model.ImagePath" alt="@Model.Title" />
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                            <div class="tab-pane" id="image3" role="tabpanel">
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Mã bình luận</th>
+                                                                <th>Tên tài khoản</th>
+                                                                <th>Nội dung</th>                                                               
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>                                                          
+
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+
+                                            </div>
+                                            <div class="tab-pane" id="settings3" role="tabpanel">
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <!-- Row end -->
+                                <a class="btn btn-primary" asp-action="Index">Quay về</a>
+                            </div>
+                        </div>
+                        <!-- Material tab card end -->
+                    </div>
+                </div>
+
+            </div>
+            <!-- Page body end -->
+        </div>
+    </div>
+</div>
+

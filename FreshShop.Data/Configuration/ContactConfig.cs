@@ -15,9 +15,7 @@ namespace FreshShop.Data.Configuration
 
             builder.HasKey(x => x.ID);
 
-            builder.Property(x => x.ID).UseIdentityColumn();
-
-            builder.HasOne(x => x.Customer).WithMany(x => x.Contacts).HasForeignKey(x => x.CustomerID);         
+            builder.Property(x => x.ID).UseIdentityColumn();                   
 
             builder.Property(x => x.Message).IsRequired();
 

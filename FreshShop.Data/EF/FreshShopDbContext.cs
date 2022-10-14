@@ -22,9 +22,7 @@ namespace FreshShop.Data.EF
         public virtual DbSet<Cart> Carts { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Contact> Contacts { get; set; }
-        public virtual DbSet<Coupon> Coupons { get; set; }
-        public virtual DbSet<Customer> Customers { get; set; }
-        public virtual DbSet<Employee> Employees { get; set; }
+        public virtual DbSet<Coupon> Coupons { get; set; }      
         public virtual DbSet<Image> Images { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<OrderDetail> OrderDetails { get; set; }
@@ -45,9 +43,7 @@ namespace FreshShop.Data.EF
             modelBuilder.ApplyConfiguration(new CartConfig());
             modelBuilder.ApplyConfiguration(new CategoryConfig());
             modelBuilder.ApplyConfiguration(new CouponConfig());
-            modelBuilder.ApplyConfiguration(new ContactConfig());
-            modelBuilder.ApplyConfiguration(new CustomerConfig());
-            modelBuilder.ApplyConfiguration(new EmployeeConfig());
+            modelBuilder.ApplyConfiguration(new ContactConfig());           
             modelBuilder.ApplyConfiguration(new ImageConfig());
             modelBuilder.ApplyConfiguration(new OrderConfig());
             modelBuilder.ApplyConfiguration(new OrderDetailConfig());

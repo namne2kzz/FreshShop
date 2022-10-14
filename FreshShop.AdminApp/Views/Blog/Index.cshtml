@@ -1,0 +1,132 @@
+﻿@using FreshShop.ViewModels.Common
+@model PagedResult<FreshShop.ViewModels.Catalog.Blog.BlogViewModel>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section script{
+    <script src="~/jsControllers/blogController.js"></script>
+
+}
+
+<!-- Page-header start -->
+<div class="page-header">
+    <div class="page-block">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <div class="page-header-title">
+                    <h5 class="m-b-10">Danh sách bài viết</h5>
+                    <p class="m-b-0">Lorem Ipsum is simply dummy text of the printing</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <ul class="breadcrumb-title">
+                    <li class="breadcrumb-item">
+                        <a href="/Home/Index"> <i class="fa fa-home"></i> </a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="/Blog/Index">Bài viết</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="/Blog/Index">Danh sách</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Page-header end -->
+<div class="pcoded-inner-content">
+    <!-- Main-body start -->
+    <div class="main-body">
+        <div class="page-wrapper">
+            <!-- Page-body start -->
+            <div class="page-body">
+                <!-- Hover table card start -->
+                <div class="card">
+                    @if (TempData["AlertMessage"] != null)
+                    {
+                        <div id="AlertBox" class="alert @TempData["AlertType"] hide" role="alert">
+                            @TempData["AlertMessage"]
+                        </div>
+
+                    }
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <a class="btn btn-primary" href="/Blog/Create">Thêm mới</a>
+                            </div>
+                            <div class="col-md-6">
+                                <form class="form-group" asp-action="Index" asp-controller="Blog" method="get">
+                                    <div class="row">
+                                        <div class="col-md-9">
+                                            <input class="form-control" name="keyword" value="@ViewBag.Keyword" placeholder="Tìm kiếm..." />
+                                        </div>
+
+                                        <div style="display:inline-block">
+                                            <button type="submit" class="btn-sm btn-primary">Tìm kiếm</button>
+                                            <button type="button" class="btn-sm btn-primary" onclick="window.location.href='/Blog/Index'">Đặt lại</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="card-block table-border-style">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Mã bài viết</th>
+                                        <th>Tên bài viết</th>
+                                        <th>Ngày tạo</th>
+                                        <th>Trạng thái hiển thị</th>
+                                        <th>Hình ảnh</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    @{
+                                        foreach (var item in Model.Items)
+                                        {
+                                            <tr>
+                                                <td>@item.Id</td>
+                                                <td>@item.Title</td>
+                                                <td>@item.CreatedDate</td>
+                                                <td>
+                                                    <a href="#" class="b-b-primary text-primary blog-link-status" data-id="@item.Id">@(item.Status ? "Hiển thị" : "Khóa")</a>
+                                                </td>
+                                                <td>
+                                                    <img src="http://localhost:5001/user-content/@item.ImagePath" class="img-radius img-40 align-top m-r-15" />
+                                                </td>
+
+                                                <td>
+                                                    @Html.ActionLink("Cập nhật", "Update", "Blog", new { id = item.Id }) |
+                                                    @Html.ActionLink("Chi tiết", "Detail", "Blog", new { id = item.Id }) |
+                                                    <a href="#" class="blog-link-delete" data-id="@item.Id">Xóa</a> |
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <!--Pagination-->
+                        @await Component.InvokeAsync("Pager", Model)
+                    </div>
+                </div>
+                <!-- Hover table card end -->
+            </div>
+            <!-- Page-body end -->
+        </div>
+    </div>
+    <!-- Main-body end -->
+
+</div>
+

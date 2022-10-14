@@ -50,8 +50,15 @@ namespace FreshShop.AdminApp.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            var defaultLanguageId = HttpContext.Session.GetString("DefaultLanguageId");
+            var categories = await _categoryApiClient.GetAllCategoryFilter(defaultLanguageId);
+            ViewBag.Categories = categories.ResultObj.Select(x => new SelectListItem()
+            {
+                Text = x.CategoryName,
+                Value = x.CategoryId.ToString(),             
+            });
             return View();
         }
 
@@ -109,6 +116,13 @@ namespace FreshShop.AdminApp.Controllers
                     SeoTitle = product.SeoTitle,
                     LanguageId = product.LanguageId
                 };
+                var categories = await _categoryApiClient.GetAllCategoryFilter(defaultLanguageId);
+                ViewBag.Categories = categories.ResultObj.Select(x => new SelectListItem()
+                {
+                    Text = x.CategoryName,
+                    Value = x.CategoryId.ToString(),
+                    Selected=x.CategoryId==product.CategoryID,
+                });
                 return View(updateRequest);
             }
             return RedirectToAction("Error", "Home");
@@ -118,7 +132,7 @@ namespace FreshShop.AdminApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(ProductUpdateRequest request)
         {
-            if (!ModelState.IsValid) return View();
+            if (!ModelState.IsValid) return View(request);
 
             var result = await _productApiClient.Update(request);
             if (result.IsSuccessed)

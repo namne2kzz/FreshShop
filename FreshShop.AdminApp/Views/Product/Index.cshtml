@@ -60,10 +60,10 @@
                             <div class="col-md-6">
                                 <form class="form-group" asp-action="Index" asp-controller="Product" method="get">
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-5">
                                             <input class="form-control" name="keyword" value="@ViewBag.Keyword" placeholder="Tìm kiếm..." />
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-4">
                                             <select name="categoryId" class="custom-select" onchange="this.form.submit()" asp-items="@ViewBag.Categories">
                                                 <option>--Chọn danh mục--</option>
                                             </select>
@@ -91,9 +91,7 @@
                                         <th>Kho</th>
                                         <th>Đã bán</th>
                                         <th>Giá nhập</th>
-                                        <th>Giá bán</th>
-                                        <th>Mô tả</th>
-                                        <th>Image</th>
+                                        <th>Giá bán</th>                                                                               
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -109,11 +107,7 @@
                                                 <td>@item.Stock</td>
                                                 <td>@item.Sold</td>
                                                 <td>@item.OriginalPrice</td>
-                                                <td>@item.Price</td>
-                                                <td>@item.Description</td>
-                                                <td>
-                                                    <img class="img-radius img-40 align-top m-r-15" alt="@item.Name" src="http://localhost:5001/user-content/@item.ImagePath" />
-                                                </td>
+                                                <td>@item.Price</td>                                                                                          
                                                 <td>
                                                     @Html.ActionLink("Cập nhật", "Update", "Product", new { id = item.ID }) |
                                                     @Html.ActionLink("Chi tiết", "Detail", "Product", new { id = item.ID }) |

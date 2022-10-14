@@ -1,4 +1,5 @@
 ﻿using FreshShop.AdminApp.Services;
+using FreshShop.ViewModels.Catalog.Address;
 using FreshShop.ViewModels.Common;
 using FreshShop.ViewModels.System.Roles;
 using FreshShop.ViewModels.System.Users;
@@ -7,9 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace FreshShop.AdminApp.Controllers
@@ -18,16 +17,17 @@ namespace FreshShop.AdminApp.Controllers
     {
         private readonly IUserApiClient _userApiClient;
         private readonly IRoleApiClient _roleApiClient;
+        private readonly IAddressApiClient _addressApiClient;
 
-        public UserController(IUserApiClient userApiClient, IRoleApiClient roleApiClient)
+        public UserController(IUserApiClient userApiClient, IRoleApiClient roleApiClient, IAddressApiClient addressApiClient)
         {
             _userApiClient = userApiClient;
             _roleApiClient = roleApiClient;
+            _addressApiClient = addressApiClient;
         }
         
         public async Task<IActionResult> Index(string keyword, int pageIndex=1, int pageSize=10)
-        {           
-           
+        {
             var session = HttpContext.Session.GetString("Token");
             var request = new GetUserPagingRequest()
             {              
@@ -46,7 +46,6 @@ namespace FreshShop.AdminApp.Controllers
         }
 
         [HttpPost]
-        [Consumes("multipart/form-data")]
         public async Task<IActionResult> Create(RegisterRequest request)
         {
             if (!ModelState.IsValid) return View();
@@ -88,7 +87,7 @@ namespace FreshShop.AdminApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(UserUpdateRequest request)
         {
-            if (!ModelState.IsValid) return View();
+            if (!ModelState.IsValid) return View(request);
 
             var result = await _userApiClient.Update(request.Id,request);
             if (result.IsSuccessed)
@@ -104,11 +103,15 @@ namespace FreshShop.AdminApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Detail(Guid id)
         {
+           var listAddress = await _addressApiClient.GetAllByUserId(id);
+            ViewBag.ListAddress = listAddress.ResultObj;
+
             var result = await _userApiClient.GetById(id);
             return View(result.ResultObj);
         }
 
-        [HttpPost]       
+        [HttpDelete]
+        [EnableCors("MyPolicy")]
         public async Task<JsonResult> Delete(Guid id)
         {           
 

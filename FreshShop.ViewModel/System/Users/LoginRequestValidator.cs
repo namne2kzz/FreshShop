@@ -9,9 +9,9 @@ namespace FreshShop.ViewModels.System.Users
     {
         public LoginRequestValidator()
         {
-            RuleFor(x => x.UserName).NotEmpty().WithMessage("UserName is required");
+            RuleFor(x => x.UserName).NotEmpty().WithMessage("Tên đăng nhập không được rỗng");
 
-            RuleFor(x => x.Password).NotEmpty().WithMessage("Password is required"); 
+            RuleFor(x => x.Password).NotEmpty().WithMessage("Mật khẩu không được rỗng"); 
         }
     }
 }
