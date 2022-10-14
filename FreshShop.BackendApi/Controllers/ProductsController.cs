@@ -40,7 +40,7 @@ namespace FreshShop.BackendApi.Controllers
         {
             var products = await _productService.GetAllByCategoryId(request, languageId);
             return Ok(products);
-        }
+        }       
 
         [HttpGet("detail")]
         public async Task<IActionResult> GetById([FromQuery] int productId, string languageId)
@@ -81,7 +81,7 @@ namespace FreshShop.BackendApi.Controllers
             var result = await _productService.Update(request);
             if (result.IsSuccessed) return Ok(result);
             return BadRequest(result);
-        }
+        }      
 
         [HttpDelete("{productId}")]
         public async Task<IActionResult> Delete(int productId)

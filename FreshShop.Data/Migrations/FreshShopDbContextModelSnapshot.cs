@@ -30,30 +30,21 @@ namespace FreshShop.Data.Migrations
 
                     b.Property<string>("AddressDetail")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CustomerID")
+                    b.Property<int>("DistrictId")
                         .HasColumnType("int");
-
-                    b.Property<string>("District")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(255)")
-                        .HasMaxLength(255);
 
                     b.Property<bool>("IsDefault")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Province")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(255)")
-                        .HasMaxLength(255);
+                    b.Property<int>("ProvinceId")
+                        .HasColumnType("int");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("CustomerID");
 
                     b.HasIndex("UserId");
 
@@ -88,7 +79,7 @@ namespace FreshShop.Data.Migrations
                         new
                         {
                             Id = new Guid("8d04dce2-969a-435d-bba4-df3f325983dc"),
-                            ConcurrencyStamp = "83c583f9-c8ff-46da-817d-af0b6b82f2df",
+                            ConcurrencyStamp = "e1c1c44a-1493-4acc-83f0-65c8d6066b17",
                             Description = "Administrator role",
                             Name = "admin",
                             NormalizedName = "admin"
@@ -171,7 +162,7 @@ namespace FreshShop.Data.Migrations
                         {
                             Id = new Guid("69bd714f-9576-45ba-b5b7-f00649be00de"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "9bfe85ae-20ae-4617-bca2-70dda434b4d8",
+                            ConcurrencyStamp = "f64583d1-ea82-4539-b352-6a6637b798c0",
                             Dob = new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "tedu.international@gmail.com",
                             EmailConfirmed = true,
@@ -181,7 +172,7 @@ namespace FreshShop.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "tedu.international@gmail.com",
                             NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAEAACcQAAAAEA1rMNIRJjZxXITj4WU0a9ESzlCLy5ETMx16vlTpnPlcro5mh86EAs9Eh3awj8h8zA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJM5Zc55cfnqy5/t3bfm/F363uX4GU1J6ARcmmE+EEZa2in3VNDCRtvCKAD2LJgInQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -235,9 +226,6 @@ namespace FreshShop.Data.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("date");
 
-                    b.Property<int>("CustomerID")
-                        .HasColumnType("int");
-
                     b.Property<int>("ProductID")
                         .HasColumnType("int");
 
@@ -248,8 +236,6 @@ namespace FreshShop.Data.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("CustomerID");
 
                     b.HasIndex("ProductID");
 
@@ -391,9 +377,6 @@ namespace FreshShop.Data.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("date");
 
-                    b.Property<int>("CustomerID")
-                        .HasColumnType("int");
-
                     b.Property<string>("Message")
                         .IsRequired()
                         .HasColumnType("text");
@@ -402,8 +385,6 @@ namespace FreshShop.Data.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("CustomerID");
 
                     b.HasIndex("UserId");
 
@@ -447,118 +428,6 @@ namespace FreshShop.Data.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Coupon");
-                });
-
-            modelBuilder.Entity("FreshShop.Data.Entities.Customer", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
-                        .HasAnnotation("SqlServer:IdentitySeed", 1)
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("date");
-
-                    b.Property<DateTime>("Dob")
-                        .HasColumnType("date");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("varchar(50)")
-                        .HasMaxLength(50)
-                        .IsUnicode(false);
-
-                    b.Property<string>("Image")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(255)")
-                        .HasMaxLength(255);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(255)")
-                        .HasMaxLength(255);
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(255)")
-                        .HasMaxLength(255);
-
-                    b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(15)")
-                        .HasMaxLength(15);
-
-                    b.Property<bool>("Status")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Customer");
-                });
-
-            modelBuilder.Entity("FreshShop.Data.Entities.Employee", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
-                        .HasAnnotation("SqlServer:IdentitySeed", 1)
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("date");
-
-                    b.Property<DateTime>("Dob")
-                        .HasColumnType("date");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("varchar(50)")
-                        .HasMaxLength(50)
-                        .IsUnicode(false);
-
-                    b.Property<string>("Image")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(255)")
-                        .HasMaxLength(255);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(255)")
-                        .HasMaxLength(255);
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(255)")
-                        .HasMaxLength(255);
-
-                    b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(15)")
-                        .HasMaxLength(15);
-
-                    b.Property<bool>("Status")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Employee");
                 });
 
             modelBuilder.Entity("FreshShop.Data.Entities.Image", b =>
@@ -641,9 +510,6 @@ namespace FreshShop.Data.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("date");
 
-                    b.Property<int>("CustomerID")
-                        .HasColumnType("int");
-
                     b.Property<string>("ShipAddress")
                         .IsRequired()
                         .HasColumnType("text");
@@ -676,8 +542,6 @@ namespace FreshShop.Data.Migrations
                     b.HasKey("ID");
 
                     b.HasIndex("CouponID");
-
-                    b.HasIndex("CustomerID");
 
                     b.HasIndex("UserId");
 
@@ -768,7 +632,7 @@ namespace FreshShop.Data.Migrations
                         {
                             ID = 1,
                             CategoryID = 1,
-                            CreatedDate = new DateTime(2022, 10, 6, 14, 52, 34, 801, DateTimeKind.Local).AddTicks(6581),
+                            CreatedDate = new DateTime(2022, 10, 13, 15, 49, 26, 134, DateTimeKind.Local).AddTicks(6401),
                             OriginalPrice = 8000m,
                             Price = 10000m,
                             Sold = 0,
@@ -892,9 +756,6 @@ namespace FreshShop.Data.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("CustomerID")
-                        .HasColumnType("int");
-
                     b.Property<string>("Message")
                         .IsRequired()
                         .HasColumnType("text");
@@ -912,8 +773,6 @@ namespace FreshShop.Data.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("CustomerID");
 
                     b.HasIndex("ProductID");
 
@@ -933,9 +792,6 @@ namespace FreshShop.Data.Migrations
 
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("CustomerID")
-                        .HasColumnType("int");
 
                     b.Property<int>("ExternalTransactionID")
                         .HasColumnType("int");
@@ -967,8 +823,6 @@ namespace FreshShop.Data.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("CustomerID");
-
                     b.HasIndex("UserId");
 
                     b.ToTable("Transaction");
@@ -989,9 +843,6 @@ namespace FreshShop.Data.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("date");
 
-                    b.Property<int>("CustomerID")
-                        .HasColumnType("int");
-
                     b.Property<int>("ProductID")
                         .HasColumnType("int");
 
@@ -1001,8 +852,6 @@ namespace FreshShop.Data.Migrations
                     b.HasKey("ID");
 
                     b.HasIndex("AppUserId");
-
-                    b.HasIndex("CustomerID");
 
                     b.HasIndex("ProductID");
 
@@ -1113,12 +962,6 @@ namespace FreshShop.Data.Migrations
 
             modelBuilder.Entity("FreshShop.Data.Entities.Address", b =>
                 {
-                    b.HasOne("FreshShop.Data.Entities.Customer", "Customer")
-                        .WithMany("Addresses")
-                        .HasForeignKey("CustomerID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("FreshShop.Data.Entities.AppUser", "AppUser")
                         .WithMany("Addresses")
                         .HasForeignKey("UserId")
@@ -1128,12 +971,6 @@ namespace FreshShop.Data.Migrations
 
             modelBuilder.Entity("FreshShop.Data.Entities.Cart", b =>
                 {
-                    b.HasOne("FreshShop.Data.Entities.Customer", "Customer")
-                        .WithMany("Carts")
-                        .HasForeignKey("CustomerID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("FreshShop.Data.Entities.Product", "Product")
                         .WithMany("Carts")
                         .HasForeignKey("ProductID")
@@ -1164,12 +1001,6 @@ namespace FreshShop.Data.Migrations
 
             modelBuilder.Entity("FreshShop.Data.Entities.Contact", b =>
                 {
-                    b.HasOne("FreshShop.Data.Entities.Customer", "Customer")
-                        .WithMany("Contacts")
-                        .HasForeignKey("CustomerID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("FreshShop.Data.Entities.AppUser", "AppUser")
                         .WithMany("Contacts")
                         .HasForeignKey("UserId")
@@ -1191,12 +1022,6 @@ namespace FreshShop.Data.Migrations
                     b.HasOne("FreshShop.Data.Entities.Coupon", "Coupon")
                         .WithMany("Orders")
                         .HasForeignKey("CouponID");
-
-                    b.HasOne("FreshShop.Data.Entities.Customer", "Customer")
-                        .WithMany("Orders")
-                        .HasForeignKey("CustomerID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
 
                     b.HasOne("FreshShop.Data.Entities.AppUser", "AppUser")
                         .WithMany("Orders")
@@ -1259,12 +1084,6 @@ namespace FreshShop.Data.Migrations
 
             modelBuilder.Entity("FreshShop.Data.Entities.Review", b =>
                 {
-                    b.HasOne("FreshShop.Data.Entities.Customer", "Customer")
-                        .WithMany("Reviews")
-                        .HasForeignKey("CustomerID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("FreshShop.Data.Entities.Product", "Product")
                         .WithMany("Reviews")
                         .HasForeignKey("ProductID")
@@ -1280,12 +1099,6 @@ namespace FreshShop.Data.Migrations
 
             modelBuilder.Entity("FreshShop.Data.Entities.Transaction", b =>
                 {
-                    b.HasOne("FreshShop.Data.Entities.Customer", "Customer")
-                        .WithMany("Transactions")
-                        .HasForeignKey("CustomerID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("FreshShop.Data.Entities.AppUser", "AppUser")
                         .WithMany("Transactions")
                         .HasForeignKey("UserId")
@@ -1298,12 +1111,6 @@ namespace FreshShop.Data.Migrations
                     b.HasOne("FreshShop.Data.Entities.AppUser", "AppUser")
                         .WithMany()
                         .HasForeignKey("AppUserId");
-
-                    b.HasOne("FreshShop.Data.Entities.Customer", "Customer")
-                        .WithMany("Wishlists")
-                        .HasForeignKey("CustomerID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
 
                     b.HasOne("FreshShop.Data.Entities.Product", "Product")
                         .WithMany("Wishlists")

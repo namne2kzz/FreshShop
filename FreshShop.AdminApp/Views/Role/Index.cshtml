@@ -1,0 +1,111 @@
+﻿@model List<FreshShop.ViewModels.System.Roles.RoleViewModel>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section script{ 
+
+    <script src="~/jsControllers/roleController.js"></script>
+}
+
+<!-- Page-header start -->
+<div class="page-header">
+    <div class="page-block">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <div class="page-header-title">
+                    <h5 class="m-b-10">Danh sách nhóm quyền</h5>
+                    <p class="m-b-0">Lorem Ipsum is simply dummy text of the printing</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <ul class="breadcrumb-title">
+                    <li class="breadcrumb-item">
+                        <a href="/Home/Index"> <i class="fa fa-home"></i> </a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="/Role/Index">Nhóm quyền</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="/Role/Index">Danh sách</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Page-header end -->
+<div class="pcoded-inner-content">
+    <!-- Main-body start -->
+    <div class="main-body">
+        <div class="page-wrapper">
+            <!-- Page-body start -->
+            <div class="page-body">
+                <!-- Hover table card start -->
+                <div class="card">
+                    @if (TempData["AlertMessage"] != null)
+                    {
+                        <div id="AlertBox" class="alert @TempData["AlertType"] hide" role="alert">
+                            @TempData["AlertMessage"]
+                        </div>
+
+                    }
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <a class="btn btn-primary" href="/Role/Create">Thêm mới</a>
+                            </div>                           
+
+                        </div>
+
+                    </div>
+
+                    <div class="card-block table-border-style">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Mã nhóm quyền</th>
+                                        <th>Tên nhóm quyền</th>
+                                        <th>Tên bình thường</th>
+                                        <th>Mô tả</th>
+                                        <th>Concurrency Stamp</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    @{
+                                        foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                <td>@item.Id</td>
+                                                <td>@item.Name</td>
+                                                <td>@item.NormalizedName</td>
+                                                <td>@item.Description</td>      
+                                                <td>@item.ConcurrencyStamp</td>
+                                                <td>
+                                                  
+                                                    @Html.ActionLink("Danh sách", "ListByRole", "Role", new { id = item.Id }) |
+                                                    <a href="#" class="role-link-delete" data-id="@item.Id">Xóa</a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+
+
+                                </tbody>
+                            </table>
+                        </div>                     
+                    </div>
+                </div>
+                <!-- Hover table card end -->
+            </div>
+            <!-- Page-body end -->
+        </div>
+    </div>
+    <!-- Main-body end -->
+
+</div>
+

@@ -17,9 +17,7 @@ namespace FreshShop.Data.Configuration
 
             builder.Property(x => x.ID).UseIdentityColumn();
 
-            builder.Property(x => x.ReplyID).IsRequired(false);
-
-            builder.HasOne(x => x.Customer).WithMany(x => x.Reviews).HasForeignKey(x => x.CustomerID);
+            builder.Property(x => x.ReplyID).IsRequired(false);           
 
             builder.HasOne(x => x.Product).WithMany(x => x.Reviews).HasForeignKey(x => x.ProductID);
 

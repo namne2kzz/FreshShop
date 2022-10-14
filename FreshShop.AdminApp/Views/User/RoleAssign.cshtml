@@ -24,7 +24,7 @@
                         <a href="/User/Index">Người dùng</a>
                     </li>
                     <li class="breadcrumb-item">
-                       @Html.ActionLink("Gán quyền","RoleAssign","User",new {id=Model.Id})
+                        @Html.ActionLink("Gán quyền", "RoleAssign", "User", new { id = Model.Id })
                     </li>
                 </ul>
             </div>
@@ -50,10 +50,10 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col-md-6">
-                               
+
                             </div>
                             <div class="col-md-6">
-                               
+
                             </div>
 
                         </div>
@@ -61,35 +61,33 @@
                     </div>
 
                     <div class="card-block table-border-style">
-                        <div class="table-responsive">
-                            <form asp-action="RoleAssign">
-                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                <input type="hidden" asp-for="Id" />
-                                @for (var i = 0; i < Model.Roles.Count; i++)
-                                {
-                                    <div class="chk-option">
-                                        <div class="checkbox-fade fade-in-primary">
-                                            <label class="check-task">
-                                                @Model.Roles[i].Name
-                                                <input asp-for="Roles[i].Selected" type="checkbox" value="">
-                                                <input type="hidden" asp-for="Roles[i].Id" />
-                                                <input type="hidden" asp-for="Roles[i].Name" />
-                                                <span class="cr">
-                                                    <i class="cr-icon fa fa-check txt-default"></i>
-                                                </span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                 
-                                }
+                       
+                        <form asp-action="RoleAssign">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <input type="hidden" asp-for="Id" />
+                            @for (var i = 0; i < Model.Roles.Count; i++)
+                            {
+                                <div class="form-group">
+                                   
+                                        <label class="form-check-label">
+                                            @Model.Roles[i].Name
+                                            <input asp-for="Roles[i].Selected" type="checkbox" value="" class="form-control">
+                                            <input type="hidden" asp-for="Roles[i].Id" />
+                                            <input type="hidden" asp-for="Roles[i].Name" />
+                                           
+                                        </label>
+                                   
+                                </div>
+
+                            }
 
                             <div class="form-group">
                                 <input type="submit" value="Lưu lại" class="btn btn-primary" />
                                 <a class="btn btn-primary" asp-action="Index">Quay về</a>
                             </div>
-                            </form>
-                        </div>
-                      
+                        </form>
+                       
+
                     </div>
                 </div>
                 <!-- Hover table card end -->
@@ -101,9 +99,9 @@
 
 </div>
 
-  
-      
-   
+
+
+
 
 
 

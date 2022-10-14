@@ -8,9 +8,7 @@ namespace FreshShop.Data.Entities
    
     public partial class Cart
     {
-        public int ID { get; set; }
-
-        public int CustomerID { get; set; }
+        public int ID { get; set; }       
 
         public Guid UserId { get; set; }
 
@@ -19,9 +17,7 @@ namespace FreshShop.Data.Entities
         public int Quantity { get; set; }
 
         [Column(TypeName = "date")]
-        public DateTime CreatedDate { get; set; }
-
-        public virtual Customer Customer { get; set; }
+        public DateTime CreatedDate { get; set; }      
 
         public virtual Product Product { get; set; }
 

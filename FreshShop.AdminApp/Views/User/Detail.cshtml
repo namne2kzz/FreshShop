@@ -3,6 +3,11 @@
 @{
     ViewData["Title"] = "Detail";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var addresses = (List<FreshShop.ViewModels.Catalog.Address.AddressViewModel>)ViewBag.ListAddress;
+}
+@section script{
+    <script src="~/jsControllers/addressController.js"></script>
+
 }
 
 
@@ -25,8 +30,8 @@
                         <a href="/User/Index">Người dùng</a>
                     </li>
                     <li class="breadcrumb-item">
-                        @Html.ActionLink("Chi tiết","Detail","User", new {id=Model.Id })
-                       
+                        @Html.ActionLink("Chi tiết", "Detail", "User", new { id = Model.Id })
+
                     </li>
                 </ul>
             </div>
@@ -38,12 +43,12 @@
     <div class="main-body">
         <div class="page-wrapper">
             <!-- Page body start -->
-            <div class="page-body">              
+            <div class="page-body">
                 <div class="row">
                     <div class="col-sm-12">
                         <!-- Material tab card start -->
                         <div class="card">
-                          
+
                             <div class="card-block">
                                 <!-- Row start -->
                                 <div class="row m-b-30">
@@ -52,15 +57,15 @@
                                         <!-- Nav tabs -->
                                         <ul class="nav nav-tabs md-tabs" role="tablist">
                                             <li class="nav-item">
-                                                <a class="nav-link active" data-toggle="tab" href="#home3" role="tab">Home</a>
+                                                <a class="nav-link active" data-toggle="tab" href="#home3" role="tab">Thông tin chung</a>
                                                 <div class="slide"></div>
                                             </li>
                                             <li class="nav-item">
-                                                <a class="nav-link" data-toggle="tab" href="#profile3" role="tab">Profile</a>
+                                                <a class="nav-link" data-toggle="tab" href="#profile3" role="tab">Danh sách địa chỉ</a>
                                                 <div class="slide"></div>
                                             </li>
                                             <li class="nav-item">
-                                                <a class="nav-link" data-toggle="tab" href="#messages3" role="tab">Messages</a>
+                                                <a class="nav-link" data-toggle="tab" href="#messages3" role="tab">Danh sách đơn hàng</a>
                                                 <div class="slide"></div>
                                             </li>
                                             <li class="nav-item">
@@ -71,56 +76,164 @@
                                         <!-- Tab panes -->
                                         <div class="tab-content card-block">
                                             <div class="tab-pane active" id="home3" role="tabpanel">
-                                                <p class="m-0">1. This is Photoshop's version of Lorem IpThis is Photoshop's version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean mas Cum sociis natoque penatibus et magnis dis.....</p>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <table style="width:100%" class="table table-hover table-responsive">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <th>
+                                                                        @Html.DisplayNameFor(model => model.FirstName)
+                                                                    </th>
+                                                                    <td>
+                                                                        @Html.DisplayFor(model => model.FirstName)
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>
+                                                                        @Html.DisplayNameFor(model => model.FirstName)
+                                                                    </th>
+                                                                    <td>
+                                                                        @Html.DisplayFor(model => model.FirstName)
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>
+                                                                        @Html.DisplayNameFor(model => model.LastName)
+                                                                    </th>
+                                                                    <td>
+                                                                        @Html.DisplayFor(model => model.LastName)
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>
+                                                                        @Html.DisplayNameFor(model => model.UserName)
+                                                                    </th>
+                                                                    <td>
+                                                                        @Html.DisplayFor(model => model.UserName)
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>
+                                                                        @Html.DisplayNameFor(model => model.Email)
+                                                                    </th>
+                                                                    <td>
+                                                                        @Html.DisplayFor(model => model.Email)
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>
+                                                                        @Html.DisplayNameFor(model => model.PhoneNumber)
+                                                                    </th>
+                                                                    <td>
+                                                                        @Html.DisplayFor(model => model.PhoneNumber)
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>
+                                                                        @Html.DisplayNameFor(model => model.Dob)
+                                                                    </th>
+                                                                    <td>
+                                                                        @Html.DisplayFor(model => model.Dob)
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <img style="height:80%;width:80%" src="http://localhost:5001/user-content/@Model.ImagePath" />
+                                                    </div>
+
+                                                </div>
+
                                             </div>
                                             <div class="tab-pane" id="profile3" role="tabpanel">
+                                                <!--<div class="pcoded-inner-content">-->
+                                                <!-- Main-body start -->
+                                                <!--<div class="main-body">
+                                                    <div class="page-wrapper">-->
+                                                <!-- Page-body start -->
+                                                <!--<div class="page-body">-->
+                                                <!-- Hover table card start -->
+                                                <!--<div class="card">-->
+                                                @if (TempData["AlertMessage"] != null)
+                                                {
+                                                    <div id="AlertBox" class="alert @TempData["AlertType"] hide" role="alert">
+                                                        @TempData["AlertMessage"]
+                                                    </div>
+
+                                                }
+                                                @*<div class="card-header">*@
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <a class="btn btn-primary" href="/Address/Create">Thêm mới</a>
+                                                    </div>
 
 
-                                                <dl class="row">
-                                                    <dt class="col-sm-3">
-                                                        @Html.DisplayNameFor(model => model.FirstName)
-                                                    </dt>
-                                                    <dd class="col-sm-8">
-                                                        @Html.DisplayFor(model => model.FirstName)
-                                                    </dd>
-                                                    <dt class="col-sm-3">
-                                                        @Html.DisplayNameFor(model => model.LastName)
-                                                    </dt>
-                                                    <dd class="col-sm-8">
-                                                        @Html.DisplayFor(model => model.LastName)
-                                                    </dd>
-                                                    <dt class="col-sm-3">
-                                                        @Html.DisplayNameFor(model => model.UserName)
-                                                    </dt>
-                                                    <dd class="col-sm-8">
-                                                        @Html.DisplayFor(model => model.UserName)
-                                                    </dd>
-                                                    <dt class="col-sm-3">
-                                                        @Html.DisplayNameFor(model => model.Email)
-                                                    </dt>
-                                                    <dd class="col-sm-8">
-                                                        @Html.DisplayFor(model => model.Email)
-                                                    </dd>
-                                                    <dt class="col-sm-3">
-                                                        @Html.DisplayNameFor(model => model.PhoneNumber)
-                                                    </dt>
-                                                    <dd class="col-sm-8">
-                                                        @Html.DisplayFor(model => model.PhoneNumber)
-                                                    </dd>
-                                                    <dt class="col-sm-3">
-                                                        @Html.DisplayNameFor(model => model.ImagePath)
-                                                    </dt>
-                                                    <dd class="col-sm-8">
-                                                        @Html.DisplayFor(model => model.ImagePath)
-                                                    </dd>
-                                                    <dt class="col-sm-3">
-                                                        @Html.DisplayNameFor(model => model.Dob)
-                                                    </dt>
-                                                    <dd class="col-sm-8">
-                                                        @Html.DisplayFor(model => model.Dob)
-                                                    </dd>
-                                                </dl>
+                                                </div>
 
+                                                @*</div>*@
+
+
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Mã địa chỉ</th>
+                                                                <th>Mã tỉnh/thành phố</th>
+                                                                <th>Tên tỉnh/thành phố</th>
+                                                                <th>Mã quận/huyện</th>
+                                                                <th>Tên quận/huyện</th>
+                                                                <th>Chi tiết</th>
+                                                                <th>Trạng thái</th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @{
+                                                                foreach (var item in addresses)
+                                                                {
+                                                                    <tr>
+                                                                        <th>@item.Id</th>
+                                                                        <td>@item.ProvinceId</td>
+                                                                        <td>@item.ProvinceName</td>
+                                                                        <td>@item.DistrictId</td>
+                                                                        <td>@item.DistrictName</td>
+                                                                        <td>@item.Detail</td>
+                                                                        <td>
+                                                                            @if (item.IsDefault)
+                                                                            {
+                                                                            <a id="address-link-default" class="address-link-status" data-id="@item.Id" href="#">Mặc định</a>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <a href="#" data-id="@item.Id" class="address-link-status">Phụ</a>
+                                                                            }
+
+                                                                        </td>
+                                                                        <td>
+                                                                            @Html.ActionLink("Cập nhật", "Update", "Address", new { id = item.Id }) |
+                                                                            <a href="#" class="address-link-delete" data-id="@item.Id">Xóa</a>
+
+                                                                        </td>
+                                                                    </tr>
+                                                                }
+                                                            }
+
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+
+
+                                                <!--</div>-->
+                                                <!-- Hover table card end -->
+                                                <!--</div>-->
+                                                <!-- Page-body end -->
+                                                <!--</div>
+                                                </div>-->
+                                                <!-- Main-body end -->
+                                                <!--</div>-->
                                             </div>
                                             <div class="tab-pane" id="messages3" role="tabpanel">
                                                 <p class="m-0">3. This is Photoshop's version of Lorem IpThis is Photoshop's version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean mas Cum sociis natoque penatibus et magnis dis.....</p>
@@ -139,7 +252,7 @@
                         <!-- Material tab card end -->
                     </div>
                 </div>
-               
+
             </div>
             <!-- Page body end -->
         </div>

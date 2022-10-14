@@ -75,92 +75,113 @@
                                         <!-- Tab panes -->
                                         <div class="tab-content card-block">
                                             <div class="tab-pane active" id="profile3" role="tabpanel">
-                                                <dl class="row">
-                                                    <dt class="col-sm-3">
-                                                        @Html.DisplayNameFor(model => model.ID)
-                                                    </dt>
-                                                    <dd class="col-sm-8">
-                                                        @Html.DisplayFor(model => model.ID)
-                                                    </dd>
-                                                    <dt class="col-sm-3">
-                                                        @Html.DisplayNameFor(model => model.Name)
-                                                    </dt>
-                                                    <dd class="col-sm-8">
-                                                        @Html.DisplayFor(model => model.Name)
-                                                    </dd>
-                                                    <dt class="col-sm-3">
-                                                        @Html.DisplayNameFor(model => model.CategoryName)
-                                                    </dt>
-                                                    <dd class="col-sm-8">
-                                                        @Html.DisplayFor(model => model.CategoryName)
-                                                    </dd>
-                                                    <dt class="col-sm-3">
-                                                        @Html.DisplayNameFor(model => model.Description)
-                                                    </dt>
-                                                    <dd class="col-sm-8">
-                                                        @Html.DisplayFor(model => model.Description)
-                                                    </dd>
-                                                    <dt class="col-sm-3">
-                                                        @Html.DisplayNameFor(model => model.Stock)
-                                                    </dt>
-                                                    <dd class="col-sm-8">
-                                                        @Html.DisplayFor(model => model.Stock)
-                                                    </dd>
-                                                    <dt class="col-sm-3">
-                                                        @Html.DisplayNameFor(model => model.Sold)
-                                                    </dt>
-                                                    <dd class="col-sm-8">
-                                                        @Html.DisplayFor(model => model.Sold)
-                                                    </dd>
-                                                    <dt class="col-sm-3">
-                                                        @Html.DisplayNameFor(model => model.Unit)
-                                                    </dt>
-                                                    <dd class="col-sm-8">
-                                                        @Html.DisplayFor(model => model.Unit)
-                                                    </dd>
-                                                    <dt class="col-sm-3">
-                                                        @Html.DisplayNameFor(model => model.OriginalPrice)
-                                                    </dt>
-                                                    <dd class="col-sm-8">
-                                                        @Html.DisplayFor(model => model.OriginalPrice)
-                                                    </dd>
-                                                    <dt class="col-sm-3">
-                                                        @Html.DisplayNameFor(model => model.Price)
-                                                    </dt>
-                                                    <dd class="col-sm-8">
-                                                        @Html.DisplayFor(model => model.Price)
-                                                    </dd>
-                                                    <dt class="col-sm-3">
-                                                        @Html.DisplayNameFor(model => model.ViewCount)
-                                                    </dt>
-                                                    <dd class="col-sm-8">
-                                                        @Html.DisplayFor(model => model.ViewCount)
-                                                    </dd>
-                                                    <dt class="col-sm-3">
-                                                        @Html.DisplayNameFor(model => model.CreatedDate)
-                                                    </dt>
-                                                    <dd class="col-sm-8">
-                                                        @Html.DisplayFor(model => model.CreatedDate)
-                                                    </dd>
-                                                    <dt class="col-sm-3">
-                                                        @Html.DisplayNameFor(model => model.SeoAlias)
-                                                    </dt>
-                                                    <dd class="col-sm-8">
-                                                        @Html.DisplayFor(model => model.SeoAlias)
-                                                    </dd>
-                                                    <dt class="col-sm-3">
-                                                        @Html.DisplayNameFor(model => model.SeoTitle)
-                                                    </dt>
-                                                    <dd class="col-sm-8">
-                                                        @Html.DisplayFor(model => model.SeoTitle)
-                                                    </dd>
-                                                    <dt class="col-sm-3">
-                                                        @Html.DisplayNameFor(model => model.LanguageId)
-                                                    </dt>
-                                                    <dd class="col-sm-8">
-                                                        @Html.DisplayFor(model => model.LanguageId)
-                                                    </dd>
-                                                </dl>
+                                                <table style="width:100%" class="table table-hover table-responsive">
+                                                  
+                                                    <tbody>
+                                                        <tr>
+                                                            <th width="20%">
+                                                                @Html.DisplayNameFor(model => model.ID)
+                                                            </th>
+                                                            <td width="30%">
+                                                                @Html.DisplayFor(model => model.ID)
+                                                            </td>
+                                                          
+                                                        </tr>
+                                                        <tr>
+                                                            <th>
+                                                                @Html.DisplayNameFor(model => model.CategoryName)
+                                                            </th>
+                                                            <td>
+                                                                @Html.DisplayFor(model => model.CategoryName)
+                                                            </td>
+                                                            <th>
+                                                                @Html.DisplayNameFor(model => model.Name)
+                                                            </th>
+                                                            <td>
+                                                                @Html.DisplayFor(model => model.Name)
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>
+                                                                @Html.DisplayNameFor(model => model.Unit)
+                                                            </th>
+                                                            <td>
+                                                                @Html.DisplayFor(model => model.Unit)
+                                                            </td>
+                                                            <th>
+                                                                @Html.DisplayNameFor(model => model.LanguageId)
+                                                            </th>
+                                                            <td>
+                                                                @Html.DisplayFor(model => model.LanguageId)
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>
+                                                                @Html.DisplayNameFor(model => model.OriginalPrice)
+                                                            </th>
+                                                            <td>
+                                                                @Html.DisplayFor(model => model.OriginalPrice)
+                                                            </td>
+                                                            <th>
+                                                                @Html.DisplayNameFor(model => model.Price)
+                                                            </th>
+                                                            <td>
+                                                                @Html.DisplayFor(model => model.Price)
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>
+                                                                @Html.DisplayNameFor(model => model.Stock)
+                                                            </th>
+                                                            <td>
+                                                                @Html.DisplayFor(model => model.Stock)
+                                                            </td>
+                                                            <th>
+                                                                @Html.DisplayNameFor(model => model.Sold)
+                                                            </th>
+                                                            <td>
+                                                                @Html.DisplayFor(model => model.Sold)
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>
+                                                                @Html.DisplayNameFor(model => model.ViewCount)
+                                                            </th>
+                                                            <td>
+                                                                @Html.DisplayFor(model => model.ViewCount)
+                                                            </td>
+                                                            <th>
+                                                                @Html.DisplayNameFor(model => model.CreatedDate)
+                                                            </th>
+                                                            <td>
+                                                                @Html.DisplayFor(model => model.CreatedDate)
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>
+                                                                @Html.DisplayNameFor(model => model.SeoAlias)
+                                                            </th>
+                                                            <td>
+                                                                @Html.DisplayFor(model => model.SeoAlias)
+                                                            </td>
+                                                            <th>
+                                                                @Html.DisplayNameFor(model => model.SeoTitle)
+                                                            </th>
+                                                            <td>
+                                                                @Html.DisplayFor(model => model.SeoTitle)
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>
+                                                                @Html.DisplayNameFor(model => model.Description)
+                                                            </th>
+                                                            <td>
+                                                                @Html.DisplayFor(model => model.Description)
+                                                            </td>
+                                                           
+                                                        </tr>
+                                                    </tbody>
+                                                </table>                                               
 
                                             </div>
                                             <div class="tab-pane" id="image3" role="tabpanel">                                                                                                                                                
@@ -228,7 +249,7 @@
 
                                                         </div>
                                                         <div class="col-sm-2">
-                                                            <input type="submit" value="Update" class="btn btn-primary" />
+                                                            <input type="submit" value="Cập nhật" class="btn btn-primary" />
                                                         </div>
                                                     </div>
                                                 </form>

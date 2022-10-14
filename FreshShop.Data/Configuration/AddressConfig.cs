@@ -17,13 +17,11 @@ namespace FreshShop.Data.Configuration
             
             builder.Property(x => x.ID).UseIdentityColumn();
 
-            builder.Property(x => x.Province).IsRequired().HasMaxLength(255);
+            builder.Property(x => x.ProvinceId).IsRequired();
 
-            builder.Property(x => x.District).IsRequired().HasMaxLength(255);
+            builder.Property(x => x.DistrictId).IsRequired();
 
-            builder.Property(x => x.AddressDetail).IsRequired();
-
-            builder.HasOne(x => x.Customer).WithMany(x => x.Addresses).HasForeignKey(x => x.CustomerID);
+            builder.Property(x => x.AddressDetail).IsRequired();        
 
             builder.HasOne(x => x.AppUser).WithMany(x => x.Addresses).HasForeignKey(x => x.UserId);
 
