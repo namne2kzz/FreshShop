@@ -54,6 +54,7 @@ namespace FreshShop.AdminApp
             services.AddTransient<ICategoryApiClient, CategoryApiClient>(); 
             services.AddTransient<IBlogApiClient, BlogApiClient>();
             services.AddTransient<IAddressApiClient, AddressApiClient>();
+            services.AddTransient<IPromotionApiClient, PromotionApiClient>();
 
             IMvcBuilder builder = services.AddRazorPages();
             

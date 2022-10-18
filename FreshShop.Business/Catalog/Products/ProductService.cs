@@ -36,7 +36,7 @@ namespace FreshShop.Business.Catalog.Products
                         join d in _context.CategoryTranslations on a.CategoryID equals d.CategoryId
                         join e in _context.Images on a.ID equals e.ProductID
                         where e.IsDefault == true
-                        where b.LanguageId == request.LanguageId && d.LanguageId == request.LanguageId
+                        where b.LanguageId == request.LanguageId && d.LanguageId == request.LanguageId                     
                         select new { a, b, c, d, e };
             if (!string.IsNullOrEmpty(request.Keyword))
             {

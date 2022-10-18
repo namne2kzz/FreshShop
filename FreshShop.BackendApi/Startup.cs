@@ -4,13 +4,18 @@ using FreshShop.Business.Catalog.Addresses;
 using FreshShop.Business.Catalog.Blogs;
 using FreshShop.Business.Catalog.Categories;
 using FreshShop.Business.Catalog.Products;
+using FreshShop.Business.Catalog.Promotions;
 using FreshShop.Business.Common;
 using FreshShop.Business.System.Languages;
 using FreshShop.Business.System.Roles;
 using FreshShop.Business.System.Users;
 using FreshShop.Data.EF;
 using FreshShop.Data.Entities;
+using FreshShop.ViewModels.Catalog.Address;
+using FreshShop.ViewModels.Catalog.Blog;
+using FreshShop.ViewModels.Catalog.Category;
 using FreshShop.ViewModels.Catalog.Product;
+using FreshShop.ViewModels.Catalog.Promotion;
 using FreshShop.ViewModels.System.Users;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -63,12 +68,27 @@ namespace FreshShop.BackendApi
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<IBlogService, BlogService>();
             services.AddTransient<IAddressService, AddressService>();
+            services.AddTransient<IPromotionService, PromotionService>();
 
+            //Fluent validator
             services.AddTransient<IValidator<LoginRequest>, LoginRequestValidator>();
             services.AddTransient<IValidator<RegisterRequest>, RegisterRequestValidator>();
             services.AddTransient<IValidator<UserUpdateRequest>, UserUpdateRequestValidator>();
+
             services.AddTransient<IValidator<ProductCreateRequest>, ProductCreateRequestValidator>();
             services.AddTransient<IValidator<ProductUpdateRequest>, ProductUpdateRequestValidator>();
+
+            services.AddTransient<IValidator<PromotionCreateRequest>, PromotionCreateRequestValidator>();
+            services.AddTransient<IValidator<PromotionUpdateRequest>, PromotionUpdateRequestValidator>();
+
+            services.AddTransient<IValidator<BlogCreateRequest>, BlogCreateRequestValidator>();
+            services.AddTransient<IValidator<BlogUpdateRequest>, BlogUpdateRequestValidator>();
+
+            services.AddTransient<IValidator<CategoryCreateRequest>, CategoryCreateRequestValidator>();
+            services.AddTransient<IValidator<CategoryUpdateRequest>, CategoryUpdateRequestValidator>();
+
+            services.AddTransient<IValidator<AddressCreateRequest>, AddressCreateRequestValidator>();
+            services.AddTransient<IValidator<AddressUpdateRequest>, AddressUpdateRequestValidator>();
 
             services.AddControllers()
                 .AddFluentValidation(fv=>fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>());

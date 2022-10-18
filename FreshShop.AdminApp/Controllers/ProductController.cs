@@ -1,6 +1,7 @@
 ﻿using FreshShop.AdminApp.Services;
 using FreshShop.ViewModels.Catalog.Product;
 using FreshShop.ViewModels.Catalog.ProductImage;
+using FreshShop.ViewModels.Catalog.Promotion;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -17,11 +18,13 @@ namespace FreshShop.AdminApp.Controllers
     {
         private readonly IProductApiClient _productApiClient;
         private readonly ICategoryApiClient _categoryApiClient;
+        private readonly IPromotionApiClient _promotionApiClient;
 
-        public ProductController(IProductApiClient productApiClient, ICategoryApiClient categoryApiClient)
+        public ProductController(IProductApiClient productApiClient, ICategoryApiClient categoryApiClient, IPromotionApiClient promotionApiClient)
         {
             _productApiClient = productApiClient;
             _categoryApiClient = categoryApiClient;
+            _promotionApiClient = promotionApiClient;
         }
 
         public async Task<IActionResult> Index(int? categoryId, string keyword, int pageIndex = 1, int pageSize = 1)
@@ -31,7 +34,7 @@ namespace FreshShop.AdminApp.Controllers
             var request = new GetManageProductPagingRequest()
             {
                 Keyword = keyword,
-                CategoryId=categoryId,
+                CategoryId = categoryId,
                 PageIndex = pageIndex,
                 PageSize = pageSize,
                 LanguageId = defaultLanguageId
@@ -42,9 +45,9 @@ namespace FreshShop.AdminApp.Controllers
             var categories = await _categoryApiClient.GetAllCategoryFilter(defaultLanguageId);
             ViewBag.Categories = categories.ResultObj.Select(x => new SelectListItem()
             {
-                Text=x.CategoryName,
-                Value=x.CategoryId.ToString(),
-                Selected=categoryId.HasValue && categoryId.Value==x.CategoryId
+                Text = x.CategoryName,
+                Value = x.CategoryId.ToString(),
+                Selected = categoryId.HasValue && categoryId.Value == x.CategoryId
             });
             return View(data.ResultObj);
         }
@@ -57,7 +60,7 @@ namespace FreshShop.AdminApp.Controllers
             ViewBag.Categories = categories.ResultObj.Select(x => new SelectListItem()
             {
                 Text = x.CategoryName,
-                Value = x.CategoryId.ToString(),             
+                Value = x.CategoryId.ToString(),
             });
             return View();
         }
@@ -88,6 +91,26 @@ namespace FreshShop.AdminApp.Controllers
             var result = await _productApiClient.GetById(id, defaultLanguageId);
             if (result.IsSuccessed)
             {
+                var promotion = await _promotionApiClient.GetByProduct(id);
+                if (promotion.IsSuccessed)
+                {
+                    var promotionUpdateRequest = new PromotionUpdateRequest()
+                    {
+                        Id = promotion.ResultObj.Id,
+                        ProductId = promotion.ResultObj.ProductId,
+                        FromDate = promotion.ResultObj.FromDate,
+                        ExpiredDate = promotion.ResultObj.ExpiredDate,
+                        Discount = promotion.ResultObj.Discount,
+                        Status = promotion.ResultObj.Status
+                    };
+                    ViewBag.Promotion = promotionUpdateRequest;
+                }
+                else
+                {
+                    ViewBag.Promotion = null;
+                }
+                
+
                 var images = await _productApiClient.GetListManage(id);
                 if (images.IsSuccessed)
                 {
@@ -121,7 +144,7 @@ namespace FreshShop.AdminApp.Controllers
                 {
                     Text = x.CategoryName,
                     Value = x.CategoryId.ToString(),
-                    Selected=x.CategoryId==product.CategoryID,
+                    Selected = x.CategoryId == product.CategoryID,
                 });
                 return View(updateRequest);
             }
@@ -163,7 +186,7 @@ namespace FreshShop.AdminApp.Controllers
 
         [HttpPost]
         public async Task<JsonResult> Delete(int id)
-        {           
+        {
 
             var result = await _productApiClient.Delete(id);
             if (result.IsSuccessed)
@@ -181,7 +204,7 @@ namespace FreshShop.AdminApp.Controllers
 
         [HttpPost]
         [Consumes("multipart/form-data")]
-        public async Task<IActionResult> AddImage(int productId, IFormFile thumbnailImage )
+        public async Task<IActionResult> AddImage(int productId, IFormFile thumbnailImage)
         {
             if (!ModelState.IsValid) return RedirectToAction("Detail", "Product", new { id = productId });
 
@@ -194,22 +217,22 @@ namespace FreshShop.AdminApp.Controllers
 
         }
 
-       [HttpPost]
+        [HttpPost]
         public async Task<JsonResult> DeleteImage(string productImageDeleteRequest)
         {
             var request = JsonConvert.DeserializeObject<ProductImageDeleteRequest>(productImageDeleteRequest);
-           
+
             var result = await _productApiClient.DeleteImage(request.ProductId, request.ImageId);
             if (result.IsSuccessed)
             {
                 return Json(new
                 {
-                    status=true,                 
+                    status = true,
                 });
             }
             return Json(new
             {
-                status = false,               
+                status = false,
             });
         }
 

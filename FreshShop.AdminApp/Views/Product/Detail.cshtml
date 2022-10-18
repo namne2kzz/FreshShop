@@ -1,4 +1,5 @@
 ﻿@using FreshShop.ViewModels.Catalog.Product
+@using FreshShop.ViewModels.Catalog.Promotion
 @using FreshShop.ViewModels.Catalog.ProductImage
 @model ProductViewModel
 
@@ -6,9 +7,10 @@
     ViewData["Title"] = "Detail";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var listImage = (List<ProductImageViewModel>)ViewBag.ListImage;
+    var promotion = (PromotionUpdateRequest)ViewBag.Promotion;
 }
 
-@section script{ 
+@section script{
 
     <script src="~/jsControllers/product-detailController.js"></script>
 }
@@ -71,12 +73,16 @@
                                                 <a class="nav-link" data-toggle="tab" href="#settings3" role="tab">Cập nhật giá sản phẩm</a>
                                                 <div class="slide"></div>
                                             </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" data-toggle="tab" href="#promotion3" role="tab">Giảm giá</a>
+                                                <div class="slide"></div>
+                                            </li>
                                         </ul>
                                         <!-- Tab panes -->
                                         <div class="tab-content card-block">
                                             <div class="tab-pane active" id="profile3" role="tabpanel">
                                                 <table style="width:100%" class="table table-hover table-responsive">
-                                                  
+
                                                     <tbody>
                                                         <tr>
                                                             <th width="20%">
@@ -85,7 +91,7 @@
                                                             <td width="30%">
                                                                 @Html.DisplayFor(model => model.ID)
                                                             </td>
-                                                          
+
                                                         </tr>
                                                         <tr>
                                                             <th>
@@ -178,29 +184,29 @@
                                                             <td>
                                                                 @Html.DisplayFor(model => model.Description)
                                                             </td>
-                                                           
+
                                                         </tr>
                                                     </tbody>
-                                                </table>                                               
+                                                </table>
 
                                             </div>
-                                            <div class="tab-pane" id="image3" role="tabpanel">                                                                                                                                                
-                                                        <form class="form-group" asp-action="AddImage" asp-controller="Product" method="post" enctype="multipart/form-data">
-                                                            <div class="row">
-                                                                <div class="col-md-6">
-                                                                    <input type="hidden" name="productId" value="@Model.ID" />
-                                                                </div>
-                                                              
-                                                                <label>Chọn hình ảnh</label>
-                                                                <div class="col-md-4">
-                                                                    <input class="form-control" name="thumbnailImage" type="file" />
-                                                                </div>
-                                                                <div style="display:inline-block">
-                                                                    <button type="submit" class="btn-sm btn-primary">Thêm mới</button>
+                                            <div class="tab-pane" id="image3" role="tabpanel">
+                                                <form class="form-group" asp-action="AddImage" asp-controller="Product" method="post" enctype="multipart/form-data">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <input type="hidden" name="productId" value="@Model.ID" />
+                                                        </div>
 
-                                                                </div>
-                                                            </div>
-                                                        </form>                                                                                                
+                                                        <label>Chọn hình ảnh</label>
+                                                        <div class="col-md-4">
+                                                            <input class="form-control" name="thumbnailImage" type="file" />
+                                                        </div>
+                                                        <div style="display:inline-block">
+                                                            <button type="submit" class="btn-sm btn-primary">Thêm mới</button>
+
+                                                        </div>
+                                                    </div>
+                                                </form>
 
                                                 <div class="table-responsive">
                                                     <table class="table table-hover">
@@ -253,6 +259,57 @@
                                                         </div>
                                                     </div>
                                                 </form>
+                                            </div>
+                                            <div class="tab-pane" id="promotion3" role="tabpanel">
+                                                @if (ViewBag.Promotion != null)
+                                                {
+                                                    <form asp-action="Update" asp-controller="Promotion" method="post">
+                                                        <input type="hidden" value="@promotion.Id" name="Id" />
+                                                        <input type="hidden" value="@promotion.ProductId" name="ProductId" />
+                                                        <div class="form-group row">
+                                                            <label class="col-sm-2 col-form-label">From Date</label>
+                                                            <div class="col-sm-8">
+                                                                <input asp-for="@promotion.FromDate" name="FromDate" type="date" class="form-control" required />
+                                                                <span asp-validation-for="@promotion.FromDate" class="text-danger"></span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <label class="col-sm-2 col-form-label">Expired Date</label>
+                                                            <div class="col-sm-8">
+                                                                <input asp-for="@promotion.ExpiredDate" name="ExpiredDate" type="date" class="form-control" required />
+                                                                <span asp-validation-for="@promotion.ExpiredDate" class="text-danger"></span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <label class="col-sm-2 col-form-label">From Date</label>
+                                                            <div class="col-sm-8">
+                                                                <input asp-for="@promotion.Discount" name="Discount" type="text" class="form-control" required />
+                                                                <span asp-validation-for="@promotion.Discount" class="text-danger"></span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <label class="col-sm-2 col-form-label">Status</label>
+                                                            <div class="col-sm-8">
+                                                                <input asp-for="@promotion.Status" name="Status" type="checkbox" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <div class="col-sm-2">
+                                                                <input type="submit" value="Cập nhật" class="btn btn-primary" />
+
+                                                            </div>
+                                                            <div class="col-sm-8"></div>
+                                                            <div class="col-sm-2">
+                                                                <strong> <a href="#" id="btnPromotionDelete" data-id="@promotion.Id">Xóa giảm giá</a></strong>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                }
+                                                else
+                                                {
+                                                    <div>Sản phẩm chưa được giảm giá. Đi đến trang <strong><a href="/Product/Index">Sản phẩm</a></strong> để tạo giảm giá cho sản phẩm! </div>
+                                                }
+
                                             </div>
                                         </div>
                                     </div>
