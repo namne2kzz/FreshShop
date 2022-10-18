@@ -55,7 +55,7 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col-md-6">
-                                <a class="btn btn-primary" href="/Product/Create">Thêm mới</a>
+                                <a class="btn btn-primary" href="/Product/Create">Thêm mới</a>                               
                             </div>
                             <div class="col-md-6">
                                 <form class="form-group" asp-action="Index" asp-controller="Product" method="get">
@@ -111,6 +111,7 @@
                                                 <td>
                                                     @Html.ActionLink("Cập nhật", "Update", "Product", new { id = item.ID }) |
                                                     @Html.ActionLink("Chi tiết", "Detail", "Product", new { id = item.ID }) |
+                                                    @Html.ActionLink("Giảm giá", "Create", "Promotion", new { id = item.ID }) |
                                                     <a href="#" class="product-link-delete" data-id="@item.ID">Xóa</a> |
                                                 </td>
                                             </tr>

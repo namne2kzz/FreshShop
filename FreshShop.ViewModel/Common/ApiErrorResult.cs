@@ -11,7 +11,7 @@ namespace FreshShop.ViewModels.Common
         public ApiErrorResult()
         {
 
-        }
+        }       
 
         public ApiErrorResult(string message)
         {
