@@ -5,7 +5,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FreshShop.Data\FreshShop.Data.csproj" />
+    <PackageReference Include="LazZiya.ExpressLocalization" Version="4.0.4" />
+    <PackageReference Include="LazZiya.TagHelpers" Version="6.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\fonts\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FreshShop.ApiIntergration\FreshShop.ApiIntergration.csproj" />
+    <ProjectReference Include="..\FreshShop.Utilities\FreshShop.Utilities.csproj" />
+    <ProjectReference Include="..\FreshShop.ViewModel\FreshShop.ViewModels.csproj" />
   </ItemGroup>
 
 </Project>

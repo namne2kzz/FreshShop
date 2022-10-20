@@ -1,4 +1,4 @@
-﻿using FreshShop.AdminApp.Services;
+﻿using FreshShop.ApiIntergration;
 using FreshShop.ViewModels.Catalog.Address;
 using FreshShop.ViewModels.Common;
 using FreshShop.ViewModels.System.Roles;

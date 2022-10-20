@@ -1,5 +1,5 @@
 using FluentValidation.AspNetCore;
-using FreshShop.AdminApp.Services;
+using FreshShop.ApiIntergration;
 using FreshShop.ViewModels.System.Users;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;

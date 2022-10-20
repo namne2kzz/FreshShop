@@ -1,4 +1,4 @@
-﻿using FreshShop.AdminApp.Services;
+﻿using FreshShop.ApiIntergration;
 using FreshShop.ViewModels.Catalog.Category;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
