@@ -1,5 +1,5 @@
 ﻿using FreshShop.AdminApp.Models;
-using FreshShop.AdminApp.Services;
+using FreshShop.ApiIntergration;
 using FreshShop.Utilities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

@@ -1,4 +1,4 @@
-﻿using FreshShop.AdminApp.Services;
+﻿using FreshShop.ApiIntergration;
 using FreshShop.ViewModels.Catalog.Product;
 using FreshShop.ViewModels.Catalog.ProductImage;
 using FreshShop.ViewModels.Catalog.Promotion;
