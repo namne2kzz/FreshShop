@@ -29,7 +29,7 @@ namespace FreshShop.BackendApi.Controllers
             var blogs = await _blogService.GetAllPaging(request);
             if (blogs.IsSuccessed) return Ok(blogs);
             return BadRequest(blogs);
-        }
+        }       
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById([FromQuery] int id)
@@ -90,6 +90,19 @@ namespace FreshShop.BackendApi.Controllers
             }
             var result = await _blogService.ChangeStatus(id);
             return Ok(result);
+        }
+
+        //Client binding data
+
+        [HttpGet("latest")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetAllLatest()
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            var blogs = await _blogService.GetAllLatest();
+            return Ok(blogs);
+
         }
     }
 }

@@ -20,5 +20,9 @@ namespace FreshShop.Business.Catalog.Blogs
         Task<ApiResult<bool>> Delete(int id);
 
         Task<bool> ChangeStatus(int id);
+
+        //Client binding data
+
+        Task<List<BlogViewModel>> GetAllLatest();
     }
 }

@@ -38,7 +38,7 @@ namespace FreshShop.ApiIntergration
             var languageId = _httpContextAccessor.HttpContext.Session.GetString(SystemConstants.DefaultLanguageId);
 
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.BaseAddress = new Uri(SystemConstants.BaseAddress);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
 
             var requestContent = new MultipartFormDataContent();
@@ -74,7 +74,7 @@ namespace FreshShop.ApiIntergration
         {
             var session = _httpContextAccessor.HttpContext.Session.GetString("Token");
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.BaseAddress = new Uri(SystemConstants.BaseAddress);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", session);
             var response = await client.DeleteAsync($"/api/categories/{categoryId}?categoryId={categoryId}");
 
@@ -84,13 +84,29 @@ namespace FreshShop.ApiIntergration
                 return JsonConvert.DeserializeObject<ApiSuccessResult<bool>>(body);
             }
             return JsonConvert.DeserializeObject<ApiErrorResult<bool>>(body);
-        }   
+        }
+
+        public async  Task<ApiResult<List<CategoryViewModel>>> GetAll(string languageId)
+        {
+            var session = _httpContextAccessor.HttpContext.Session.GetString(SystemConstants.Token);
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(SystemConstants.BaseAddress);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", session);
+            var response = await client.GetAsync($"api/categories/client/{languageId}?languageId={languageId}");
+            var body = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+            {
+                List<CategoryViewModel> categoriesDesereializeObj = (List<CategoryViewModel>)JsonConvert.DeserializeObject(body, typeof(List<CategoryViewModel>));
+                return new ApiSuccessResult<List<CategoryViewModel>>(categoriesDesereializeObj);
+            }
+            return JsonConvert.DeserializeObject<ApiErrorResult<List<CategoryViewModel>>>(body);
+        }
 
         public async Task<ApiResult<PagedResult<CategoryViewModel>>> GetAllCategoryByLanguageId(GetCategoryPagingRequest request)
         {
             var session = _httpContextAccessor.HttpContext.Session.GetString("Token");
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.BaseAddress = new Uri(SystemConstants.BaseAddress);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", session);
             var response = await client.GetAsync($"/api/categories/languageId?pageIndex={request.PageIndex}&pageSize={request.PageSize}&keyword={request.Keyword}&languageId={request.LanguageId}");
 
@@ -103,7 +119,7 @@ namespace FreshShop.ApiIntergration
         {
             var session = _httpContextAccessor.HttpContext.Session.GetString("Token");
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.BaseAddress = new Uri(SystemConstants.BaseAddress);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", session);
             var response = await client.GetAsync($"/api/categories?languageId={languageId}");
 
@@ -120,7 +136,7 @@ namespace FreshShop.ApiIntergration
         {
             var session = _httpContextAccessor.HttpContext.Session.GetString("Token");
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.BaseAddress = new Uri(SystemConstants.BaseAddress);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", session);
             var response = await client.GetAsync($"/api/categories/{request.LanguageId}/{request.CategoryId}/child?languageId={request.LanguageId}&categoryId={request.CategoryId}");
 
@@ -133,11 +149,27 @@ namespace FreshShop.ApiIntergration
             return JsonConvert.DeserializeObject<ApiErrorResult<List<CategoryViewModel>>>(body);
         }
 
+        public async Task<ApiResult<List<CategoryTreeViewModel>>> GetAllTree(string languageId)
+        {
+            var session = _httpContextAccessor.HttpContext.Session.GetString(SystemConstants.Token);
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(SystemConstants.BaseAddress);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", session);
+            var response = await client.GetAsync($"api/categories/client/{languageId}/tree?languageId={languageId}");
+            var body = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+            {
+                List<CategoryTreeViewModel> treeDesereializeObj = (List<CategoryTreeViewModel>)JsonConvert.DeserializeObject(body, typeof(List<CategoryTreeViewModel>));
+                return new ApiSuccessResult<List<CategoryTreeViewModel>>(treeDesereializeObj);
+            }
+            return JsonConvert.DeserializeObject<ApiErrorResult<List<CategoryTreeViewModel>>>(body);
+        }
+
         public async Task<ApiResult<CategoryViewModel>> GetById(string languageId, int categoryId)
         {
             var session = _httpContextAccessor.HttpContext.Session.GetString("Token");
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.BaseAddress = new Uri(SystemConstants.BaseAddress);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", session);
             var response = await client.GetAsync($"/api/categories/{languageId}/{categoryId}?languageId={languageId}&categoryId={categoryId}");
 
@@ -149,7 +181,7 @@ namespace FreshShop.ApiIntergration
         public async Task<ApiResult<bool>> Update(CategoryUpdateRequest request)
         {
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.BaseAddress = new Uri(SystemConstants.BaseAddress);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _httpContextAccessor.HttpContext.Session.GetString("Token"));
 
             var json = JsonConvert.SerializeObject(request);
@@ -167,7 +199,7 @@ namespace FreshShop.ApiIntergration
         public async Task<bool> UpdateStatus(int categoryId)
         {
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.BaseAddress = new Uri(SystemConstants.BaseAddress);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _httpContextAccessor.HttpContext.Session.GetString("Token"));
 
             var json = JsonConvert.SerializeObject(categoryId);

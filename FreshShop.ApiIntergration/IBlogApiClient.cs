@@ -20,5 +20,9 @@ namespace FreshShop.ApiIntergration
         Task<ApiResult<bool>> Update(BlogUpdateRequest request);
 
         Task<bool> UpdateStatus(int id);
+
+        //Client binding data
+
+        Task<ApiResult<List<BlogViewModel>>> GetAllLatest();
     }
 }

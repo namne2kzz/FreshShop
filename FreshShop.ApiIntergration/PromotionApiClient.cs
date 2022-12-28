@@ -36,7 +36,7 @@ namespace FreshShop.ApiIntergration
                .GetString(SystemConstants.Token);
 
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.BaseAddress = new Uri(SystemConstants.BaseAddress);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
 
             var json = JsonConvert.SerializeObject(request);
@@ -59,7 +59,7 @@ namespace FreshShop.ApiIntergration
               .GetString(SystemConstants.Token);
 
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.BaseAddress = new Uri(SystemConstants.BaseAddress);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
 
             var response = await client.DeleteAsync($"/api/promotions/{id}?id={id}");
@@ -75,7 +75,7 @@ namespace FreshShop.ApiIntergration
         {
             var session = _httpContextAccessor.HttpContext.Session.GetString("Token");
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.BaseAddress = new Uri(SystemConstants.BaseAddress);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", session);
             var response = await client.GetAsync($"/api/promotions/{id}?id={id}");
 
@@ -91,7 +91,7 @@ namespace FreshShop.ApiIntergration
         {
             var session = _httpContextAccessor.HttpContext.Session.GetString("Token");
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.BaseAddress = new Uri(SystemConstants.BaseAddress);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", session);
             var response = await client.GetAsync($"/api/promotions/product/{id}?id={id}");
 
@@ -106,7 +106,7 @@ namespace FreshShop.ApiIntergration
         public async Task<ApiResult<bool>> Update(PromotionUpdateRequest request)
         {
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.BaseAddress = new Uri(SystemConstants.BaseAddress);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _httpContextAccessor.HttpContext.Session.GetString("Token"));
 
             var json = JsonConvert.SerializeObject(request);

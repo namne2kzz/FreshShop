@@ -36,14 +36,66 @@ namespace FreshShop.BackendApi.Controllers
 
 
         [HttpGet("{languageId}/{categoryId}")]
-        public async Task<IActionResult> GetAllByCategory([FromQuery] GetPublicProductPagingRequest request, string languageId)
+        public async Task<IActionResult> GetAllByCategory([FromQuery] GetManageProductPagingRequest request, string languageId)
         {
             var products = await _productService.GetAllByCategoryId(request, languageId);
             return Ok(products);
-        }       
+        }
+
+        [AllowAnonymous]
+        [HttpGet("client/{languageId}")]
+        public async Task<IActionResult> GetAll([FromQuery] GetPublicProductPagingRequest request)
+        {
+            var products = await _productService.GetAll(request);
+            return Ok(products);
+        }
+
+        [AllowAnonymous]
+        [HttpGet("sale/{languageId}")]
+        public async Task<IActionResult> GetAllSale([FromQuery] string languageId)
+        {
+            var products = await _productService.GetAllSale(languageId);
+            return Ok(products);
+        }
+
+        [AllowAnonymous]
+        [HttpGet("latest/{languageId}")]
+        public async Task<IActionResult> GetAllLatest([FromQuery] string languageId)
+        {
+            var products = await _productService.GetAllLatest(languageId);
+            return Ok(products);
+        }
+
+        [AllowAnonymous]
+        [HttpGet("bestseller/{languageId}")]
+        public async Task<IActionResult> GetAllBestSeller([FromQuery] string languageId)
+        {
+            var products = await _productService.GetAllBestSeller(languageId);
+            return Ok(products);
+        }
+
+        [AllowAnonymous]
+        [HttpGet("related/{productId}/{languageId}")]
+        public async Task<IActionResult> GetAllBestSeller([FromQuery] GetRelatedProductRequest request)
+        {
+            var products = await _productService.GetAllRelated(request);
+            return Ok(products);
+        }
 
         [HttpGet("detail")]
         public async Task<IActionResult> GetById([FromQuery] int productId, string languageId)
+        {
+            var product = await _productService.GetById(productId, languageId);
+            if (product == null)
+            {
+                return BadRequest("Cannot find product");
+            }
+            return Ok(product);
+        }
+
+        [HttpGet("client/detail/{productId}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetByIdClient([FromQuery] int productId, string languageId)
         {
             var product = await _productService.GetById(productId, languageId);
             if (product == null)
@@ -198,7 +250,14 @@ namespace FreshShop.BackendApi.Controllers
             return BadRequest(images);
         }
 
-
+        [HttpGet("client/{productId}/images")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetListImageClient([FromQuery] int productId)
+        {
+            var images = await _productService.GetListImage(productId);
+            if (images.Count > 0) return Ok(images);
+            return BadRequest(images);
+        }
 
     }
 }

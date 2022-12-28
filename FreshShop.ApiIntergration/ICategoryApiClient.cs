@@ -24,5 +24,11 @@ namespace FreshShop.ApiIntergration
         Task<ApiResult<bool>> Update(CategoryUpdateRequest request);
 
         Task<bool> UpdateStatus(int categoryId);
+
+        //Binding client data
+
+        Task<ApiResult<List<CategoryViewModel>>> GetAll(string languageId);
+
+        Task<ApiResult<List<CategoryTreeViewModel>>> GetAllTree(string languageId);
     }
 }

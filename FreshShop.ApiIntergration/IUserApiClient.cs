@@ -23,5 +23,12 @@ namespace FreshShop.ApiIntergration
         Task<ApiResult<bool>> Delete(Guid id);
 
         Task<ApiResult<bool>> RoleAssign(Guid id, RoleAssignRequest request);
+
+        //
+
+        Task<ApiResult<string>> AuthenticateClient(LoginRequest request);
+
+        Task<ApiResult<bool>> RegisterClient(RegisterRequest request);
+
     }
 }

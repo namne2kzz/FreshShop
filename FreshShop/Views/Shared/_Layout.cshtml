@@ -25,17 +25,6 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="~/css/bootstrap.min.css">
 
-
-    <link href="~/css/all.css" rel="stylesheet" />
-    <link href="~/css/animate.css" rel="stylesheet" />
-    <link href="~/css/baguetteBox.min.css" rel="stylesheet" />
-    <link href="~/css/bootsnav.css" rel="stylesheet" />
-    <link href="~/css/bootstrap-select.css" rel="stylesheet" />
-    <link href="~/css/carousel-ticker.css" rel="stylesheet" />
-    <link href="~/css/code_animate.css" rel="stylesheet" />
-    <link href="~/css/jquery-ui.css" rel="stylesheet" />
-    <link href="~/css/owl.carousel.min.css" rel="stylesheet" />
-
     <!-- Site CSS -->
     <link rel="stylesheet" href="~/css/style.css">
     <!-- Responsive CSS -->
@@ -71,18 +60,32 @@
                     </div>
                     <div class="our-link">
                         <ul>
-                            <li><a asp-route-culture="@culture"><i class="fa fa-user s_color"></i><localize>My Account</localize> </a></li>
+                            <li>
+
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    <a href="/@culture/User/Index"> <i class="fa fa-user s_color"></i> @User.Identity.Name</a>
+                                }
+                                else
+                                {
+                                    <a href="/@culture/Authen/Login"> <i class="fa fa-user s_color"></i><localize>My Account</localize></a>
+                                }
+                            </li>
+                            <li><a href="/@culture/Authen/Register"><i class="fas fa-user-plus"></i><localize>Register</localize> </a></li>
                             <li><a asp-route-culture="@culture"><i class="fas fa-location-arrow"></i><localize>Our location</localize> </a></li>
-                            <li><a asp-route-culture="@culture"><i class="fas fa-headset"></i><localize>Contact Us</localize> </a></li>
                         </ul>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                     <div class="login-box">
-                        <select id="basic" class="selectpicker show-tick form-control" data-placeholder="Sign In">
-                            <option><localize>Register Here</localize></option>
-                            <option><localize>Sign In</localize></option>
-                        </select>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <a class="btn hvr-hover" href="/@CultureInfo.CurrentCulture.Name/Authen/Logout"><localize>Logout</localize></a>
+                        }
+                        else
+                        {
+                            <a class="btn hvr-hover" href="/@CultureInfo.CurrentCulture.Name/Authen/Login"><localize>Login</localize></a>
+                        }
                     </div>
                     <div class="text-slid-box">
                         <div id="offer-box" class="carouselTicker">
@@ -140,14 +143,12 @@
                         <li class="dropdown">
                             <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown"><localize>Shop</localize></a>
                             <ul class="dropdown-menu">
-                                <li><a href="shop.html">Sidebar Shop</a></li>
-                                <li><a href="shop-detail.html">Shop Detail</a></li>
-                                <li><a href="cart.html">Cart</a></li>
-                                <li><a href="checkout.html">Checkout</a></li>
-                                <li><a href="my-account.html">My Account</a></li>
+                                <li><a href="/@culture/Product/Index">Shop</a></li>
+                                <li><a href="#">Cart</a></li>
                                 <li><a href="wishlist.html">Wishlist</a></li>
                             </ul>
-                        </li>                      
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="/@culture/Category/Index"><localize>Category</localize></a></li>
                         <li class="nav-item"><a class="nav-link" href="contact-us.html"><localize>Contact Us</localize> </a></li>
                     </ul>
                 </div>
@@ -355,7 +356,7 @@
                             <ul>
                                 <li><a href="#"><localize>About Us</localize> </a></li>
                                 <li><a href="#"><localize>Customer Service</localize></a></li>
-                                <li><a href="#"><localize>Our Sitemap</localize></a></li>                           
+                                <li><a href="#"><localize>Our Sitemap</localize></a></li>
                                 <li><a href="#"><localize>Privacy Policy</localize></a></li>
                                 <li><a href="#"><localize>Delivery Information</localize></a></li>
                             </ul>
@@ -409,6 +410,9 @@
     <script src="~/js/form-validator.min.js"></script>
     <script src="~/js/contact-form-script.js"></script>
     <script src="~/js/custom.js"></script>
+    <!--SweetAlert-->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @RenderSection("script", required: false)
 </body>
 
 </html>

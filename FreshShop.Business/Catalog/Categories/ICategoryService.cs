@@ -24,5 +24,11 @@ namespace FreshShop.Business.Catalog.Categories
         Task<bool> UpdateStatus(int categoryId);
 
         Task<List<CategoryViewModel>> GetAllChildByCategoryId(GetAllChildRequest request);
+
+        // Binding client data
+
+        Task<List<CategoryViewModel>> GetAll(string languageId);
+
+        Task<List<CategoryTreeViewModel>> GetAllTree(string languageId);
     }
 }

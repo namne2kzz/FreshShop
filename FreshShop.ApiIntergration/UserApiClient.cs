@@ -1,4 +1,5 @@
-﻿using FreshShop.ViewModels.Common;
+﻿using FreshShop.Utilities;
+using FreshShop.ViewModels.Common;
 using FreshShop.ViewModels.System.Roles;
 using FreshShop.ViewModels.System.Users;
 using Microsoft.AspNetCore.Http;
@@ -33,7 +34,7 @@ namespace FreshShop.ApiIntergration
             var json = JsonConvert.SerializeObject(request);
             var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.BaseAddress = new Uri(SystemConstants.BaseAddress);
             var response = await client.PostAsync("/api/authens/authenticate",httpContent);
             if (response.IsSuccessStatusCode)
             {
@@ -43,11 +44,26 @@ namespace FreshShop.ApiIntergration
             return JsonConvert.DeserializeObject<ApiErrorResult<string>>(await response.Content.ReadAsStringAsync());
         }
 
+        public async Task<ApiResult<string>> AuthenticateClient(LoginRequest request)
+        {
+            var json = JsonConvert.SerializeObject(request);
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(SystemConstants.BaseAddress);
+            var response = await client.PostAsync("/api/authens/client/authenticate", httpContent);
+            if (response.IsSuccessStatusCode)
+            {
+                return JsonConvert.DeserializeObject<ApiSuccessResult<string>>(await response.Content.ReadAsStringAsync());
+            }
+
+            return JsonConvert.DeserializeObject<ApiErrorResult<string>>(await response.Content.ReadAsStringAsync());
+        }
+
         public async Task<ApiResult<bool>> Delete(Guid id)
         {
             var session = _httpContextAccessor.HttpContext.Session.GetString("Token");
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.BaseAddress = new Uri(SystemConstants.BaseAddress);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", session);
             var response = await client.DeleteAsync($"/api/users/{id}");
 
@@ -56,7 +72,7 @@ namespace FreshShop.ApiIntergration
             {
                 return JsonConvert.DeserializeObject<ApiSuccessResult<bool>>(body);
             }
-            return JsonConvert.DeserializeObject<ApiErrorResult<bool>>("Thao tác thất bại");
+            return JsonConvert.DeserializeObject<ApiErrorResult<bool>>(body);
 
         }
 
@@ -64,7 +80,7 @@ namespace FreshShop.ApiIntergration
         {
             var session = _httpContextAccessor.HttpContext.Session.GetString("Token");
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.BaseAddress = new Uri(SystemConstants.BaseAddress);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", session );
             var response = await client.GetAsync($"/api/users/{id}");
 
@@ -73,27 +89,28 @@ namespace FreshShop.ApiIntergration
             {
                 return JsonConvert.DeserializeObject<ApiSuccessResult<UserViewModel>>(body);
             }
-                return JsonConvert.DeserializeObject<ApiErrorResult<UserViewModel>>("Không tìm thấy tài khoản");
+                return JsonConvert.DeserializeObject<ApiErrorResult<UserViewModel>>(body);
 
         }
 
         public async Task<ApiResult<PagedResult<UserViewModel>>> GetUserPaging(GetUserPagingRequest request)
         {
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.BaseAddress = new Uri(SystemConstants.BaseAddress);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _httpContextAccessor.HttpContext.Session.GetString("Token"));
             var response = await client.GetAsync($"/api/users/paging?pageIndex=" +
                 $"{request.PageIndex}&pageSize={request.PageSize}&keyword={request.Keyword}");
             var body = await response.Content.ReadAsStringAsync();
             if(response.IsSuccessStatusCode) return JsonConvert.DeserializeObject<ApiSuccessResult<PagedResult<UserViewModel>>>(body);
-            return JsonConvert.DeserializeObject<ApiErrorResult<PagedResult<UserViewModel>>>("Thao tác thất bại");
+            return JsonConvert.DeserializeObject<ApiErrorResult<PagedResult<UserViewModel>>>(body);
         }
 
         public async Task<ApiResult<bool>> Register(RegisterRequest request)
         {
+            var session = _httpContextAccessor.HttpContext.Session.GetString(SystemConstants.Token);
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration["BaseAddress"]);         
-          
+            client.BaseAddress = new Uri(SystemConstants.BaseAddress);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", session);
             var requestContent = new MultipartFormDataContent();
 
             if (request.ThumbnailImage != null)
@@ -109,28 +126,61 @@ namespace FreshShop.ApiIntergration
 
             requestContent.Add(new StringContent(request.FirstName.ToString()), "firstName");
             requestContent.Add(new StringContent(request.LastName.ToString()), "lastName");
-            requestContent.Add(new StringContent(request.Dob.ToString()), "dob");
+            requestContent.Add(new StringContent(request.Dob.ToShortDateString()), "dob");
             requestContent.Add(new StringContent(request.Email.ToString()), "email");
             requestContent.Add(new StringContent(request.PhoneNumber.ToString()), "phoneNumber");
             requestContent.Add(new StringContent(request.UserName.ToString()), "userName");
             requestContent.Add(new StringContent(request.Password.ToString()), "password");
-            requestContent.Add(new StringContent(request.ConfirmPassword.ToString()), "confirmPassowrd");          
+            requestContent.Add(new StringContent(request.ConfirmPassword.ToString()), "confirmPassword");          
 
-            var response = await client.PostAsync("/api/users/register", requestContent);
+            var response = await client.PostAsync($"/api/users", requestContent);
             var result = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode)
             {
                 return JsonConvert.DeserializeObject<ApiSuccessResult<bool>>(result);
             }
-            return JsonConvert.DeserializeObject<ApiErrorResult<bool>>("Thêm tài khoản thất bại");
+            return JsonConvert.DeserializeObject<ApiErrorResult<bool>>(result);
         }
 
-    
+        public async Task<ApiResult<bool>> RegisterClient(RegisterRequest request)
+        {           
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(SystemConstants.BaseAddress);          
+            var requestContent = new MultipartFormDataContent();
+
+            if (request.ThumbnailImage != null)
+            {
+                byte[] data;
+                using (var br = new BinaryReader(request.ThumbnailImage.OpenReadStream()))
+                {
+                    data = br.ReadBytes((int)request.ThumbnailImage.OpenReadStream().Length);
+                }
+                ByteArrayContent bytes = new ByteArrayContent(data);
+                requestContent.Add(bytes, "thumbnailImage", request.ThumbnailImage.FileName);
+            }
+
+            requestContent.Add(new StringContent(request.FirstName.ToString()), "firstName");
+            requestContent.Add(new StringContent(request.LastName.ToString()), "lastName");
+            requestContent.Add(new StringContent(request.Dob.ToShortDateString()), "dob");
+            requestContent.Add(new StringContent(request.Email.ToString()), "email");
+            requestContent.Add(new StringContent(request.PhoneNumber.ToString()), "phoneNumber");
+            requestContent.Add(new StringContent(request.UserName.ToString()), "userName");
+            requestContent.Add(new StringContent(request.Password.ToString()), "password");
+            requestContent.Add(new StringContent(request.ConfirmPassword.ToString()), "confirmPassword");
+
+            var response = await client.PostAsync("/api/authens/client/register", requestContent);
+            var result = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+            {
+                return JsonConvert.DeserializeObject<ApiSuccessResult<bool>>(result);
+            }
+            return JsonConvert.DeserializeObject<ApiErrorResult<bool>>(result);
+        }
 
         public async Task<ApiResult<bool>> RoleAssign(Guid id, RoleAssignRequest request)
         {
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.BaseAddress = new Uri(SystemConstants.BaseAddress);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _httpContextAccessor.HttpContext.Session.GetString("Token"));
 
             var json = JsonConvert.SerializeObject(request);
@@ -142,13 +192,13 @@ namespace FreshShop.ApiIntergration
             {
                 return JsonConvert.DeserializeObject<ApiSuccessResult<bool>>(result);
             }
-            return JsonConvert.DeserializeObject<ApiErrorResult<bool>>("Gán quyền thất bại");
+            return JsonConvert.DeserializeObject<ApiErrorResult<bool>>(result);
         }
 
         public async Task<ApiResult<bool>> Update(Guid id, UserUpdateRequest request)
         {
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.BaseAddress = new Uri(SystemConstants.BaseAddress);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _httpContextAccessor.HttpContext.Session.GetString("Token"));
             
             var json = JsonConvert.SerializeObject(request);
@@ -160,7 +210,7 @@ namespace FreshShop.ApiIntergration
             {
                 return JsonConvert.DeserializeObject<ApiSuccessResult<bool>>(result);
             }
-            return JsonConvert.DeserializeObject<ApiErrorResult<bool>>("Cập nhật thất bại");
+            return JsonConvert.DeserializeObject<ApiErrorResult<bool>>(result);
         }
     }
 }

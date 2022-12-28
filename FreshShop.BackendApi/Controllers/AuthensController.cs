@@ -36,7 +36,39 @@ namespace FreshShop.BackendApi.Controllers
             return Ok(resultToken);
         }
 
-       
+        [HttpPost("client/authenticate")]
+        [AllowAnonymous]
+        public async Task<IActionResult> AuthenticateClient([FromBody] LoginRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var resultToken = await _userService.AuthenticateClient(request);
+            if (!resultToken.IsSuccessed)
+            {
+                return BadRequest(resultToken);
+            }
+            return Ok(resultToken);
+        }
+
+        [HttpPost("client/register")]
+        [Consumes("multipart/form-data")]
+        [AllowAnonymous]
+        public async Task<IActionResult> RegisterClient([FromForm] RegisterRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+           
+            var result = await _userService.RegisterClient(request);
+            if (!result.IsSuccessed)
+            {
+                return BadRequest(result.Message);
+            }
+            return Ok(result);
+        }
 
 
     }

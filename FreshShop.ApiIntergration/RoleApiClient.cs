@@ -38,7 +38,7 @@ namespace FreshShop.ApiIntergration
             var languageId = _httpContextAccessor.HttpContext.Session.GetString(SystemConstants.DefaultLanguageId);
 
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.BaseAddress = new Uri(SystemConstants.BaseAddress);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
 
             var json = JsonConvert.SerializeObject(request);
@@ -63,7 +63,7 @@ namespace FreshShop.ApiIntergration
             var languageId = _httpContextAccessor.HttpContext.Session.GetString(SystemConstants.DefaultLanguageId);
 
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.BaseAddress = new Uri(SystemConstants.BaseAddress);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);          
 
             var response = await client.DeleteAsync($"/api/roles?id={id}");
@@ -79,7 +79,7 @@ namespace FreshShop.ApiIntergration
         {
             var session = _httpContextAccessor.HttpContext.Session.GetString("Token");
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.BaseAddress = new Uri(SystemConstants.BaseAddress);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", session);
             var response = await client.GetAsync($"/api/roles");
 
@@ -96,7 +96,7 @@ namespace FreshShop.ApiIntergration
         public async Task<ApiResult<PagedResult<UserViewModel>>> GetAllPagingByRole(GetUserPagingByRoleRequest request)
         {
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.BaseAddress = new Uri(SystemConstants.BaseAddress);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _httpContextAccessor.HttpContext.Session.GetString("Token"));
             var response = await client.GetAsync($"/api/roles/{request.Id}?pageIndex=" +
                 $"{request.PageIndex}&pageSize={request.PageSize}&keyword={request.Keyword}&Id={request.Id}");

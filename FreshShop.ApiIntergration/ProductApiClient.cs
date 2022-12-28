@@ -37,7 +37,7 @@ namespace FreshShop.ApiIntergration
                 .GetString(SystemConstants.Token);         
 
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.BaseAddress = new Uri(SystemConstants.BaseAddress);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
 
             var requestContent = new MultipartFormDataContent();
@@ -74,7 +74,7 @@ namespace FreshShop.ApiIntergration
             var languageId = _httpContextAccessor.HttpContext.Session.GetString(SystemConstants.DefaultLanguageId);
 
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.BaseAddress = new Uri(SystemConstants.BaseAddress);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
 
             var requestContent = new MultipartFormDataContent();
@@ -114,7 +114,7 @@ namespace FreshShop.ApiIntergration
         {
             var session = _httpContextAccessor.HttpContext.Session.GetString("Token");
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.BaseAddress = new Uri(SystemConstants.BaseAddress);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", session);
             var response = await client.DeleteAsync($"/api/products/{id}?productId={id}");
 
@@ -130,7 +130,7 @@ namespace FreshShop.ApiIntergration
         {
             var session = _httpContextAccessor.HttpContext.Session.GetString("Token");
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.BaseAddress = new Uri(SystemConstants.BaseAddress);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", session);
             var response = await client.DeleteAsync($"/api/products/{productId}/images/{imageId}?productId={productId}&imageId={imageId}");
 
@@ -142,11 +142,41 @@ namespace FreshShop.ApiIntergration
             return JsonConvert.DeserializeObject<ApiErrorResult<bool>>(body);
         }
 
+        public async Task<ApiResult<PagedResult<ProductViewModel>>> GetAll(GetPublicProductPagingRequest request)
+        {
+            var session = _httpContextAccessor.HttpContext.Session.GetString("Token");
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(SystemConstants.BaseAddress);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", session);
+            var response = await client.GetAsync($"/api/products/client/{request.LanguageId}?pageIndex={request.PageIndex}&pageSize={request.PageSize}&keyword={request.Keyword}&languageId={request.LanguageId}&sortId={request.SortId}&categoryId={request.CategoryId}");
+
+            var body = await response.Content.ReadAsStringAsync();
+            var products = JsonConvert.DeserializeObject<ApiSuccessResult<PagedResult<ProductViewModel>>>(body);
+            return products;
+        }
+
+        public async Task<ApiResult<List<ProductViewModel>>> GetAllBestSeller(string languageId)
+        {
+            var session = _httpContextAccessor.HttpContext.Session.GetString("Token");
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(SystemConstants.BaseAddress);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", session);
+            var response = await client.GetAsync($"/api/products/bestseller/{languageId}?languageId={languageId}");
+
+            var body = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+            {
+                List<ProductViewModel> productsDeserializedObj = (List<ProductViewModel>)JsonConvert.DeserializeObject(body, typeof(List<ProductViewModel>));
+                return new ApiSuccessResult<List<ProductViewModel>>(productsDeserializedObj);
+            }
+            return JsonConvert.DeserializeObject<ApiErrorResult<List<ProductViewModel>>>(body);
+        }
+
         public async Task<ApiResult<PagedResult<ProductViewModel>>> GetAllByLanguageId(GetManageProductPagingRequest request)
         {
             var session = _httpContextAccessor.HttpContext.Session.GetString("Token");
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.BaseAddress = new Uri(SystemConstants.BaseAddress);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", session);
             var response = await client.GetAsync($"/api/products/languageId?pageIndex={request.PageIndex}&pageSize={request.PageSize}&keyword={request.Keyword}&languageId={request.LanguageId}&categoryId={request.CategoryId}");
 
@@ -155,11 +185,43 @@ namespace FreshShop.ApiIntergration
             return products;
         }
 
+        public async Task<ApiResult<List<ProductViewModel>>> GetAllLatest(string languageId)
+        {
+            var session = _httpContextAccessor.HttpContext.Session.GetString(SystemConstants.Token);
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(SystemConstants.BaseAddress);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", session);
+            var response = await client.GetAsync($"api/products/latest/{languageId}?languageId={languageId}");
+            var body = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+            {
+                List<ProductViewModel> productsDeserializeObj = (List<ProductViewModel>)JsonConvert.DeserializeObject(body,typeof(List<ProductViewModel>));
+                return new ApiSuccessResult<List<ProductViewModel>>(productsDeserializeObj);
+            }
+            return new ApiErrorResult<List<ProductViewModel>>(body);
+        }
+
+        public async Task<ApiResult<List<ProductViewModel>>> GetAllSale(string languageId)
+        {
+            var session = _httpContextAccessor.HttpContext.Session.GetString(SystemConstants.Token);
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(SystemConstants.BaseAddress);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", session);
+            var response = await client.GetAsync($"api/products/sale/{languageId}?languageId={languageId}");
+            var body = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+            {
+                List<ProductViewModel> productsDeserializeObj = (List<ProductViewModel>)JsonConvert.DeserializeObject(body, typeof(List<ProductViewModel>));
+                return new ApiSuccessResult<List<ProductViewModel>>(productsDeserializeObj);
+            }
+            return new ApiErrorResult<List<ProductViewModel>>(body);
+        }
+
         public async Task<ApiResult<ProductViewModel>> GetById(int id, string languageId)
         {                                                 
             var session = _httpContextAccessor.HttpContext.Session.GetString("Token");
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.BaseAddress = new Uri(SystemConstants.BaseAddress);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", session);
             var response = await client.GetAsync($"/api/products/detail?languageId={languageId}&productId={id}");
 
@@ -172,11 +234,46 @@ namespace FreshShop.ApiIntergration
 
         }
 
-        public async Task<ApiResult<List<ProductImageViewModel>>> GetListManage(int productId)
+        public async Task<ApiResult<ProductViewModel>> GetByIdClient(int id, string languageId)
         {
             var session = _httpContextAccessor.HttpContext.Session.GetString("Token");
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.BaseAddress = new Uri(SystemConstants.BaseAddress);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", session);
+            var response = await client.GetAsync($"/api/products/client/detail/{id}?languageId={languageId}&productId={id}");
+
+            var body = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+            {
+                return JsonConvert.DeserializeObject<ApiSuccessResult<ProductViewModel>>(body);
+            }
+            return JsonConvert.DeserializeObject<ApiErrorResult<ProductViewModel>>(body);
+
+        }
+
+        public async Task<ApiResult<List<ProductImageViewModel>>> GetListImageClient(int productId)
+        {
+            var session = _httpContextAccessor.HttpContext.Session.GetString("Token");
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(SystemConstants.BaseAddress);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", session);
+            var response = await client.GetAsync($"/api/products/client/{productId}/images?productId={productId}");
+
+            var body = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+            {
+                List<ProductImageViewModel> imagesDeserializedObj = (List<ProductImageViewModel>)JsonConvert.DeserializeObject(body, typeof(List<ProductImageViewModel>));
+                return new ApiSuccessResult<List<ProductImageViewModel>>(imagesDeserializedObj);
+            }
+            return JsonConvert.DeserializeObject<ApiErrorResult<List<ProductImageViewModel>>>(body);
+
+        }
+
+        public async Task<ApiResult<List<ProductImageViewModel>>> GetListImage(int productId)
+        {
+            var session = _httpContextAccessor.HttpContext.Session.GetString("Token");
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(SystemConstants.BaseAddress);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", session);
             var response = await client.GetAsync($"/api/products/{productId}/images?productId={productId}");
 
@@ -193,7 +290,7 @@ namespace FreshShop.ApiIntergration
         public async Task<ApiResult<bool>> Update(ProductUpdateRequest request)
         {
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.BaseAddress = new Uri(SystemConstants.BaseAddress);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _httpContextAccessor.HttpContext.Session.GetString("Token"));
 
             var json = JsonConvert.SerializeObject(request);
@@ -211,7 +308,7 @@ namespace FreshShop.ApiIntergration
         public async Task<ApiResult<bool>> UpdatePrice(int id, decimal newPrice)
         {
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.BaseAddress = new Uri(SystemConstants.BaseAddress);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _httpContextAccessor.HttpContext.Session.GetString("Token"));
 
             var json = JsonConvert.SerializeObject(newPrice);
@@ -224,6 +321,23 @@ namespace FreshShop.ApiIntergration
                 return JsonConvert.DeserializeObject<ApiSuccessResult<bool>>(result);
             }
             return JsonConvert.DeserializeObject<ApiErrorResult<bool>>(result);
+        }
+
+        public async Task<ApiResult<List<ProductViewModel>>> GetAllRelated(GetRelatedProductRequest request)
+        {
+            var session = _httpContextAccessor.HttpContext.Session.GetString("Token");
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(SystemConstants.BaseAddress);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", session);
+            var response = await client.GetAsync($"/api/products/related/{request.ProductId}/{request.LanguageId}?languageId={request.LanguageId}&productId={request.ProductId}");
+
+            var body = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+            {
+                List<ProductViewModel> productsDeserializedObj = (List<ProductViewModel>)JsonConvert.DeserializeObject(body, typeof(List<ProductViewModel>));
+                return new ApiSuccessResult<List<ProductViewModel>>(productsDeserializedObj);
+            }
+            return JsonConvert.DeserializeObject<ApiErrorResult<List<ProductViewModel>>>(body);
         }
     }
 }

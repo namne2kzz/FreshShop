@@ -46,7 +46,8 @@ namespace FreshShop.AdminApp
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 
-            //Declear DI
+            //Declear DI           
+
             services.AddTransient<IUserApiClient, UserApiClient>();
             services.AddTransient<IRoleApiClient, RoleApiClient>();
             services.AddTransient<ILanguageApiClient, LanguageApiClient>();

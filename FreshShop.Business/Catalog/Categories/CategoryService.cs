@@ -63,7 +63,7 @@ namespace FreshShop.Business.Catalog.Categories
         {
             var categories = from a in _context.Categories
                              join b in _context.CategoryTranslations on a.ID equals b.CategoryId
-                             where b.LanguageId == languageId
+                             where b.LanguageId == languageId                             
                              select new { a, b };
             return await categories.Select(x => new CategoryFilterRequest()
             {
@@ -171,9 +171,7 @@ namespace FreshShop.Business.Catalog.Categories
                              join b in _context.CategoryTranslations on a.ID equals b.CategoryId
                              where b.LanguageId == request.LanguageId
                              where a.ParentID==request.CategoryId
-                             select new { a, b };          
-
-            int totalRow = await categories.CountAsync();
+                             select new { a, b };                     
 
             var data = await categories.Select(x => new CategoryViewModel()
             {
@@ -198,6 +196,60 @@ namespace FreshShop.Business.Catalog.Categories
             category.IsShowOnHome = !category.IsShowOnHome;
             await _context.SaveChangesAsync();
             return category.IsShowOnHome;
+        }
+
+        public async Task<List<CategoryViewModel>> GetAll(string languageId)
+        {
+            var categories = from a in _context.Categories
+                             join b in _context.CategoryTranslations on a.ID equals b.CategoryId
+                             where b.LanguageId == languageId                         
+                             select new { a, b };          
+
+            var data = await categories.Select(x => new CategoryViewModel()
+            {
+                CategoryId = x.a.ID,
+                CategoryName = x.b.Name,
+                ParentId = x.a.ParentID,
+                IsShownHome = x.a.IsShowOnHome,
+                ImagePath = x.a.ImagePath,
+                LanguageId = x.b.LanguageId,
+                SeoAlias = x.b.SeoAlias,
+                SeoTitle = x.b.SeoTitle,
+            }).ToListAsync();
+
+            return data;
+        }
+
+        public async Task<List<CategoryTreeViewModel>> GetAllTree(string languageId)
+        {
+            var categories = from a in _context.Categories
+                             join b in _context.CategoryTranslations on a.ID equals b.CategoryId
+                             where b.LanguageId == languageId
+                             where a.ParentID==null
+                             select new { a, b };
+            var node = categories.Select(x => new CategoryTreeViewModel()
+            {
+                Id=x.a.ID,
+                Name=x.b.Name,
+                Quantity=x.a.Products.Count()
+            }).ToList();
+           
+            foreach(var item in node)
+            {
+                var child= from a in _context.Categories
+                           join b in _context.CategoryTranslations on a.ID equals b.CategoryId
+                           where b.LanguageId == languageId
+                           where a.ParentID == item.Id
+                           select new { a, b };
+                var nodeChild = child.Select(x => new CategoryTreeViewModel()
+                {
+                    Id = x.a.ID,
+                    Name = x.b.Name,
+                    Quantity = x.a.Products.Count
+                }).ToList();
+                item.Child = nodeChild;
+            }
+            return node;
         }
     }
 }

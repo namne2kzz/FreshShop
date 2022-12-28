@@ -117,6 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="About" xml:space="preserve">
+    <value>Khoảng</value>
+    <comment>View/Product/Detail</comment>
+  </data>
   <data name="About Freshshop" xml:space="preserve">
     <value>Về cửa hàng</value>
     <comment>View/Shared/_Layout</comment>
@@ -125,16 +129,44 @@
     <value>Về chúng tôi</value>
     <comment>View/Shared/_Layout</comment>
   </data>
+  <data name="Add to Cart" xml:space="preserve">
+    <value>Thêm vào giỏ</value>
+    <comment>View/Product/Index</comment>
+  </data>
+  <data name="Add to Wishlist" xml:space="preserve">
+    <value>Thêm vào yêu thích</value>
+    <comment>View/Product/Detail</comment>
+  </data>
   <data name="Address" xml:space="preserve">
     <value>Địa chỉ</value>
     <comment>View/Shared/_Layout</comment>
+  </data>
+  <data name="available" xml:space="preserve">
+    <value>có sẵn</value>
+    <comment>View/Product/Detail</comment>
+  </data>
+  <data name="Best Selling" xml:space="preserve">
+    <value>Bán chạy</value>
+    <comment>View/Product/Index</comment>
   </data>
   <data name="Business Time" xml:space="preserve">
     <value>Giờ hoạt động</value>
     <comment>View/Shared/_Layout</comment>
   </data>
+  <data name="Buy New" xml:space="preserve">
+    <value>Mua hàng</value>
+    <comment>View/Product/Detail</comment>
+  </data>
   <data name="Call US" xml:space="preserve">
     <value>Gọi</value>
+    <comment>View/Shared/_Layout</comment>
+  </data>
+  <data name="Categories" xml:space="preserve">
+    <value>Danh mục</value>
+    <comment>View/Product/Index</comment>
+  </data>
+  <data name="Category" xml:space="preserve">
+    <value>Danh mục</value>
     <comment>View/Shared/_Layout</comment>
   </data>
   <data name="Closed" xml:space="preserve">
@@ -153,6 +185,14 @@
     <value>Thông tin giao hàng</value>
     <comment>View/Shared/_Layout</comment>
   </data>
+  <data name="Description" xml:space="preserve">
+    <value>Mô tả</value>
+    <comment>View/Product/Detail</comment>
+  </data>
+  <data name="High Price" xml:space="preserve">
+    <value>Giá cao</value>
+    <comment>View/Product/Index</comment>
+  </data>
   <data name="Home" xml:space="preserve">
     <value>Trang chủ</value>
     <comment>View/Shared/_Layout</comment>
@@ -160,6 +200,14 @@
   <data name="Information" xml:space="preserve">
     <value>Thông tin chung</value>
     <comment>View/Shared/_Layout</comment>
+  </data>
+  <data name="Leave a Review" xml:space="preserve">
+    <value>Để lại bình luận</value>
+    <comment>View/Product/Detail</comment>
+  </data>
+  <data name="Low Price" xml:space="preserve">
+    <value>Giá thấp</value>
+    <comment>View/Product/Index</comment>
   </data>
   <data name="Monday - Friday" xml:space="preserve">
     <value>Thứ hai - Thứ sáu</value>
@@ -177,6 +225,18 @@
     <value>Bảng tin</value>
     <comment>View/Shared/_Layout</comment>
   </data>
+  <data name="Nothing" xml:space="preserve">
+    <value>Không</value>
+    <comment>View/Product/Index</comment>
+  </data>
+  <data name="On Sale" xml:space="preserve">
+    <value>Đang giảm giá</value>
+    <comment>View/Product/Index</comment>
+  </data>
+  <data name="Our Gallery" xml:space="preserve">
+    <value>Danh mục</value>
+    <comment>View/Category/Index</comment>
+  </data>
   <data name="Our location" xml:space="preserve">
     <value>Vị trí</value>
     <comment>View/Shared/_Layout</comment>
@@ -187,14 +247,39 @@
   </data>
   <data name="Phone" xml:space="preserve">
     <value>Số điện thoại</value>
+    <comment>View/Shared/_Layout</comment>
   </data>
   <data name="Privacy Policy" xml:space="preserve">
     <value>Chính sách bảo mật</value>
     <comment>View/Shared/_Layout</comment>
   </data>
+  <data name="Product Reviews" xml:space="preserve">
+    <value>Bình luận</value>
+    <comment>View/Product/Detail</comment>
+  </data>
+  <data name="Quantity" xml:space="preserve">
+    <value>Số lượng mua</value>
+    <comment>View/Product/Detail</comment>
+  </data>
+  <data name="Recently" xml:space="preserve">
+    <value>Gần đây</value>
+    <comment>View/Product/Index</comment>
+  </data>
+  <data name="records" xml:space="preserve">
+    <value>kết quả</value>
+    <comment>View/Product/Index</comment>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>Đăng kí</value>
+    <comment>View/Shared/_Layout</comment>
+  </data>
   <data name="Register Here" xml:space="preserve">
     <value>Đăng kí</value>
     <comment>View/Shared/_Layout</comment>
+  </data>
+  <data name="Related Products" xml:space="preserve">
+    <value>Sản phẩm liên quan</value>
+    <comment>View/Product/Detail</comment>
   </data>
   <data name="Saturday" xml:space="preserve">
     <value>Thứ bảy</value>
@@ -204,9 +289,17 @@
     <value>Cửa hàng</value>
     <comment>View/Shared/_Layout</comment>
   </data>
+  <data name="Shop Detail" xml:space="preserve">
+    <value>Chi tiết sản phẩm</value>
+    <comment>View/Product/Detail</comment>
+  </data>
   <data name="Shop Now" xml:space="preserve">
     <value>Mua ngay</value>
     <comment>View/Shared/_Layout</comment>
+  </data>
+  <data name="Showing" xml:space="preserve">
+    <value>Hiển thị</value>
+    <comment>View/Product/Index</comment>
   </data>
   <data name="Sign In" xml:space="preserve">
     <value>Đăng nhập</value>
@@ -215,6 +308,14 @@
   <data name="Social Media" xml:space="preserve">
     <value>Mạng xã hội</value>
     <comment>View/Shared/_Layout</comment>
+  </data>
+  <data name="sold" xml:space="preserve">
+    <value>đã bán</value>
+    <comment>View/Product/Detail</comment>
+  </data>
+  <data name="Sort" xml:space="preserve">
+    <value>Sắp xếp</value>
+    <comment>View/Product/Index</comment>
   </data>
   <data name="Submit" xml:space="preserve">
     <value>Gửi đi</value>
