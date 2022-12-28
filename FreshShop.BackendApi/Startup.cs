@@ -6,6 +6,7 @@ using FreshShop.Business.Catalog.Categories;
 using FreshShop.Business.Catalog.Coupons;
 using FreshShop.Business.Catalog.Products;
 using FreshShop.Business.Catalog.Promotions;
+using FreshShop.Business.Catalog.Reviews;
 using FreshShop.Business.Common;
 using FreshShop.Business.System.Languages;
 using FreshShop.Business.System.Roles;
@@ -71,6 +72,7 @@ namespace FreshShop.BackendApi
             services.AddTransient<IAddressService, AddressService>();
             services.AddTransient<IPromotionService, PromotionService>();
             services.AddTransient<ICouponService, CouponService>();
+            services.AddTransient<IReviewService, ReviewService>();
 
             //Fluent validator
             services.AddTransient<IValidator<LoginRequest>, LoginRequestValidator>();

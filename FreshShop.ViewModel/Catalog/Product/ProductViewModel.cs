@@ -22,7 +22,9 @@ namespace FreshShop.ViewModels.Catalog.Product
 
         public decimal OriginalPrice { get; set; }
 
-        public decimal Price { get; set; }
+        public decimal Price { get; set; }       
+
+        public decimal? Discount { get; set; }
 
         public int ViewCount { get; set; }
 

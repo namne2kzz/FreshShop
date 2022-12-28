@@ -57,9 +57,8 @@ namespace FreshShop.AdminApp.Controllers
                 return RedirectToAction("Index");
 
             }
-            SetAlert(result.Message, "warning");
-            ModelState.AddModelError("", result.Message);
-            return View(request);
+            SetAlert(result.Message, "warning");           
+            return RedirectToAction("Index","User");
         }
 
         [HttpGet]

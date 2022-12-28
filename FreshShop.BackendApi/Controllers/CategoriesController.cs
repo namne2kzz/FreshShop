@@ -40,6 +40,28 @@ namespace FreshShop.BackendApi.Controllers
             return Ok(categories);
         }
 
+        [HttpGet("client/{languageId}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetAll([FromQuery] string languageId)
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            var categories = await _categoryService.GetAll(languageId);
+            return Ok(categories);
+        }
+
+        [HttpGet("client/{languageId}/tree")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetAllTree([FromQuery] string languageId)
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            var tree = await _categoryService.GetAllTree(languageId);
+            return Ok(tree);
+        }
+
+
+
         [HttpGet("{languageId}/{categoryId}")]
         public async Task<IActionResult> GetById([FromQuery]string languageId, int categoryId)
         {

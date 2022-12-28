@@ -24,5 +24,10 @@ namespace FreshShop.Business.System.Users
 
         Task<ApiResult<bool>> RoleAssign(Guid id, RoleAssignRequest request);
 
+        //Client method
+        Task<ApiResult<string>> AuthenticateClient(LoginRequest request);
+
+        Task<ApiResult<bool>> RegisterClient(RegisterRequest request);
+
     }
 }

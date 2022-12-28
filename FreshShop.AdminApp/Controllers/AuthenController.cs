@@ -55,7 +55,7 @@ namespace FreshShop.AdminApp.Controllers
                 ModelState.AddModelError("", token.Message);
                 return View();
             }
-
+            
             var userPrincipal = this.ValidateToken(token.ResultObj);
             var authProperties = new AuthenticationProperties
             {

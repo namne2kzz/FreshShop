@@ -40,6 +40,21 @@ namespace FreshShop.Business.Catalog.Products
 
         Task<ProductImageViewModel> GetImageById(int imageId);
 
-        public Task<PagedResult<ProductViewModel>> GetAllByCategoryId(GetPublicProductPagingRequest request, string languageId);
+        Task<PagedResult<ProductViewModel>> GetAllByCategoryId(GetManageProductPagingRequest request, string languageId);
+
+        //Binding client data
+
+        Task<List<ProductViewModel>> GetAllSale(string languageId);
+
+        Task<List<ProductViewModel>> GetAllLatest(string languageId);
+
+        Task<List<ProductViewModel>> GetAllBestSeller(string languageId);
+
+        Task<ApiResult<PagedResult<ProductViewModel>>> GetAll(GetPublicProductPagingRequest request);
+
+        Task<List<ProductViewModel>> GetAllRelated(GetRelatedProductRequest request);
+
+      
+
     }
 }

@@ -117,6 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="About" xml:space="preserve">
+    <value>About</value>
+    <comment>View/Product/Detail</comment>
+  </data>
   <data name="About Freshshop" xml:space="preserve">
     <value>About Freshshop</value>
     <comment>View/Shared/_Layout</comment>
@@ -125,16 +129,44 @@
     <value>About Us</value>
     <comment>View/Shared/_Layout</comment>
   </data>
+  <data name="Add to Cart" xml:space="preserve">
+    <value>Add to Cart</value>
+    <comment>View/Product/Index</comment>
+  </data>
+  <data name="Add to Wishlist" xml:space="preserve">
+    <value>Add to Wishlist</value>
+    <comment>View/Product/Detail</comment>
+  </data>
   <data name="Address" xml:space="preserve">
     <value>Address</value>
     <comment>View/Shared/_Layout</comment>
+  </data>
+  <data name="available" xml:space="preserve">
+    <value>available</value>
+    <comment>View/Product/Detail</comment>
+  </data>
+  <data name="Best Selling" xml:space="preserve">
+    <value>Best Selling</value>
+    <comment>View/Product/Index</comment>
   </data>
   <data name="Business Time" xml:space="preserve">
     <value>Business Time</value>
     <comment>View/Shared/_Layout</comment>
   </data>
+  <data name="By New" xml:space="preserve">
+    <value>Bye New</value>
+    <comment>View/Product/Detail</comment>
+  </data>
   <data name="Call US" xml:space="preserve">
     <value>Call US</value>
+    <comment>View/Shared/_Layout</comment>
+  </data>
+  <data name="Categories" xml:space="preserve">
+    <value>Categories</value>
+    <comment>View/Product/Index</comment>
+  </data>
+  <data name="Category" xml:space="preserve">
+    <value>Category</value>
     <comment>View/Shared/_Layout</comment>
   </data>
   <data name="Closed" xml:space="preserve">
@@ -153,6 +185,14 @@
     <value>Delivery Information</value>
     <comment>View/Shared/_Layout</comment>
   </data>
+  <data name="Description" xml:space="preserve">
+    <value>Description</value>
+    <comment>View/Product/Detail</comment>
+  </data>
+  <data name="High Price" xml:space="preserve">
+    <value>High Price</value>
+    <comment>View/Product/Index</comment>
+  </data>
   <data name="Home" xml:space="preserve">
     <value>Home</value>
     <comment>View/Shared/_Layout</comment>
@@ -160,6 +200,14 @@
   <data name="Information" xml:space="preserve">
     <value>Information</value>
     <comment>View/Shared/_Layout</comment>
+  </data>
+  <data name="Leave a Review" xml:space="preserve">
+    <value>Leave a Review</value>
+    <comment>View/Product/Detail</comment>
+  </data>
+  <data name="Low Price" xml:space="preserve">
+    <value>Low Price</value>
+    <comment>View/Product/Index</comment>
   </data>
   <data name="Monday - Friday" xml:space="preserve">
     <value>Monday -  Friday</value>
@@ -177,6 +225,18 @@
     <value>Newsletter</value>
     <comment>View/Shared/_Layout</comment>
   </data>
+  <data name="Nothing" xml:space="preserve">
+    <value>Nothing</value>
+    <comment>View/Product/Index</comment>
+  </data>
+  <data name="On Sale" xml:space="preserve">
+    <value>On Sale</value>
+    <comment>View/Product/Index</comment>
+  </data>
+  <data name="Our Gallery" xml:space="preserve">
+    <value>Our Gallery</value>
+    <comment>View/Category/Index</comment>
+  </data>
   <data name="Our location" xml:space="preserve">
     <value>Our location</value>
     <comment>View/Shared/_Layout</comment>
@@ -193,9 +253,33 @@
     <value>Privacy Policy</value>
     <comment>View/Shared/_Layout</comment>
   </data>
+  <data name="Product Reviews" xml:space="preserve">
+    <value>Product Reviews</value>
+    <comment>View/Product/Detail</comment>
+  </data>
+  <data name="Quantity" xml:space="preserve">
+    <value>Quantity</value>
+    <comment>View/Product/Detail</comment>
+  </data>
+  <data name="Recently" xml:space="preserve">
+    <value>Recently</value>
+    <comment>View/Product/Index</comment>
+  </data>
+  <data name="records" xml:space="preserve">
+    <value>records</value>
+    <comment>View/Product/Index</comment>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>Register</value>
+    <comment>View/Shared/_Layout</comment>
+  </data>
   <data name="Register Here" xml:space="preserve">
     <value>Register Here</value>
     <comment>View/Shared/_Layout</comment>
+  </data>
+  <data name="Related Products" xml:space="preserve">
+    <value>Related Products</value>
+    <comment>View/Product/Detail</comment>
   </data>
   <data name="Saturday" xml:space="preserve">
     <value>Saturday</value>
@@ -205,9 +289,17 @@
     <value>Shop</value>
     <comment>View/Shared/_Layout</comment>
   </data>
+  <data name="Shop Detail" xml:space="preserve">
+    <value>Shop Detail</value>
+    <comment>View/Product/Detail</comment>
+  </data>
   <data name="Shop Now" xml:space="preserve">
     <value>Shop Now</value>
     <comment>View/Shared/_Layout</comment>
+  </data>
+  <data name="Showing" xml:space="preserve">
+    <value>Showing</value>
+    <comment>View/Product/Index</comment>
   </data>
   <data name="Sign In" xml:space="preserve">
     <value>Sign In</value>
@@ -216,6 +308,14 @@
   <data name="Social Media" xml:space="preserve">
     <value>Social Media</value>
     <comment>View/Shared/_Layout</comment>
+  </data>
+  <data name="sold" xml:space="preserve">
+    <value>sold</value>
+    <comment>View/Product/Detail</comment>
+  </data>
+  <data name="Sort" xml:space="preserve">
+    <value>Sort</value>
+    <comment>View/Product/Index</comment>
   </data>
   <data name="Submit" xml:space="preserve">
     <value>Submit</value>

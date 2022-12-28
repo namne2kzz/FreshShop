@@ -1,0 +1,123 @@
+﻿@model FreshShop.ViewModels.System.Users.RegisterRequest
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section script{ 
+@if (TempData["RegisterStateError"] != null) {
+    <script>
+        Swal.fire(
+            'Opps...',
+            'Đăng ký thất bại!',
+            'error'
+        )      
+    </script>
+}
+
+}
+
+<!-- Start All Title Box -->
+<div class="all-title-box">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2><localize>Register</localize></h2>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/"><localize>Home</localize></a></li>
+                    <li class="breadcrumb-item active"> <localize>Register</localize></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End All Title Box -->
+<!-- Start Contact Us  -->
+<div class="contact-box-main">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-sm-12">
+                <div class="contact-form-right">
+                    <h2><localize>Authentication with your username and password is accessing the information</localize></h2>
+                    <form action="/@CultureInfo.CurrentCulture.Name/Authen/Register" method="post" enctype="multipart/form-data">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="text" asp-for="FirstName" class="form-control" placeholder="Nhập họ">
+                                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="text" asp-for="LastName" class="form-control" placeholder="Nhập tên">
+                                    <span asp-validation-for="LastName" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="date" asp-for="Dob" class="form-control">
+                                    <span asp-validation-for="Dob" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="text" asp-for="Email" class="form-control" placeholder="Nhập Email">
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="text" asp-for="PhoneNumber" class="form-control" placeholder="Nhập số điện thoại">
+                                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="text" asp-for="UserName" class="form-control" placeholder="Nhập tên đăng nhập">
+                                    <span asp-validation-for="UserName" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="password" asp-for="Password" class="form-control" placeholder="Nhập mật khẩu">
+                                    <span asp-validation-for="Password" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="password" asp-for="ConfirmPassword" class="form-control" placeholder="Nhập lại mật khẩu">
+                                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="file" asp-for="ThumbnailImage" class="form-control">
+                                    <span asp-validation-for="ThumbnailImage" class="text-danger"></span>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-12">
+                                <div class="submit-button text-center">
+                                    <button class="btn hvr-hover" type="submit"><localize>Register</localize></button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-12">
+                <div class="contact-info-left">
+                    <h2>HAVE AN ACCOUNT</h2>
+                    <p>Login with your account to contact us</p>
+                    <ul>
+                        <li>
+                            <p><i class="fas fa-user-check"></i><a href="/@CultureInfo.CurrentCulture.Name/Authen/Login"><localize>Login here</localize></a></p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Cart -->

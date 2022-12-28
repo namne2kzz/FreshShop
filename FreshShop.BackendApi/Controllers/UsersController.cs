@@ -13,6 +13,7 @@ namespace FreshShop.BackendApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UsersController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -21,9 +22,8 @@ namespace FreshShop.BackendApi.Controllers
             _userService = userService;
         }
 
-        [HttpPost("register")]
-        [AllowAnonymous]
-        [Consumes("multipart/form-data")]
+        [HttpPost]
+        [Consumes("multipart/form-data")]      
         public async Task<IActionResult> Register([FromForm] RegisterRequest request)
         {
             if (!ModelState.IsValid)

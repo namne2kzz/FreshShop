@@ -38,7 +38,7 @@ namespace FreshShop.ApiIntergration
             var languageId = _httpContextAccessor.HttpContext.Session.GetString(SystemConstants.DefaultLanguageId);
 
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.BaseAddress = new Uri(SystemConstants.BaseAddress);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
 
             var requestContent = new MultipartFormDataContent();
@@ -70,7 +70,7 @@ namespace FreshShop.ApiIntergration
         {
             var session = _httpContextAccessor.HttpContext.Session.GetString("Token");
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.BaseAddress = new Uri(SystemConstants.BaseAddress);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", session);
             var response = await client.DeleteAsync($"/api/blogs/{id}?id={id}");
 
@@ -86,7 +86,7 @@ namespace FreshShop.ApiIntergration
         {
             var session = _httpContextAccessor.HttpContext.Session.GetString("Token");
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.BaseAddress = new Uri(SystemConstants.BaseAddress);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", session);
             var response = await client.GetAsync($"/api/blogs?pageIndex={request.PageIndex}&pageSize={request.PageSize}&keyword={request.Keyword}");
 
@@ -99,7 +99,7 @@ namespace FreshShop.ApiIntergration
         {
             var session = _httpContextAccessor.HttpContext.Session.GetString("Token");
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.BaseAddress = new Uri(SystemConstants.BaseAddress);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", session);
             var response = await client.GetAsync($"/api/blogs/{id}?id={id}");
 
@@ -111,7 +111,7 @@ namespace FreshShop.ApiIntergration
         public async Task<ApiResult<bool>> Update(BlogUpdateRequest request)
         {
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.BaseAddress = new Uri(SystemConstants.BaseAddress);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _httpContextAccessor.HttpContext.Session.GetString("Token"));
 
             var json = JsonConvert.SerializeObject(request);
@@ -129,7 +129,7 @@ namespace FreshShop.ApiIntergration
         public async Task<bool> UpdateStatus(int id)
         {
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.BaseAddress = new Uri(SystemConstants.BaseAddress);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _httpContextAccessor.HttpContext.Session.GetString("Token"));
 
             var json = JsonConvert.SerializeObject(id);
@@ -142,6 +142,24 @@ namespace FreshShop.ApiIntergration
                 return JsonConvert.DeserializeObject<bool>(result);
             }
             return JsonConvert.DeserializeObject<bool>(result);
+        }
+
+        //Client binding data
+
+        public async Task<ApiResult<List<BlogViewModel>>> GetAllLatest()
+        {          
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(SystemConstants.BaseAddress);
+           
+            var response = await client.GetAsync($"/api/blogs/latest");
+
+            var body = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+            {
+                List<BlogViewModel> blogsDeserializedObj = (List<BlogViewModel>)JsonConvert.DeserializeObject(body, typeof(List<BlogViewModel>));
+                return new ApiSuccessResult<List<BlogViewModel>>(blogsDeserializedObj);
+            }
+            return JsonConvert.DeserializeObject<ApiErrorResult<List<BlogViewModel>>>(body);
         }
     }
 }

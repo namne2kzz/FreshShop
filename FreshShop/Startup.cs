@@ -1,7 +1,13 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using FreshShop.ApiIntergration;
 using FreshShop.LocalizationResources;
+using FreshShop.ViewModels.System.Users;
 using LazZiya.ExpressLocalization;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -26,6 +32,14 @@ namespace FreshShop
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHttpClient();
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
+            {
+                options.LoginPath = "/vi/Authen/Login/";
+                options.AccessDeniedPath = "/Authen/Forbidden/";
+            });
+
             var cultures = new[]
           {
                 new CultureInfo("en"),
@@ -61,7 +75,26 @@ namespace FreshShop
                         o.SupportedUICultures = cultures;
                         o.DefaultRequestCulture = new RequestCulture("vi");
                     };
-                }); 
+                });
+
+            //Fluent Validator
+            services.AddControllersWithViews()
+               .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>());
+            
+            //services.AddScoped<IValidator<LoginRequest>, LoginRequestValidator>();
+
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+            });
+
+            //Declear DI
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddTransient<IBlogApiClient, BlogApiClient>();
+            services.AddTransient<IProductApiClient, ProductApiClient>();
+            services.AddTransient<ICategoryApiClient, CategoryApiClient>();
+            services.AddTransient<IUserApiClient, UserApiClient>();
+            services.AddTransient<IReviewApiClient, ReviewApiClient>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -75,11 +108,18 @@ namespace FreshShop
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+
+            app.UseHttpsRedirection();
+
             app.UseStaticFiles();
+
+            app.UseAuthentication();
 
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseSession();
 
             app.UseRequestLocalization();
 

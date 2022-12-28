@@ -1,0 +1,78 @@
+﻿@model FreshShop.ViewModels.System.Users.LoginRequest
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Start All Title Box -->
+<div class="all-title-box">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2><localize>Authentication</localize></h2>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/"><localize>Home</localize></a></li>
+                    <li class="breadcrumb-item active"> <localize>Login</localize></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End All Title Box -->
+<!-- Start Contact Us  -->
+<div class="contact-box-main">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-sm-12">
+                <div class="contact-form-right">
+                    <h2><localize>Authentication with your username and password is accessing the information</localize></h2>               
+                    <form action="/@CultureInfo.CurrentCulture.Name/Authen/Login" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="text" asp-for="UserName" class="form-control" placeholder="Your UserName"  data-error="Please enter your Username">
+                                    <span asp-validation-for="UserName" class="text-danger"></span>                                   
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="password" asp-for="Password" placeholder="Your Password" class="form-control"  data-error="Please enter your Password">
+                                    <span asp-validation-for="UserName" class="text-danger"></span>                                   
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="checkbox" asp-for="RememberMe" /> <localize>Remenber Me</localize>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                  <p><a class="link" href="#"><localize>Forgot Password</localize></a></p>
+                                </div>
+                            </div>
+                          
+                            <div class="col-md-12">                              
+                                <div class="submit-button text-center">
+                                    <button class="btn hvr-hover" type="submit"><localize>Login</localize></button>                                  
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-12">
+                <div class="contact-info-left">
+                    <h2>DO NOT HAVE AN ACCOUNT</h2>
+                    <p>Register an account by accepting your information to use for the next time...</p>
+                    <ul>
+                        <li>
+                            <p><i class="fas fa-user-plus"></i><a href="/@CultureInfo.CurrentCulture.Name/Authen/Register"><localize>Register here</localize></a></p>
+                        </li>                       
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Cart -->

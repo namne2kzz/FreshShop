@@ -111,7 +111,7 @@ namespace FreshShop.AdminApp.Controllers
                 }
                 
 
-                var images = await _productApiClient.GetListManage(id);
+                var images = await _productApiClient.GetListImage(id);
                 if (images.IsSuccessed)
                 {
                     ViewBag.ListImage = images.ResultObj;

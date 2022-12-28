@@ -10,7 +10,8 @@ namespace FreshShop.ViewModels.Common
 
         public ApiErrorResult()
         {
-
+            IsSuccessed = false;
+            Message = "Thao tác thất bại";
         }       
 
         public ApiErrorResult(string message)

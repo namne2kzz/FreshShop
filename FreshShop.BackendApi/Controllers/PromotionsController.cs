@@ -55,7 +55,7 @@ namespace FreshShop.BackendApi.Controllers
             
             var promotion = await _promotionService.GetById(promotionId);
 
-            return CreatedAtAction(nameof(GetById), new { id = promotionId }, promotion.ResultObj);
+            return CreatedAtAction(nameof(GetById), new { id = promotionId }, promotion.ResultObj.Id);
 
         }
 

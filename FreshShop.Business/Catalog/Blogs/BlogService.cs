@@ -136,5 +136,23 @@ namespace FreshShop.Business.Catalog.Blogs
             if (result > 0) return new ApiSuccessResult<bool>();
             return new ApiErrorResult<bool>("Cập nhật không thành công");
         }
+
+        public async Task<List<BlogViewModel>> GetAllLatest()
+        {
+            var blogs = await _context.Blogs.OrderByDescending(x => x.CreatedDate).Take(3)
+                .Select(x => new BlogViewModel()
+                {
+                    Id=x.ID,
+                    Content=x.Content,
+                    Title=x.Title,
+                    ImagePath=x.Image,
+                    CreatedDate=x.CreatedDate,
+                    Status=x.Status
+
+                }).ToListAsync();
+
+            return blogs;
+
+        }
     }
 }

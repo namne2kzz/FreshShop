@@ -23,12 +23,28 @@ namespace FreshShop.ApiIntergration
 
         Task<ApiResult<bool>> Delete(int id);
 
-
-
-        Task<ApiResult<List<ProductImageViewModel>>> GetListManage(int productId);
+        Task<ApiResult<List<ProductImageViewModel>>> GetListImage(int productId);
 
         Task<ApiResult<bool>> AddImage(int id, IFormFile thumbnailImage);
 
         Task<ApiResult<bool>> DeleteImage(int productId, int imageId);
+
+        //Binding client data
+
+        Task<ApiResult<List<ProductViewModel>>> GetAllSale(string languageId);
+
+        Task<ApiResult<List<ProductViewModel>>> GetAllLatest(string languageId);
+
+        Task<ApiResult<List<ProductViewModel>>> GetAllBestSeller(string languageId);
+
+        Task<ApiResult<PagedResult<ProductViewModel>>> GetAll(GetPublicProductPagingRequest request);
+
+        Task<ApiResult<ProductViewModel>> GetByIdClient(int id, string languageId);
+
+        Task<ApiResult<List<ProductImageViewModel>>> GetListImageClient(int productId);
+
+        Task<ApiResult<List<ProductViewModel>>> GetAllRelated(GetRelatedProductRequest request);
+
+
     }
 }
