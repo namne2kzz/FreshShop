@@ -25,7 +25,7 @@ namespace FreshShop.Data.Configuration
 
             builder.Property(x => x.Quantity).IsRequired();
 
-            builder.Property(x => x.Amount).IsRequired();
+            builder.Property(x => x.Amount).IsRequired().HasColumnType("decimal(18,2)");
 
         }
     }

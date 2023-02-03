@@ -126,7 +126,23 @@ namespace FreshShop.ApiIntergration
             return JsonConvert.DeserializeObject<ApiErrorResult<AddressViewModel>>(body);
         }
 
-        public async Task<ApiResult<List<GetDistrictRequest>>> GetDistrict(int provinceId)
+        public async Task<ApiResult<GetDistrictRequest>> GetDistrict(int districtId)
+        {
+            var session = _httpContextAccessor.HttpContext.Session.GetString("Token");
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri("https://provinces.open-api.vn");
+            var response = await client.GetAsync($"/api/d/{districtId}");
+
+            var body = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+            {
+                GetDistrictRequest districtDeserializedObj = JsonConvert.DeserializeObject<GetDistrictRequest>(body);
+                return new ApiSuccessResult<GetDistrictRequest>(districtDeserializedObj);
+            }
+            return JsonConvert.DeserializeObject<ApiErrorResult<GetDistrictRequest>>(body);
+        }
+
+        public async Task<ApiResult<List<GetDistrictRequest>>> GetListDistrictByProvince(int provinceId)
         {
             var session = _httpContextAccessor.HttpContext.Session.GetString("Token");
             var client = _httpClientFactory.CreateClient();
@@ -142,7 +158,7 @@ namespace FreshShop.ApiIntergration
             return JsonConvert.DeserializeObject<ApiErrorResult<List<GetDistrictRequest>>>(body);
         }
 
-        public async Task<ApiResult<List<GetProvinceRequest>>> GetProvince()
+        public async Task<ApiResult<List<GetProvinceRequest>>> GetListProvince()
         {
             var session = _httpContextAccessor.HttpContext.Session.GetString("Token");
             var client = _httpClientFactory.CreateClient();
@@ -156,6 +172,22 @@ namespace FreshShop.ApiIntergration
                 return new ApiSuccessResult<List<GetProvinceRequest>>(provinceDeserializedObj);
             }
             return JsonConvert.DeserializeObject<ApiErrorResult<List<GetProvinceRequest>>>(body);
+        }
+
+        public async Task<ApiResult<GetProvinceRequest>> GetProvince(int provinceId)
+        {
+            var session = _httpContextAccessor.HttpContext.Session.GetString("Token");
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri("https://provinces.open-api.vn");
+            var response = await client.GetAsync($"/api/p/{provinceId}");
+
+            var body = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+            {
+                GetProvinceRequest provinceDeserializedObj = JsonConvert.DeserializeObject<GetProvinceRequest>(body);
+                return new ApiSuccessResult<GetProvinceRequest>(provinceDeserializedObj);
+            }
+            return JsonConvert.DeserializeObject<ApiErrorResult<GetProvinceRequest>>(body);
         }
 
         public async Task<ApiResult<bool>> Update(AddressUpdateRequest request)

@@ -19,16 +19,19 @@ namespace FreshShop.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly IBlogApiClient _blogApiClient;       
         private readonly IProductApiClient _productApiClient;
+        private readonly string _culture;
 
         public HomeController(ILogger<HomeController> logger, IBlogApiClient blogApiClient, IProductApiClient productApiClient)
         {
             _logger = logger;
             _blogApiClient = blogApiClient;          
             _productApiClient = productApiClient;
+            _culture = CultureInfo.CurrentCulture.Name;
         }
 
         public async Task<IActionResult> Index()
         {
+           
             var culture = CultureInfo.CurrentCulture.Name;
             var blogs = await _blogApiClient.GetAllLatest();
             if (blogs.IsSuccessed)
@@ -57,8 +60,6 @@ namespace FreshShop.Controllers
             {
                 ViewBag.BestSeller = null;
             }
-
-
             return View();
         }
 
@@ -82,6 +83,15 @@ namespace FreshShop.Controllers
                 );
 
             return LocalRedirect(returnUrl);
+        }
+
+        public JsonResult GetCulture()
+        {
+            return Json(new
+            {
+                status=true,
+                culture=_culture
+            });
         }
     }
 }

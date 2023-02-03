@@ -21,7 +21,7 @@ namespace FreshShop.Data.Configuration
 
             builder.Property(x => x.Code).IsRequired().HasMaxLength(50);
 
-            builder.Property(x => x.Discount).IsRequired();
+            builder.Property(x => x.Discount).IsRequired().HasColumnType("decimal(18,2)");           
 
             builder.Property(x => x.Quantity).IsRequired();
 

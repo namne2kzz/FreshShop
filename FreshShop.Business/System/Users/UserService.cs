@@ -116,7 +116,6 @@ namespace FreshShop.Business.System.Users
                 UserName = user.UserName,
                 ImagePath = user.ImagePath,
                 Roles = roles
-
             };
             return new ApiSuccessResult<UserViewModel>(result);
         }

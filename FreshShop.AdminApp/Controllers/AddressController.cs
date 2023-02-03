@@ -20,15 +20,15 @@ namespace FreshShop.AdminApp.Controllers
             _addressApiClient = addressApiClient;
         }
 
-        public async Task<IActionResult> Create()
+        public async Task<IActionResult> Create(Guid userId)
         {
-            var listProvince = await _addressApiClient.GetProvince();
+            var listProvince = await _addressApiClient.GetListProvince();
             ViewBag.ListProvince = listProvince.ResultObj.Select(x => new SelectListItem()
             {
                 Text = x.Name,
                 Value = x.Code.ToString(),
             });
-            
+            ViewBag.UserId = userId;
             return View();
         }
 
@@ -52,7 +52,7 @@ namespace FreshShop.AdminApp.Controllers
             var address = await _addressApiClient.GetById(id);
             if (!address.IsSuccessed) return RedirectToAction("Index", "User");
 
-            var listProvince = await _addressApiClient.GetProvince();
+            var listProvince = await _addressApiClient.GetListProvince();
             ViewBag.ListProvince = listProvince.ResultObj.Select(x => new SelectListItem()
             {
                 Text = x.Name,
@@ -60,7 +60,7 @@ namespace FreshShop.AdminApp.Controllers
                 Selected=address.IsSuccessed && address.ResultObj.ProvinceId==x.Code
             });
 
-            var listDistrict = await _addressApiClient.GetDistrict(address.ResultObj.ProvinceId);
+            var listDistrict = await _addressApiClient.GetListDistrictByProvince(address.ResultObj.ProvinceId);
             ViewBag.ListDistrict = listDistrict.ResultObj.Select(x => new SelectListItem()
             {
                 Text = x.Name,
@@ -132,7 +132,7 @@ namespace FreshShop.AdminApp.Controllers
         [HttpPost]
         public async Task<JsonResult> LoadDistrict(int id)
         {
-            var listDistrict = await _addressApiClient.GetDistrict(id);
+            var listDistrict = await _addressApiClient.GetListDistrictByProvince(id);
             var data = listDistrict.ResultObj;
             
             return Json(new

@@ -35,6 +35,8 @@ namespace FreshShop.Data.Entities
         [Required]
         public string ShipAddress { get; set; }
 
+        public decimal ShippingCost { get; set; }      
+
         public decimal Total { get; set; }
 
         public int? CouponID { get; set; }

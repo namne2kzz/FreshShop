@@ -9,9 +9,9 @@ namespace FreshShop.ApiIntergration
 {
     public interface IAddressApiClient
     {
-        Task<ApiResult<List<GetProvinceRequest>>> GetProvince();
+        Task<ApiResult<List<GetProvinceRequest>>> GetListProvince();
 
-        Task<ApiResult<List<GetDistrictRequest>>> GetDistrict(int provinceId);
+        Task<ApiResult<List<GetDistrictRequest>>> GetListDistrictByProvince(int provinceId);
 
         Task<ApiResult<List<AddressViewModel>>> GetAllByUserId(Guid id);
 
@@ -24,5 +24,9 @@ namespace FreshShop.ApiIntergration
         Task<ApiResult<bool>> Update(AddressUpdateRequest request);
 
         Task<ApiResult<bool>> ChangeDefaultAddress(int id);
+
+        Task<ApiResult<GetProvinceRequest>> GetProvince(int provinceId);
+
+        Task<ApiResult<GetDistrictRequest>> GetDistrict(int districtId);
     }
 }

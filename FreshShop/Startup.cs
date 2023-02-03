@@ -16,6 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace FreshShop
@@ -32,7 +33,7 @@ namespace FreshShop
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddHttpClient();
+            services.AddHttpClient();         
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
             {
@@ -95,6 +96,10 @@ namespace FreshShop
             services.AddTransient<ICategoryApiClient, CategoryApiClient>();
             services.AddTransient<IUserApiClient, UserApiClient>();
             services.AddTransient<IReviewApiClient, ReviewApiClient>();
+            services.AddTransient<ICartApiClient, CartApiClient>();
+            services.AddTransient<ICouponApiClient, CouponApiClient>();
+            services.AddTransient<IAddressApiClient, AddressApiClient>();
+          
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -107,6 +112,7 @@ namespace FreshShop
             else
             {
                 app.UseExceptionHandler("/Home/Error");
+                app.UseHsts();
             }
 
             app.UseHttpsRedirection();

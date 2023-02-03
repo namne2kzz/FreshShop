@@ -73,18 +73,16 @@ namespace FreshShop.Business.Catalog.Addresses
             var user = await _userManager.FindByIdAsync(id.ToString());
             if (user == null) return null;
 
-            var addresses = from a in _context.Addresses
-                            where a.UserId == id
-                            select new AddressViewModel()
-                            {
-                                Id = a.ID,
-                                UserId = a.UserId,
-                                ProvinceId = a.ProvinceId,
-                                DistrictId = a.DistrictId,
-                                Detail = a.AddressDetail,
-                                IsDefault = a.IsDefault
-                            };
-            return await addresses.ToListAsync();           
+            var addresses = await _context.Addresses.Where(x => x.UserId == id).Select(x => new AddressViewModel()
+            {
+                UserId=x.UserId,
+                Detail=x.AddressDetail,
+                DistrictId=x.DistrictId,
+                Id=x.ID,
+                IsDefault=x.IsDefault,
+                ProvinceId=x.ProvinceId                
+            }).ToListAsync();
+            return addresses;
         }
 
         public async Task<ApiResult<AddressViewModel>> GetById(int id)

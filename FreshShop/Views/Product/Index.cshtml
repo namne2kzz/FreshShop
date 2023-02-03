@@ -80,7 +80,13 @@
                                                             <li><a href="#" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
                                                             <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
                                                         </ul>
-                                                        <a class="cart" href="#"><localize>Add to Cart</localize></a>
+                                                        <form asp-action="AddCart" asp-controller="Cart" method="post">
+                                                            <input type="hidden" name="quantity" value="1"/>
+                                                            <input type="hidden" name="productId" value="@item.ID"/>
+                                                            <div class="submit-button">
+                                                                <button class="bnt hvr-hover" type="submit"><localize>Add to Cart</localize></button>
+                                                            </div>
+                                                        </form>                                                        
                                                     </div>
                                                 </div>
                                                 <div class="why-text">
@@ -124,7 +130,13 @@
                                                     <p>
                                                         @Html.Raw(item.Description)
                                                     </p>
-                                                    <a class="btn hvr-hover" href="#"><localize>Add to Cart</localize></a>
+                                                    <form asp-action="AddCart" asp-controller="Cart" method="post">
+                                                        <input type="hidden" name="quantity" value="1" />
+                                                        <input type="hidden" name="productId" value="@item.ID" />
+                                                        <div class="submit-button">
+                                                            <button class="btn hvr-hover" type="submit"><localize>Add to Cart</localize></button>
+                                                        </div>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>

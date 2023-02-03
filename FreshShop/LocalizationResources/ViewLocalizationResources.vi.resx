@@ -181,6 +181,10 @@
     <value>Dịch vụ khách hàng</value>
     <comment>View/Shared/_Layout</comment>
   </data>
+  <data name="Default" xml:space="preserve">
+    <value>Mặc định</value>
+    <comment>View/User/Address</comment>
+  </data>
   <data name="Delivery Information" xml:space="preserve">
     <value>Thông tin giao hàng</value>
     <comment>View/Shared/_Layout</comment>
@@ -188,6 +192,10 @@
   <data name="Description" xml:space="preserve">
     <value>Mô tả</value>
     <comment>View/Product/Detail</comment>
+  </data>
+  <data name="Extra" xml:space="preserve">
+    <value>Phụ</value>
+    <comment>View/User/Address</comment>
   </data>
   <data name="High Price" xml:space="preserve">
     <value>Giá cao</value>

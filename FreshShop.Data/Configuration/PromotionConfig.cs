@@ -23,7 +23,7 @@ namespace FreshShop.Data.Configuration
 
             builder.Property(x => x.ExpiredDate).IsRequired();
 
-            builder.Property(x => x.Discount).IsRequired();
+            builder.Property(x => x.Discount).IsRequired().HasColumnType("decimal(18,2)");
 
             builder.Property(x => x.Status).IsRequired();
 
