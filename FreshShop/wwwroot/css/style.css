@@ -2067,6 +2067,16 @@
  .remove-pr{
      text-align: center;
 }
+.select-pr {
+    text-align: center;
+    
+}
+    .select-pr input {            
+        height: 25px;
+        width: 25px;
+    }
+   
+       
  .coupon-box .input-group .form-control {
      min-height: 50px;
      border-radius: 0px;

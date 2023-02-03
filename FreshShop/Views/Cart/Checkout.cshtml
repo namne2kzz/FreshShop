@@ -1,0 +1,156 @@
+﻿@model FreshShop.ViewModels.Catalog.Cart.UserCheckoutViewModel
+@using Newtonsoft.Json;
+@{
+    ViewData["Title"] = "Checkout";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var culture = CultureInfo.CurrentCulture.Name;
+    var listCartCheckout = (List<FreshShop.ViewModels.Catalog.Cart.CartViewModel>)ViewBag.ListCartCheckout;
+}
+@section script{
+    <script src="~/jsController/checkoutController.js"></script>
+}
+
+
+<!-- Start All Title Box -->
+<div class="all-title-box">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2><localize>Checkout</localize></h2>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/@culture/Cart/Index"><localize>Cart</localize></a></li>
+                    <li class="breadcrumb-item active"><localize>Checkout</localize></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End All Title Box -->
+<!-- Start checkout  -->
+<div class="cart-box-main">
+    <div class="container">
+        <form asp-action="Order" asp-controller="Cart" method="post" asp-route-checkouts="@(JsonConvert.SerializeObject(listCartCheckout))">
+            <div class="row">
+                <div class="col-sm-6 col-lg-6 mb-3">
+                    <div class="checkout-address">
+                        <div class="title-left">
+                            <h3>Billing infomation</h3>
+                        </div>                       
+                        <input type="hidden" asp-for="CouponId" value="@ViewBag.CouponId" />
+                        <input type="hidden" asp-for="CouponDiscount" value="@ViewBag.CouponDiscount" />
+                        <input type="hidden" asp-for="Discount" value="@ViewBag.Discount" />
+                        <input type="hidden" asp-for="Total" value="@ViewBag.SubTotal" />
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="firstName">First name *</label>
+                                <input type="text" class="form-control" id="firstName" asp-for="FirstName" placeholder="Fill firstname" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="lastName">Last name *</label>
+                                <input type="text" class="form-control" id="lastName" asp-for="LastName" placeholder="Fill lastname" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email">Ship Email *</label>
+                            <input type="email" class="form-control" id="email" asp-for="ShipEmail" placeholder="Fill email">
+                        </div>
+                        <div class="mb-3">
+                            <label for="email">Ship Phone Number *</label>
+                            <input type="tel" class="form-control" id="tel" asp-for="ShipPhone" placeholder="Fill phone number">
+                        </div>
+                        <div class="mb-3">
+                            <label for="address">Address *</label>
+                            <select id="sllAddress" asp-for="ShipAddress" name="ShipAddress" class="custom-select" asp-items="@ViewBag.ListAddress">
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-6 mb-3">
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12">
+                            <div class="shipping-method-box">
+                                <div class="title-left">
+                                    <h3>Shipping Method</h3>
+                                </div>
+                                <div class="mb-4">
+
+                                    <div class="custom-control custom-radio">
+                                        <input id="shippingOption1" value="1" asp-for="ShippingType" name="ShippingType" class="custom-control-input shipping-option" checked="checked" type="radio">
+                                        <label class="custom-control-label" for="shippingOption1">Standard Delivery</label> <span class="float-right font-weight-bold">FREE</span>
+                                    </div>
+                                    <div class="ml-4 mb-2 small">(3-4 business days)</div>
+                                    <div class="custom-control custom-radio">
+                                        <input id="shippingOption2" value="2" asp-for="ShippingType" name="ShippingType" class="custom-control-input shipping-option" type="radio">
+                                        <label class="custom-control-label" for="shippingOption2">Express Delivery</label> <span class="float-right font-weight-bold">20.000 VND</span>
+                                    </div>
+                                    <div class="ml-4 mb-2 small">(2 business days)</div>
+                                    <div class="custom-control custom-radio">
+                                        <input id="shippingOption3"  value="3" asp-for="ShippingType" name="ShippingType" class="custom-control-input shipping-option" type="radio">
+                                        <label class="custom-control-label" for="shippingOption3">Next Business day</label> <span class="float-right font-weight-bold">50.000 VND</span>
+                                    </div>
+                                    <div class="ml-4 mb-2 small">(1 business days)</div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-lg-12">
+                            <div class="odr-box">
+                                <div class="title-left">
+                                    <h3>Shopping cart</h3>
+                                </div>
+                                <div class="rounded p-2 bg-light">
+                                    @foreach (var item in listCartCheckout)
+                                    {
+                                        <div class="media mb-2 border-bottom">
+                                            <div class="media-body">
+                                                <a href="/@culture/Product/Detail?productId=@item.ProductID"> @item.ProductName</a>
+                                                <div class="small text-muted">Price: @item.Price VND <span class="mx-2">|</span> Qty: @item.Quantity <span class="mx-2">|</span> Subtotal: @(item.Price*item.Quantity) VND<span class="mx-2">|</span> Discount: @item.Discount VND</div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-lg-12">
+                            <div class="order-box">
+                                <div class="title-left">
+                                    <h3>Order summary</h3>
+                                </div>
+                                <div class="d-flex">
+                                    <h4>Sub Total</h4>
+                                    <div class="ml-auto font-weight-bold" id="text-subtotal"> @ViewBag.SubTotal VND </div>
+                                </div>
+                                <hr class="my-1">
+                                <div class="d-flex">
+                                    <h4>Discount</h4>
+                                    <div class="ml-auto font-weight-bold" id="text-discount"> @ViewBag.Discount VND </div>
+                                </div>
+                                <div class="d-flex">
+                                    <h4>Coupon Discount</h4>
+                                    <div class="ml-auto font-weight-bold" id="text-coupon"> @ViewBag.CouponDiscount VND </div>
+                                </div>
+                                <hr class="my-1">
+                                <div class="d-flex">
+                                    <h4>Shipping Cost</h4>
+                                    <div class="ml-auto font-weight-bold" id="text-shipping"> 0 VND </div>
+                                </div>
+                                <hr>
+                                <div class="d-flex gr-total">
+                                    <h5>Total</h5>
+                                    <div class="ml-auto h5" id="text-total"> @(ViewBag.SubTotal-ViewBag.Discount- ViewBag.CouponDiscount) VND </div>
+                                </div>
+                                <hr>
+                            </div>
+                        </div>
+                        <div class="col-12 d-flex shopping-box submit-button">
+                            <button type="submit" class="ml-auto btn hvr-hover">Place Order</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>
+<!-- End checkout -->

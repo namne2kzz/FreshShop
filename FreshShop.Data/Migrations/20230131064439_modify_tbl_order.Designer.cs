@@ -4,14 +4,16 @@ using FreshShop.Data.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FreshShop.Data.Migrations
 {
     [DbContext(typeof(FreshShopDbContext))]
-    partial class FreshShopDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230131064439_modify_tbl_order")]
+    partial class modify_tbl_order
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

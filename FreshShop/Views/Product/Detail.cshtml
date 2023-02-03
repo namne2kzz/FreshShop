@@ -87,22 +87,22 @@
                     <p>
                         @Html.Raw(Model.Description)
                     </p>
-                    <ul>
-                        <li>
-                            <div class="form-group quantity-box">
-                                <label class="control-label"><localize>Quantity</localize></label>
-                                <input class="form-control" value="0" min="0" max="@Model.Stock" type="number">
+                    <form asp-action="AddCart" asp-controller="Cart" method="post">
+                        <ul>
+                            <li>
+                                <div class="form-group quantity-box">
+                                    <label class="control-label"><localize>Quantity</localize></label>
+                                    <input class="form-control" name="quantity" value="1" min="0" max="@Model.Stock" type="number">
+                                </div>
+                            </li>
+                        </ul>
+                        <input type="hidden" name="productId" value="@Model.ID"/>
+                        <div class="price-box-bar">
+                            <div class="submit-button">
+                                <button type="submit" class="btn hvr-hover" data-fancybox-close=""><localize>Add to Cart</localize></button>
                             </div>
-                        </li>
-                    </ul>
-
-                    <div class="price-box-bar">
-                        <div class="cart-and-bay-btn">
-                            <a class="btn hvr-hover" data-fancybox-close="" href="#"><localize>Buy New</localize></a>
-                            <a class="btn hvr-hover" data-fancybox-close="" href="#"><localize>Add to Cart</localize></a>
                         </div>
-                    </div>
-
+                    </form>
                     <div class="add-to-btn">
                         <div class="add-comp">
                             <a class="btn hvr-hover" href="#"><i class="fas fa-heart"></i><localize>Add to Wishlist</localize></a>
@@ -161,7 +161,9 @@
                             <input type="text" name="message" placeholder="Review here" class="form-control" required />
 
                         </div>
-                        <button type="submit" class="btn hvr-hover"><localize>Leave a Review</localize></button>
+                        <div class="submit-button">
+                            <button type="submit" class="btn hvr-hover"><localize>Leave a Review</localize></button>
+                        </div>
                     }
                     else
                     {
@@ -170,7 +172,9 @@
                             <input type="text" disabled name="message" placeholder="Review here" class="form-control" required />
 
                         </div>
-                        <button type="submit" disabled class="btn hvr-hover"><localize>Leave a Review</localize></button>
+                        <div class="submit-button">
+                            <button type="submit" disabled class="btn hvr-hover"><localize>Leave a Review</localize></button>
+                        </div>
                     }
 
                 </form>                   

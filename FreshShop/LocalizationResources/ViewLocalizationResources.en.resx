@@ -181,6 +181,10 @@
     <value>Customer Service</value>
     <comment>View/Shared/_Layout</comment>
   </data>
+  <data name="Default" xml:space="preserve">
+    <value>Default</value>
+    <comment>View/User/Address</comment>
+  </data>
   <data name="Delivery Information" xml:space="preserve">
     <value>Delivery Information</value>
     <comment>View/Shared/_Layout</comment>
@@ -188,6 +192,10 @@
   <data name="Description" xml:space="preserve">
     <value>Description</value>
     <comment>View/Product/Detail</comment>
+  </data>
+  <data name="Extra" xml:space="preserve">
+    <value>Extra</value>
+    <comment>View/User/Address</comment>
   </data>
   <data name="High Price" xml:space="preserve">
     <value>High Price</value>

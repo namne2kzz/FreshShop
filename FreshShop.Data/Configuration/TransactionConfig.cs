@@ -22,9 +22,9 @@ namespace FreshShop.Data.Configuration
           
             builder.Property(x => x.ExternalTransactionID).IsRequired();
 
-            builder.Property(x => x.Amount).IsRequired();
+            builder.Property(x => x.Amount).IsRequired().HasColumnType("decimal(18,2)");
 
-            builder.Property(x => x.Fee).IsRequired();
+            builder.Property(x => x.Fee).IsRequired().HasColumnType("decimal(18,2)");
 
             builder.Property(x => x.Result).IsRequired();
 

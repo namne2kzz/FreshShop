@@ -25,7 +25,9 @@ namespace FreshShop.Data.Configuration
 
             builder.Property(x => x.ShipAddress).IsRequired();
 
-            builder.Property(x => x.Total).IsRequired();
+            builder.Property(x => x.ShippingCost).IsRequired().HasColumnType("decimal(18,2)");
+
+            builder.Property(x => x.Total).IsRequired().HasColumnType("decimal(18,2)");
 
             builder.HasOne(x => x.Coupon).WithMany(x => x.Orders).HasForeignKey(x => x.CouponID);
 

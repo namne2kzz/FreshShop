@@ -46,11 +46,7 @@
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                     <div class="custom-select-box">
-                        @*<select id="basic" class="selectpicker show-tick form-control" data-placeholder="$ USD">
-                                <option>¥ JPY</option>
-                                <option>$ USD</option>
-                                <option>€ EUR</option>
-                            </select>*@
+                       
                         <language-nav language-label="NativeName"
                                       cookie-handler-url="@(Url.Action("SetCultureCookie", "Home", new { area= "", cltr="{0}", returnUrl="{1}" }))">
                         </language-nav>
@@ -80,11 +76,15 @@
                     <div class="login-box">
                         @if (User.Identity.IsAuthenticated)
                         {
+                        <div class="submit-button">
                             <a class="btn hvr-hover" href="/@CultureInfo.CurrentCulture.Name/Authen/Logout"><localize>Logout</localize></a>
+                        </div>
                         }
                         else
                         {
-                            <a class="btn hvr-hover" href="/@CultureInfo.CurrentCulture.Name/Authen/Login"><localize>Login</localize></a>
+                    <div class="submit-button">
+                        <a class="btn hvr-hover" href="/@CultureInfo.CurrentCulture.Name/Authen/Login"><localize>Login</localize></a>
+                    </div>
                         }
                     </div>
                     <div class="text-slid-box">
@@ -158,9 +158,9 @@
                     <ul>
                         <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
                         <li class="side-menu">
-                            <a href="#">
+                            <a href="/@culture/Cart/Index">
                                 <i class="fa fa-shopping-bag"></i>
-                                <span class="badge">3</span>
+                                @*<span class="badge">@TempData["CountCart"]</span>*@
                                 <p><localize>My Cart</localize></p>
                             </a>
                         </li>

@@ -103,6 +103,18 @@ namespace FreshShop.AdminApp.Controllers
         public async Task<IActionResult> Detail(Guid id)
         {
            var listAddress = await _addressApiClient.GetAllByUserId(id);
+            foreach(var item in listAddress.ResultObj)
+            {
+                var province = await _addressApiClient.GetProvince(item.ProvinceId);
+                var district = await _addressApiClient.GetDistrict(item.DistrictId);
+                if (!province.IsSuccessed || !district.IsSuccessed)
+                {
+                    TempData["AddressError"] = true;
+                    return RedirectToAction("Index");
+                }
+                item.ProvinceName = province.ResultObj.Name;
+                item.DistrictName = district.ResultObj.Name;
+            }
             ViewBag.ListAddress = listAddress.ResultObj;
 
             var result = await _userApiClient.GetById(id);

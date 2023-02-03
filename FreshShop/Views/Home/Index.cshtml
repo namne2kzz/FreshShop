@@ -6,11 +6,11 @@
     var sale = (List<FreshShop.ViewModels.Catalog.Product.ProductViewModel>)ViewBag.Sale;
     var latest = (List<FreshShop.ViewModels.Catalog.Product.ProductViewModel>)ViewBag.Latest;
     var bestseller = (List<FreshShop.ViewModels.Catalog.Product.ProductViewModel>)ViewBag.BestSeller;
-
+    var culture = CultureInfo.CurrentCulture.Name;
 
 }
 @section script{
-    @if (TempData["RegisterStateSuccess"] !=null)
+    @if (TempData["RegisterStateSuccess"] != null)
     {
         <script>
             Swal.fire(
@@ -20,6 +20,18 @@
             )
         </script>
     }
+
+    @if (TempData["OrderSuccess"] != null)
+    {
+        <script>
+            Swal.fire(
+                'Yeahh...',
+                'Đặt hàng thành công!',
+                'success'
+            )
+        </script>
+    }
+
 
 }
 <!-- Start Slider -->
@@ -150,11 +162,17 @@
                                 <img style="height:255px;max-height:255px;" src="http://localhost:5001/user-content/@item.ImagePath" class="img-fluid" alt="Image">
                                 <div class="mask-icon">
                                     <ul>
-                                        <li><a href="#" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
+                                        <li><a href="/@culture/Product/Detail?productId=@item.ID" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
                                         <li><a href="#" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
                                         <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
                                     </ul>
-                                    <a class="cart" href="#">Add to Cart</a>
+                                    <form asp-action="AddCart" asp-controller="Cart" method="post">
+                                        <input type="hidden" name="quantity" value="1" />
+                                        <input type="hidden" name="productId" value="@item.ID" />
+                                        <div class="submit-button">
+                                            <button class="btn hvr-hover" type="submit"><localize>Add to Cart</localize></button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                             <div class="why-text">
@@ -178,11 +196,17 @@
                             <img style="height:255px;max-height:255px;" src="http://localhost:5001/user-content/@item.ImagePath" class="img-fluid" alt="Image">
                             <div class="mask-icon">
                                 <ul>
-                                    <li><a href="#" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
+                                    <li><a href="/@culture/Product/Detail?productId=@item.ID" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
                                     <li><a href="#" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
                                     <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
                                 </ul>
-                                <a class="cart" href="#">Add to Cart</a>
+                                <form asp-action="AddCart" asp-controller="Cart" method="post">
+                                    <input type="hidden" name="quantity" value="1" />
+                                    <input type="hidden" name="productId" value="@item.ID" />
+                                    <div class="submit-button">
+                                        <button class="btn hvr-hover" type="submit"><localize>Add to Cart</localize></button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                         <div class="why-text">
@@ -204,11 +228,17 @@
                             <img style="height:255px;max-height:255px;" src="http://localhost:5001/user-content/@item.ImagePath" class="img-fluid" alt="Image">
                             <div class="mask-icon">
                                 <ul>
-                                    <li><a href="#" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
+                                    <li><a href="/@culture/Product/Detail?productId=@item.ID" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
                                     <li><a href="#" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
                                     <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
                                 </ul>
-                                <a class="cart" href="#">Add to Cart</a>
+                                <form asp-action="AddCart" asp-controller="Cart" method="post">
+                                    <input type="hidden" name="quantity" value="1" />
+                                    <input type="hidden" name="productId" value="@item.ID" />
+                                    <div class="submit-button">
+                                        <button class="btn hvr-hover" type="submit"><localize>Add to Cart</localize></button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                         <div class="why-text">

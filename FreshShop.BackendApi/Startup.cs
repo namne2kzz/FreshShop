@@ -2,6 +2,7 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using FreshShop.Business.Catalog.Addresses;
 using FreshShop.Business.Catalog.Blogs;
+using FreshShop.Business.Catalog.Cart;
 using FreshShop.Business.Catalog.Categories;
 using FreshShop.Business.Catalog.Coupons;
 using FreshShop.Business.Catalog.Products;
@@ -73,6 +74,7 @@ namespace FreshShop.BackendApi
             services.AddTransient<IPromotionService, PromotionService>();
             services.AddTransient<ICouponService, CouponService>();
             services.AddTransient<IReviewService, ReviewService>();
+            services.AddTransient<ICartService, CartService>();
 
             //Fluent validator
             services.AddTransient<IValidator<LoginRequest>, LoginRequestValidator>();
