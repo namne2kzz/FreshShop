@@ -1,0 +1,141 @@
+﻿@model FreshShop.ViewModels.System.Users.RegisterRequest
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<!-- Page-header start -->
+<div class="page-header">
+    <div class="page-block">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <div class="page-header-title">
+                    <h5 class="m-b-10">Thêm mới người dùng</h5>
+                
+                </div>
+            </div>
+            <div class="col-md-4">
+                <ul class="breadcrumb-title">
+                    <li class="breadcrumb-item">
+                        <a href="/"> <i class="fa fa-home"></i> </a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="/User/Index">User</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="/User/Create">Create</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Page-header end -->
+<div class="pcoded-inner-content">
+    <!-- Main-body start -->
+    <div class="main-body">
+        <div class="page-wrapper">
+
+            <!-- Page body start -->
+            <div class="page-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                               
+                             
+                            </div>
+                            <div class="card-block">                              
+                                <form asp-action="Create" asp-controller="User" method="post" enctype="multipart/form-data">
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label" asp-for="FirstName"></label>
+                                        <div class="col-sm-10">
+                                            <input asp-for="FirstName" type="text" class="form-control" placeholder="Nhập tên ...">
+                                            <span asp-validation-for="FirstName" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label" asp-for="LastName"></label>
+                                        <div class="col-sm-10">
+                                            <input asp-for="LastName" type="text" class="form-control" placeholder="Nhập họ...">
+                                            <span asp-validation-for="LastName" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label" asp-for="Dob"></label>
+                                        <div class="col-sm-10">
+                                            <input asp-for="Dob" type="date" class="form-control" >
+                                            <span asp-validation-for="Dob" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label" asp-for="Email"></label>
+                                        <div class="col-sm-10">
+                                            <input asp-for="Email" type="text" class="form-control" placeholder="Nhập email...">
+                                            <span asp-validation-for="Email" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label" asp-for="PhoneNumber"></label>
+                                        <div class="col-sm-10">
+                                            <input asp-for="PhoneNumber" type="text" class="form-control" placeholder="Nhập số điện thoại...">
+                                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label" asp-for="UserName"></label>
+                                        <div class="col-sm-10">
+                                            <input asp-for="UserName" type="text" class="form-control" placeholder="Nhập tên đăng nhập...">
+                                            <span asp-validation-for="UserName" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label" asp-for="Password"></label>
+                                        <div class="col-sm-10">
+                                            <input asp-for="Password" type="password" class="form-control" placeholder="Nhập mật khẩu...">
+                                            <span asp-validation-for="Password" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label" asp-for="ConfirmPassword"></label>
+                                        <div class="col-sm-10">
+                                            <input asp-for="ConfirmPassword" type="password" class="form-control" placeholder="Xác nhận mật khẩu...">
+                                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label" asp-for="ThumbnailImage"></label>
+                                        <div class="col-sm-10">
+                                            <input asp-for="ThumbnailImage" class="form-control" >
+                                            <span asp-validation-for="ThumbnailImage" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                <div class="form-group">
+                                    <input type="submit" value="Thêm mới" class="btn btn-primary" />
+                                    <a class="btn btn-primary" asp-action="Index">Quay về</a>
+                                </div>
+                                </form>
+                                
+                               
+                            </div>
+                        </div>
+
+                       
+                    </div>
+                   
+                </div>
+               
+            </div>
+            <!-- Page body end -->
+        </div>
+    </div>
+    <!-- Main-body end -->  
+</div>
+
+
+

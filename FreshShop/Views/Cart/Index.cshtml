@@ -1,0 +1,193 @@
+﻿@using FreshShop.ViewModels.Common
+@model PagedResult<FreshShop.ViewModels.Catalog.Cart.CartViewModel>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var culture = CultureInfo.CurrentCulture.Name;
+}
+
+@section script
+{
+    <script src="~/jsController/cartController.js"></script>
+
+    @if (ViewBag.AddCartError != null)
+    {
+        <script>
+            Swal.fire(
+                'Oops...',
+                'Thêm giỏ hàng thất bại!',
+                'error'
+            )
+        </script>
+    }
+    @if (TempData["OrderError"] != null)
+    {
+        <script>
+            Swal.fire(
+                'Oops...',
+                'Đặt hàng thất bại!',
+                'error'
+            )
+        </script>
+    }
+    @if (TempData["AddressError"] != null)
+    {
+        <script>
+            Swal.fire(
+                'Oops...',
+                'Lỗi địa chỉ!',
+                'error'
+            )
+        </script>
+    }
+
+}
+
+<!-- Start All Title Box -->
+<div class="all-title-box">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2><localize>Cart</localize></h2>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/"><localize>Home</localize></a></li>
+                    <li class="breadcrumb-item active"><localize>Cart</localize></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End All Title Box -->
+<!-- Start Cart  -->
+<div class="cart-box-main">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="table-main table-responsive">
+                    <table id="tblCart" class="table">
+                        <thead>
+                            <tr>
+                                <th>Images</th>
+                                <th>Product Name</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                                <th>Remove</th>
+                                <th>Select</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Items)
+                            {
+                                <tr>
+                                    <td class="thumbnail-img">
+                                        <a href="/@culture/Product/Detail?productId=@item.ProductID">
+                                            <img class="img-fluid" src="http://localhost:5001/user-content/@item.ImagePath" alt="" />
+                                        </a>
+                                    </td>
+                                    <td class="name-pr">
+                                        <a href="/@culture/Product/Detail?productId=@item.ProductID">
+                                            @item.ProductName
+                                        </a>
+                                    </td>
+                                    <td class="price-pr">
+                                        <p>@item.Price</p>
+                                    </td>
+                                    <td class="quantity-box">
+                                        <form asp-action="UpdateCart" asp-controller="Cart" method="post">
+                                            <input type="hidden" name="id" value="@item.ID" />
+                                            <input type="number" name="quantity" value="@item.Quantity" onchange="this.form.submit()" min="0" step="1" class="c-input-text qty text">
+                                        </form>
+
+                                    </td>
+                                    <td class="total-pr">
+                                        <p>@(item.Price*item.Quantity)</p>
+                                    </td>
+                                    <td class="remove-pr">
+                                        <a class="cart-item-remove" data-id="@item.ID" href="#">
+                                            <i class="fas fa-times"></i>
+                                        </a>
+                                    </td>
+                                    <td class="select-pr">
+                                        <input class="select-checked" value="@item.ProductID" data-id="@item.ID" data-price="@item.Price" data-discount="@item.Discount" data-quantity="@item.Quantity" type="checkbox" />
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td style="padding:0px;margin:10px 0 0 0;float:left">
+                                    <form asp-action="Index" asp-controller="Cart" method="post">
+                                        <input type="hidden" name="pageSizeMore" value="@((int)(ViewBag.PageSizeMore)+1)" />
+                                        <div style="float:right" class="submit-button">
+                                            <button class="btn hvr-hover" type="submit"><localize>Show more...</localize></button>
+                                        </div>
+                                    </form>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+
+
+
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row my-5">
+            <div class="col-lg-6 col-sm-6">
+                <div class="coupon-box">
+                    <div class="input-group input-group-sm">
+                        <input class="form-control" id="text-code-coupon" placeholder="Enter your coupon code" aria-label="Coupon code" type="text">
+                        <div class="input-group-append">
+                            <button id="coupon-submit" class="btn btn-theme" type="button">Apply Coupon</button>
+                        </div>
+                        <div class="input-group-append">
+                            <button id="coupon-unsubmit" class="btn btn-theme" type="button">Remove Coupon</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-sm-6">             
+                    <div style="float:right" class="submit-button">
+                        <button id="cart-button-delete" class="btn hvr-hover" type="button">
+                            <localize>Delete Cart</localize>
+                        </button>
+                    </div>              
+            </div>
+        </div>
+
+        <div class="row my-5">
+            <div class="col-lg-8 col-sm-12"></div>
+            <div class="col-lg-4 col-sm-12">
+                <div class="order-box">
+                    <h3>Order summary</h3>
+                    <div class="d-flex">
+                        <h4>Sub Total</h4>
+                        <div class="ml-auto font-weight-bold" id="text-subtotal"> 0 VND </div>
+                    </div>
+                    <hr class="my-1">
+                    <div class="d-flex">
+                        <h4>Discount</h4>
+                        <div class="ml-auto font-weight-bold" id="text-discount"> 0 VND </div>
+                    </div>
+                    <div class="d-flex">
+                        <h4>Coupon Discount</h4>
+                        <div class="ml-auto font-weight-bold" id="text-coupon"> 0 VND </div>
+                    </div>
+                    <hr class="my-1">
+                    <div class="d-flex gr-total">
+                        <h5>Total</h5>
+                        <div class="ml-auto h5" id="text-total"> 0 VND </div>
+                    </div>
+                    <hr>
+                </div>
+            </div>
+            <div class="col-12 d-flex shopping-box"><a href="#" id="link-checkout" class="ml-auto btn hvr-hover">Checkout</a> </div>
+        </div>
+
+    </div>
+</div>
+<!-- End Cart -->

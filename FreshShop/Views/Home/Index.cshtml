@@ -1,8 +1,295 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+@{
+    var latestblogs = (List<FreshShop.ViewModels.Catalog.Blog.BlogViewModel>)ViewBag.LatestBlogs;
+    var sale = (List<FreshShop.ViewModels.Catalog.Product.ProductViewModel>)ViewBag.Sale;
+    var latest = (List<FreshShop.ViewModels.Catalog.Product.ProductViewModel>)ViewBag.Latest;
+    var bestseller = (List<FreshShop.ViewModels.Catalog.Product.ProductViewModel>)ViewBag.BestSeller;
+    var culture = CultureInfo.CurrentCulture.Name;
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+}
+@section script{
+    @if (TempData["RegisterStateSuccess"] != null)
+    {
+        <script>
+            Swal.fire(
+                'Yeahh...',
+                'Đăng ký thành công!',
+                'success'
+            )
+        </script>
+    }
+
+    @if (TempData["OrderSuccess"] != null)
+    {
+        <script>
+            Swal.fire(
+                'Yeahh...',
+                'Đặt hàng thành công!',
+                'success'
+            )
+        </script>
+    }
+
+
+}
+<!-- Start Slider -->
+<div id="slides-shop" class="cover-slides">
+    <ul class="slides-container">
+        <li class="text-center">
+            <img src="~/images/banner-01.jpg" alt="">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1 class="m-b-20"><strong>Welcome To <br> Freshshop</strong></h1>
+                        <p class="m-b-40">See how your users experience your website in realtime or view <br> trends to see any changes in performance over time.</p>
+                        <p><a class="btn hvr-hover" href="#">Shop New</a></p>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li class="text-center">
+            <img src="~/images/banner-02.jpg" alt="">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1 class="m-b-20"><strong>Welcome To <br> Freshshop</strong></h1>
+                        <p class="m-b-40">See how your users experience your website in realtime or view <br> trends to see any changes in performance over time.</p>
+                        <p><a class="btn hvr-hover" href="#">Shop New</a></p>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li class="text-center">
+            <img src="~/images/banner-03.jpg" alt="">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1 class="m-b-20"><strong>Welcome To <br> Freshshop</strong></h1>
+                        <p class="m-b-40">See how your users experience your website in realtime or view <br> trends to see any changes in performance over time.</p>
+                        <p><a class="btn hvr-hover" href="#">Shop New</a></p>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+    <div class="slides-navigation">
+        <a href="#" class="next"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+        <a href="#" class="prev"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
+    </div>
 </div>
+<!-- End Slider -->
+<!-- Start Categories  -->
+<div class="categories-shop">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                <div class="shop-cat-box">
+                    <img class="img-fluid" src="~/images/categories_img_01.jpg" alt="" />
+                    <a class="btn hvr-hover" href="#">Lorem ipsum dolor</a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                <div class="shop-cat-box">
+                    <img class="img-fluid" src="~/images/categories_img_02.jpg" alt="" />
+                    <a class="btn hvr-hover" href="#">Lorem ipsum dolor</a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                <div class="shop-cat-box">
+                    <img class="img-fluid" src="~/images/categories_img_03.jpg" alt="" />
+                    <a class="btn hvr-hover" href="#">Lorem ipsum dolor</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Categories -->
+
+<div class="box-add-products">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <div class="offer-box-products">
+                    <img class="img-fluid" src="~/images/add-img-01.jpg" alt="" />
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <div class="offer-box-products">
+                    <img class="img-fluid" src="~/images/add-img-02.jpg" alt="" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Start Products  -->
+<div class="products-box">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="title-all text-center">
+                    <h1>Fruits & Vegetables</h1>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="special-menu text-center">
+                    <div class="button-group filter-button-group">
+                        <button class="active" data-filter="*">All</button>
+                        <button data-filter=".top-featured">Top latest</button>
+                        <button data-filter=".best-seller">Best seller</button>
+                        <button data-filter=".top-sale">Top Sale</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row special-list">
+            @if (bestseller != null)
+            {
+                @foreach (var item in bestseller)
+                {
+                    <div class="col-lg-3 col-md-6 special-grid best-seller">
+                        <div class="products-single fix">
+                            <div class="box-img-hover">
+                                <div class="type-lb">
+                                    <p class="sale">Best Seller</p>
+                                </div>
+                                <img style="height:255px;max-height:255px;" src="http://localhost:5001/user-content/@item.ImagePath" class="img-fluid" alt="Image">
+                                <div class="mask-icon">
+                                    <ul>
+                                        <li><a href="/@culture/Product/Detail?productId=@item.ID" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
+                                        <li><a href="#" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
+                                        <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
+                                    </ul>
+                                    <form asp-action="AddCart" asp-controller="Cart" method="post">
+                                        <input type="hidden" name="quantity" value="1" />
+                                        <input type="hidden" name="productId" value="@item.ID" />
+                                        <div class="submit-button">
+                                            <button class="btn hvr-hover" type="submit"><localize>Add to Cart</localize></button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="why-text">
+                                <h4>@item.Name</h4>
+                                <h5>@item.Price VND</h5>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+
+
+            @foreach (var item in latest)
+            {
+                <div class="col-lg-3 col-md-6 special-grid top-featured">
+                    <div class="products-single fix">
+                        <div class="box-img-hover">
+                            <div class="type-lb">
+                                <p class="new">New</p>
+                            </div>
+                            <img style="height:255px;max-height:255px;" src="http://localhost:5001/user-content/@item.ImagePath" class="img-fluid" alt="Image">
+                            <div class="mask-icon">
+                                <ul>
+                                    <li><a href="/@culture/Product/Detail?productId=@item.ID" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
+                                    <li><a href="#" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
+                                    <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
+                                </ul>
+                                <form asp-action="AddCart" asp-controller="Cart" method="post">
+                                    <input type="hidden" name="quantity" value="1" />
+                                    <input type="hidden" name="productId" value="@item.ID" />
+                                    <div class="submit-button">
+                                        <button class="btn hvr-hover" type="submit"><localize>Add to Cart</localize></button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="why-text">
+                            <h4>@item.Name</h4>
+                            <h5>@item.Price VND</h5>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            @foreach (var item in sale)
+            {
+                <div class="col-lg-3 col-md-6 special-grid top-sale">
+                    <div class="products-single fix">
+                        <div class="box-img-hover">
+                            <div class="type-lb">
+                                <p class="new">-@item.Discount</p>
+                            </div>
+                            <img style="height:255px;max-height:255px;" src="http://localhost:5001/user-content/@item.ImagePath" class="img-fluid" alt="Image">
+                            <div class="mask-icon">
+                                <ul>
+                                    <li><a href="/@culture/Product/Detail?productId=@item.ID" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
+                                    <li><a href="#" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
+                                    <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
+                                </ul>
+                                <form asp-action="AddCart" asp-controller="Cart" method="post">
+                                    <input type="hidden" name="quantity" value="1" />
+                                    <input type="hidden" name="productId" value="@item.ID" />
+                                    <div class="submit-button">
+                                        <button class="btn hvr-hover" type="submit"><localize>Add to Cart</localize></button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="why-text">
+                            <h4>@item.Name</h4>
+                            <h5>@item.Price VND</h5>
+                        </div>
+                    </div>
+                </div>
+            }
+
+
+
+
+        </div>
+    </div>
+</div>
+<!-- End Products  -->
+<!-- Start Blog  -->
+<div class="latest-blog">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="title-all text-center">
+                    <h1><localize>latest blog</localize></h1>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            @foreach (var item in latestblogs)
+            {
+                <div class="col-md-6 col-lg-4 col-xl-4">
+                    <div class="blog-box">
+                        <div style="text-align:center" class="blog-img">
+                            <img style="object-fit:cover;max-height:245px;max-width:290px" class="img-fluid" src="http://localhost:5001/user-content/@item.ImagePath" alt="latest blog" />
+                        </div>
+                        <div class="blog-content">
+                            <div class="title-blog">
+                                <h3>@item.Title</h3>
+                                <p>@item.Content.Substring(0, 20)<span>...<a href="#">đọc thêm</a></span></p>
+                            </div>
+                            <ul class="option-blog">
+                                <li><a href="#"><i class="far fa-heart"></i></a></li>
+                                <li><a href="#"><i class="fas fa-eye"></i></a></li>
+                                <li><a href="#"><i class="far fa-comments"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+<!-- End Blog  -->

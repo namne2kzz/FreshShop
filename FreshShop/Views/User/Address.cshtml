@@ -1,0 +1,132 @@
+﻿@model List<FreshShop.ViewModels.Catalog.Address.AddressViewModel>
+@{
+    ViewData["Title"] = "Address";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var culture = CultureInfo.CurrentCulture.Name;
+
+}
+@section script{
+    <script src="~/jsController/userController.js"></script>
+
+    @if (TempData["CreateAddressError"] != null)
+    {
+        <script>
+            Swal.fire(
+                'Oops...',
+                'Thêm địa chỉ thất bại!',
+                'error'
+            )
+        </script>
+    }
+}
+
+
+<!-- Start All Title Box -->
+<div class="all-title-box">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2><localize>Address</localize></h2>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/@culture/User/Index"><localize>Account</localize></a></li>
+                    <li class="breadcrumb-item active"><localize>Address</localize></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End All Title Box -->
+<!-- Start Address  -->
+<div class="cart-box-main">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="table-main table-responsive">
+                    <table id="tblAddress" class="table">
+                        <thead>
+                            <tr>
+                                <th>Province</th>
+                                <th>District</th>
+                                <th>Detail</th>
+                                <th>Status</th>
+                                <th>Remove</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.ProvinceName</td>
+                                    <td>@item.DistrictName</td>
+                                    <td>@item.Detail</td>
+                                    <td>
+                                        @if (item.IsDefault)
+                                        {
+                                            <a id="address-link-default" class="address-link-status" data-id="@item.Id" href="#"><localize>Default</localize></a>
+                                        }
+                                        else
+                                        {
+                                            <a href="#" data-id="@item.Id" class="address-link-status"><localize>Extra</localize></a>
+                                        }
+                                    </td>
+                                    <td style="text-align:center">
+                                        <a href="#" class="address-link-delete" data-id="@item.Id">
+                                            <i class="fas fa-times"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div style="padding-top:20px" class="row col-md-9">
+            <div class="col-md-12 col-lg-12">
+                <div class="order-box">
+                    <div class="title-left">
+                        <h3>Create New Address</h3>
+                    </div>
+                </div>
+            </div>
+            <form style="width:100%" asp-action="CreateAddress" asp-controller="User" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label"><localize>Province</localize></label>
+                    <div class="col-sm-10">
+                        <select id="sllProvince" name="province" class="custom-select" asp-items="@ViewBag.ListProvince">
+                            <option value="" selected="selected" disabled="disabled">--Chọn Tỉnh/Thành phố--</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label"><localize>District</localize></label>
+                    <div class="col-sm-10">
+                        <select id="sllDistrict" name="district" class="custom-select" asp-items="@ViewBag.ListDistrict">
+                            <option value="" selected="selected" disabled="disabled">--Chọn Quận/Huyện--</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label"><localize>Detail</localize></label>
+                    <div class="col-sm-10">
+                        <textarea name="detail" required class="form-control" type="text"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="submit-button">
+                        <button type="submit" class="btn hvr-hover"><localize>Create New</localize></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- End Address -->

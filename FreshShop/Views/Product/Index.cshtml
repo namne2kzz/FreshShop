@@ -1,0 +1,196 @@
+﻿@using FreshShop.ViewModels.Common
+@model PagedResult<FreshShop.ViewModels.Catalog.Product.ProductViewModel>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var tree = (List<FreshShop.ViewModels.Catalog.Category.CategoryTreeViewModel>)ViewBag.Tree;
+    var culture = CultureInfo.CurrentCulture.Name;
+}
+
+<!-- Start All Title Box -->
+<div class="all-title-box">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2><localize>Shop</localize></h2>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/"><localize>Home</localize></a></li>
+                    <li class="breadcrumb-item active"><localize>Shop</localize></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End All Title Box -->
+<!-- Start Shop Page  -->
+<div class="shop-box-inner">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-9 col-lg-9 col-sm-12 col-xs-12 shop-content-right">
+                <div class="right-product-box">
+                    <div class="product-item-filter row">
+                        <div class="col-12 col-sm-8 text-center text-sm-left">
+                            <form asp-action="Index" asp-controller="Product" method="get">
+                                <div class="toolbar-sorter-right">
+                                    <span><localize>Sort</localize></span>
+                                    <select id="basic" name="sortId" class="selectpicker show-tick form-control" data-placeholder="$ USD" onchange="this.form.submit()">
+                                        <option data-display="Select"><localize>Nothing</localize></option>
+                                        <option value="1"><localize>High Price</localize> → <localize>Low Price</localize></option>
+                                        <option value="2"><localize>Low Price</localize> → <localize>High Price</localize></option>
+                                        <option value="3"><localize>Recently</localize></option>
+                                        <option value="4"><localize>On Sale</localize></option>
+                                        <option value="5"><localize>Best Selling</localize></option>
+                                    </select>
+                                </div>
+                            </form>
+                            <p><localize>Showing</localize> @ViewBag.TotalRecord <localize>records</localize></p>
+                        </div>
+                        <div class="col-12 col-sm-4 text-center text-sm-right">
+                            <ul class="nav nav-tabs ml-auto">
+                                <li>
+                                    <a class="nav-link active" href="#grid-view" data-toggle="tab"> <i class="fa fa-th"></i> </a>
+                                </li>
+                                <li>
+                                    <a class="nav-link" href="#list-view" data-toggle="tab"> <i class="fa fa-list-ul"></i> </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="product-categorie-box">
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane fade show active" id="grid-view">
+                                <div class="row">
+                                    @foreach (var item in Model.Items)
+                                    {
+                                        <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
+                                            <div class="products-single fix">
+                                                <div class="box-img-hover">
+                                                    @if (item.Discount != 0)
+                                                    {
+                                                        <div class="type-lb">
+                                                            <p class="sale">-@item.Discount</p>
+                                                        </div>
+                                                    }
+
+                                                    <img style="height:255px;max-height:255px" src="http://localhost:5001/user-content/@item.ImagePath" class="img-fluid" alt="Image">
+                                                    <div class="mask-icon">
+                                                        <ul>
+                                                            <li><a href="/@culture/Product/Detail?productId=@item.ID" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
+                                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
+                                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
+                                                        </ul>
+                                                        <form asp-action="AddCart" asp-controller="Cart" method="post">
+                                                            <input type="hidden" name="quantity" value="1"/>
+                                                            <input type="hidden" name="productId" value="@item.ID"/>
+                                                            <div class="submit-button">
+                                                                <button class="bnt hvr-hover" type="submit"><localize>Add to Cart</localize></button>
+                                                            </div>
+                                                        </form>                                                        
+                                                    </div>
+                                                </div>
+                                                <div class="why-text">
+                                                    <h4>@item.Name</h4>
+                                                    <h5>@item.Price</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    }
+
+                                </div>
+                            </div>
+                            <div role="tabpanel" class="tab-pane fade" id="list-view">
+                                @foreach (var item in Model.Items)
+                                {
+                                    <div class="list-view-box">
+                                        <div class="row">
+                                            <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
+                                                <div class="products-single fix">
+                                                    <div class="box-img-hover">
+                                                        @*<div class="type-lb">
+                                                                <p class="new">New</p>
+                                                            </div>*@
+                                                        <img style="height:255px;max-height:255px" src="http://localhost:5001/user-content/@item.ImagePath" class="img-fluid" alt="Image">
+                                                        <div class="mask-icon">
+                                                            <ul>
+                                                                <li><a href="#" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
+                                                                <li><a href="#" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
+                                                                <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
+                                                            </ul>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 col-md-6 col-lg-8 col-xl-8">
+                                                <div class="why-text full-width">
+                                                    <h4>@item.Name</h4>
+                                                    <h5> <del>@item.Price</del>@(item.Price-item.Discount)</h5>
+                                                    <p>
+                                                        @Html.Raw(item.Description)
+                                                    </p>
+                                                    <form asp-action="AddCart" asp-controller="Cart" method="post">
+                                                        <input type="hidden" name="quantity" value="1" />
+                                                        <input type="hidden" name="productId" value="@item.ID" />
+                                                        <div class="submit-button">
+                                                            <button class="btn hvr-hover" type="submit"><localize>Add to Cart</localize></button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-3 col-sm-12 col-xs-12 sidebar-shop-left">
+                <div class="product-categori">
+                    <div class="search-product">
+                        <form asp-action="Index" asp-controller="Product" method="get">
+                            <input class="form-control" name="keyword" value="@ViewBag.Keyword" placeholder="Search here..." type="text">
+                            <button type="submit"> <i class="fa fa-search"></i> </button>
+                        </form>
+                    </div>
+                    <div class="filter-sidebar-left">
+                        <div class="title-left">
+                            <h3><localize>Categories</localize></h3>
+                        </div>
+                        <div class="list-group list-group-collapse list-group-sm list-group-tree" id="list-group-men" data-children=".sub-men">
+                            @foreach (var item in tree)
+                            {
+                            <div class="list-group-collapse sub-men">
+                                <a class="list-group-item list-group-item-action" href="#@item.Id" data-toggle="collapse" aria-expanded="true" aria-controls="@item.Id">
+                                    @item.Name <small class="text-muted">(@item.Quantity)</small>
+                                </a>
+                                @if (item.Child.Count != 0)
+                                {
+                                    <div class="collapse show" id="@item.Id" data-parent="#list-group-men">
+                                        <div class="list-group">
+                                            @foreach (var subItem in item.Child)
+                                            {
+                                                <a href="#" class="list-group-item list-group-item-action">@subItem.Name <small class="text-muted">(@subItem.Quantity)</small></a>
+                                            }                                         
+                                        </div>
+                                    </div>
+                                }
+
+                            </div>
+
+                            }
+
+
+                        </div>
+                    </div>                 
+                </div>
+            </div>
+        </div>
+        @await Component.InvokeAsync("Pager", Model)
+    </div>
+</div>
+<!-- End Shop Page -->

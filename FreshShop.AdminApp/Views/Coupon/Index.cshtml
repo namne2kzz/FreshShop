@@ -1,0 +1,131 @@
+﻿@using FreshShop.ViewModels.Common
+@using FreshShop.ViewModels.Catalog.Coupon
+@model PagedResult<CouponViewModel>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section script{ 
+    <script src="~/jsControllers/couponController.js"></script>
+
+}
+
+<!-- Page-header start -->
+<div class="page-header">
+    <div class="page-block">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <div class="page-header-title">
+                    <h5 class="m-b-10">Danh sách mã giảm giá</h5>
+                    <p class="m-b-0">Lorem Ipsum is simply dummy text of the printing</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <ul class="breadcrumb-title">
+                    <li class="breadcrumb-item">
+                        <a href="/Home/Index"> <i class="fa fa-home"></i> </a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="/Coupon/Index">Mã giảm giá</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="/Coupon/Index">Danh sách</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Page-header end -->
+<div class="pcoded-inner-content">
+    <!-- Main-body start -->
+    <div class="main-body">
+        <div class="page-wrapper">
+            <!-- Page-body start -->
+            <div class="page-body">
+                <!-- Hover table card start -->
+                <div class="card">
+                    @if (TempData["AlertMessage"] != null)
+                    {
+                        <div id="AlertBox" class="alert @TempData["AlertType"] hide" role="alert">
+                            @TempData["AlertMessage"]
+                        </div>
+
+                    }
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <a class="btn btn-primary" href="/Coupon/Create">Thêm mới</a>
+                            </div>
+                            <div class="col-md-6">
+                                <form class="form-group" asp-action="Index" asp-controller="Coupon" method="get">
+                                    <div class="row">
+                                        <div class="col-md-9">
+                                            <input class="form-control" name="keyword" value="@ViewBag.Keyword" placeholder="Tìm kiếm..." />
+                                        </div>
+
+                                        <div style="display:inline-block">
+                                            <button type="submit" class="btn-sm btn-primary">Tìm kiếm</button>
+                                            <button type="button" class="btn-sm btn-primary" onclick="window.location.href='/Coupon/Index'">Đặt lại</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="card-block table-border-style">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Mã giảm giá</th>
+                                        <th>Tiêu đề</th>
+                                        <th>Ngày bắt đầu</th>
+                                        <th>Ngày hết hạn</th>
+                                        <th>Giá trị</th>
+                                        <th>Số lượng</th>   
+                                        <th>Trạng thái</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    @{
+                                        foreach (var item in Model.Items)
+                                        {
+                                            <tr>
+                                                <td>@item.Code</td>
+                                                <td>@item.Title</td>
+                                                <td>@item.FromDate</td>
+                                                <td>@item.ExpiredDate</td>
+                                                <td>@item.Discount</td>
+                                                <td>@item.Quantity</td>
+                                                <td>
+                                                    <a href="#" class="b-b-primary text-primary coupon-link-status" data-id="@item.Id">@(item.Status ? "Có hiệu lực" : "Khóa")</a>
+                                                </td>                                              
+                                                <td>
+                                                    @Html.ActionLink("Cập nhật", "Update", "Coupon", new { id = item.Id }) |                                                    
+                                                    <a href="#" class="coupon-link-delete" data-id="@item.Id">Xóa</a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <!--Pagination-->
+                        @await Component.InvokeAsync("Pager", Model)
+                    </div>
+                </div>
+                <!-- Hover table card end -->
+            </div>
+            <!-- Page-body end -->
+        </div>
+    </div>
+    <!-- Main-body end -->
+
+</div>
+
